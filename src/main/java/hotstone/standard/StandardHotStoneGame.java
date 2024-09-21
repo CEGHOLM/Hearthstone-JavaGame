@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-// Test
-
 /** This is the 'temporary test stub' in TDD
  * terms: the initial empty but compilable implementation
  * of the game interface.
@@ -52,7 +50,6 @@ public class StandardHotStoneGame implements Game {
   private ManaProductionStrategy manaProductionStrategy;
   private WinningStrategy winningStrategy;
   private HeroStrategy heroStrategy;
-  private int test;
   private final DeckBuilderStrategy deckBuilderStrategy;
   private int turnNumber;
   private Map<Player, Hero> heroes = new HashMap<>();
