@@ -216,20 +216,25 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+
     // Check it's the players turn
-    if (!playerAttacking.equals(getPlayerInTurn())) {
+    boolean isAttackingPlayersTurn = getPlayerInTurn() == playerAttacking;
+    if (!isAttackingPlayersTurn) {
       return Status.NOT_PLAYER_IN_TURN;
     }
     // Check the owner of the attacking card
-    if (!playerAttacking.equals(attackingCard.getOwner())) {
+    boolean isOwningAttackingCard = attackingCard.getOwner() == playerAttacking;
+    if (!isOwningAttackingCard) {
       return Status.NOT_OWNER;
     }
     // Check the card is active
-    if(!attackingCard.canAttack()) {
+    boolean cardCanAttack = attackingCard.canAttack();
+    if(!cardCanAttack) {
       return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
     }
     // Check that you're not attacking your own minion
-    if (playerAttacking.equals(defendingCard.getOwner())) {
+    boolean isAttackingOwnMinion = defendingCard.getOwner() == playerAttacking;
+    if (isAttackingOwnMinion) {
       return  Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
     }
 
