@@ -229,14 +229,22 @@ public class StandardHotStoneGame implements Game {
 
   private void executeAttack(Card attackingCard, Card defendingCard) {
     // Apply damage
-    defendingCard.takeDamage(attackingCard.getAttack());
-    attackingCard.takeDamage(defendingCard.getAttack());
+    reduceCardHealth(defendingCard, attackingCard.getAttack());
+    reduceCardHealth(attackingCard, defendingCard.getAttack());
 
     // Remove defeated cards
     removeIfDefeated(defendingCard);
     removeIfDefeated(attackingCard);
 
     // Mark the card as having attacked
+    deactivateCard(attackingCard);
+  }
+
+  private static void reduceCardHealth(Card card, int attack) {
+    card.takeDamage(attack);
+  }
+
+  private static void deactivateCard(Card attackingCard) {
     attackingCard.attack();
   }
 
