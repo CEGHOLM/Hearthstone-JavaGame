@@ -57,7 +57,7 @@ public class TestBetaStone {
         TestHelper.advanceGameNRounds(game, 1);
         game.getHero(Player.PEDDERSEN).setHealth(0);
         Player winner = game.getWinner();
-        // Then the winner should be Peddersen
+        // Then the winner should be Findus
         assertThat(winner, is(Player.FINDUS));
     }
 
