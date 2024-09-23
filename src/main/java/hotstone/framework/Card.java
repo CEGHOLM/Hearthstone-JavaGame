@@ -80,7 +80,8 @@ public interface Card {
    */
   String getEffectDescription();
 
-    void setHealth(int i);
-
   boolean canAttack();
+
+    int takeDamage(int i);
+
 }

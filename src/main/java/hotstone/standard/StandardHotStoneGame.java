@@ -228,31 +228,24 @@ public class StandardHotStoneGame implements Game {
     if(!attackingCard.canAttack()) {
       return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
     }
-
-    List<Card> attackingPlayersField = fields.get(playerAttacking);
-    List<Card> defendingPlayersField = fields.get(Player.computeOpponent(playerAttacking));
-    if (attackingPlayersField.contains(defendingCard)) {
+    // Check that you're not attacking your own minion
+    if (playerAttacking.equals(defendingCard.getOwner())) {
       return  Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
     }
 
-    // Get current health and attack values
-    int dCHealth = defendingCard.getHealth();
-    int dCAttack = defendingCard.getAttack();
-    int aCHealth = attackingCard.getHealth();
-    int aCAttack = attackingCard.getAttack();
-
     // Apply damage
-    defendingCard.setHealth(dCHealth-aCAttack);
-    attackingCard.setHealth(aCHealth-dCAttack);
+    defendingCard.takeDamage(attackingCard.getAttack());
+    attackingCard.takeDamage(defendingCard.getAttack());
 
     // Check if defending card's health is 0 or less, and remove it from the field if so
-    if (defendingCard.getHealth() == 0) {
-      defendingPlayersField.remove(defendingCard);
+    Player defendingPlayer = Player.computeOpponent(playerAttacking);
+    if (defendingCard.getHealth() <= 0) {
+      fields.get(defendingPlayer).remove(defendingCard);
     }
 
     // Check if attacking card's health is 0 or less, and remove it from the field if so
-    if (attackingCard.getHealth() == 0) {
-      attackingPlayersField.remove(attackingCard);
+    if (attackingCard.getHealth() <= 0) {
+      fields.get(playerAttacking).remove(attackingCard);
     }
 
     ((StandardCard) attackingCard).attack(); // Mark the card as having attacked

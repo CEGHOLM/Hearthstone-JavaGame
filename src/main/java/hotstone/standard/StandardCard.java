@@ -9,7 +9,7 @@ public class StandardCard implements Card {
     private int attack;
     private int health;
     private Player owner;
-    private int turnsOnField = 0; // Flag to track if the card has attacked in the current turn
+    private int turnsOnField; // Flag to track if the card has attacked in the current turn
     private boolean hasAttacked;
 
     public StandardCard(String name, int manaCost, int attack, int health, Player owner) {
@@ -40,14 +40,6 @@ public class StandardCard implements Card {
     public int getHealth() {
         return health;
     }
-    @Override
-    public void setHealth(int newHealth) {
-        if(newHealth < 0) {
-            health = 0;
-        } else {
-            health = newHealth;
-        }
-    }
 
     @Override
     public boolean isActive() {
@@ -61,6 +53,11 @@ public class StandardCard implements Card {
 
     public boolean canAttack() {
         return !hasAttacked && isActive(); // Can attack if it hasn't attacked yet this turn and is active
+    }
+
+    @Override
+    public int takeDamage(int damage) {
+        return health -= damage;
     }
 
     public void attack() {

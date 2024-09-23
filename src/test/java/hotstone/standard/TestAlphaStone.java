@@ -562,7 +562,7 @@ public class TestAlphaStone {
       game.attackCard(Player.FINDUS, attackingCard, defendingCard);
 
       // Then attacking card should lose all health and defending card should lose 1 health
-      assertThat(attackingCard.getHealth(), is(0));
+      assertThat(attackingCard.getHealth(), is(-2));
       assertThat(defendingCard.getHealth(), is(2));
     }
 
