@@ -60,6 +60,7 @@ public class StandardCard implements Card {
         return health -= damage;
     }
 
+    @Override
     public void attack() {
         hasAttacked = true; // Mark the card as having attacked
     }

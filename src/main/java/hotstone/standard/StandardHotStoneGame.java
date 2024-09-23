@@ -221,24 +221,29 @@ public class StandardHotStoneGame implements Game {
     Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
     if (status != Status.OK) return status;
 
+    // Execute attack
+    executeAttack(attackingCard, defendingCard);
+
+    return Status.OK;
+  }
+
+  private void executeAttack(Card attackingCard, Card defendingCard) {
     // Apply damage
     defendingCard.takeDamage(attackingCard.getAttack());
     attackingCard.takeDamage(defendingCard.getAttack());
 
-    // Check if defending card's health is 0 or less, and remove it from the field if so
-    Player defendingPlayer = Player.computeOpponent(playerAttacking);
-    if (defendingCard.getHealth() <= 0) {
-      fields.get(defendingPlayer).remove(defendingCard);
+    // Remove defeated cards
+    removeIfDefeated(defendingCard);
+    removeIfDefeated(attackingCard);
+
+    // Mark the card as having attacked
+    attackingCard.attack();
+  }
+
+  private void removeIfDefeated(Card card) {
+    if (card.getHealth() <= 0) {
+      fields.get(card.getOwner()).remove(card);
     }
-
-    // Check if attacking card's health is 0 or less, and remove it from the field if so
-    if (attackingCard.getHealth() <= 0) {
-      fields.get(playerAttacking).remove(attackingCard);
-    }
-
-    ((StandardCard) attackingCard).attack(); // Mark the card as having attacked
-
-    return Status.OK;
   }
 
   private Status isAttackPossible(Player playerAttacking, Card attackingCard, Card defendingCard) {

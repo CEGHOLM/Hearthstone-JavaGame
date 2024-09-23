@@ -84,4 +84,6 @@ public interface Card {
 
     int takeDamage(int i);
 
+    void attack();
+
 }
