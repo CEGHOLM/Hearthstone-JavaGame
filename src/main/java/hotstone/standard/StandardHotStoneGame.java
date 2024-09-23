@@ -217,26 +217,9 @@ public class StandardHotStoneGame implements Game {
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
 
-    // Check it's the players turn
-    boolean isAttackingPlayersTurn = getPlayerInTurn() == playerAttacking;
-    if (!isAttackingPlayersTurn) {
-      return Status.NOT_PLAYER_IN_TURN;
-    }
-    // Check the owner of the attacking card
-    boolean isOwningAttackingCard = attackingCard.getOwner() == playerAttacking;
-    if (!isOwningAttackingCard) {
-      return Status.NOT_OWNER;
-    }
-    // Check the card is active
-    boolean cardCanAttack = attackingCard.canAttack();
-    if(!cardCanAttack) {
-      return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
-    }
-    // Check that you're not attacking your own minion
-    boolean isAttackingOwnMinion = defendingCard.getOwner() == playerAttacking;
-    if (isAttackingOwnMinion) {
-      return  Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
-    }
+    // Check if the attack is allowed
+    Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
+    if (status != Status.OK) return status;
 
     // Apply damage
     defendingCard.takeDamage(attackingCard.getAttack());
@@ -255,6 +238,30 @@ public class StandardHotStoneGame implements Game {
 
     ((StandardCard) attackingCard).attack(); // Mark the card as having attacked
 
+    return Status.OK;
+  }
+
+  private Status isAttackPossible(Player playerAttacking, Card attackingCard, Card defendingCard) {
+    // Check it's the players turn
+    boolean isAttackingPlayersTurn = getPlayerInTurn() == playerAttacking;
+    if (!isAttackingPlayersTurn) {
+      return Status.NOT_PLAYER_IN_TURN;
+    }
+    // Check the owner of the attacking card
+    boolean isOwningAttackingCard = attackingCard.getOwner() == playerAttacking;
+    if (!isOwningAttackingCard) {
+      return Status.NOT_OWNER;
+    }
+    // Check the card is active
+    boolean cardCanAttack = attackingCard.canAttack();
+    if(!cardCanAttack) {
+      return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
+    }
+    // Check that you're not attacking your own minion
+    boolean isAttackingOwnMinion = defendingCard.getOwner() == playerAttacking;
+    if (isAttackingOwnMinion) {
+      return Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
+    }
     return Status.OK;
   }
 
