@@ -279,26 +279,44 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
-    // Check attacking player is player in turn
+    // Check if the attack is allowed
+    Status status = isHeroAttackPossible(playerAttacking, attackingCard);
+    if (status != Status.OK) {
+      return status;
+    }
+
+    // Apply damage to the opponent's hero
+    dealDamageToHero(attackingCard, playerAttacking);
+
+    // Mark the card as having attacked
+    deactivateCard(attackingCard);
+
+    return Status.OK;
+  }
+
+  //Check if the attack can be made
+  private Status isHeroAttackPossible(Player playerAttacking, Card attackingCard) {
     if (!playerAttacking.equals(getPlayerInTurn())) {
       return Status.NOT_PLAYER_IN_TURN;
     }
-    // Check that attacking player is owner of attacking card
     if (!playerAttacking.equals(attackingCard.getOwner())) {
       return Status.NOT_OWNER;
     }
-    // Check the card is active
-    if(!attackingCard.canAttack()) {
+    if (!attackingCard.canAttack()) {
       return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
     }
-
-    Hero attackedHero = getHero(Player.computeOpponent(playerAttacking));
-    int attack = attackingCard.getAttack();
-    attackedHero.takeDamage(attack);
-
-    ((StandardCard) attackingCard).attack(); // Mark the card as having attacked
-
     return Status.OK;
+  }
+
+  //Deal damage to the opponent's hero
+  private void dealDamageToHero(Card attackingCard, Player playerAttacking) {
+    Hero attackedHero = getHero(Player.computeOpponent(playerAttacking));
+    reduceHeroHealth(attackedHero, attackingCard.getAttack());
+  }
+
+  //Reduce the health of the hero
+  private void reduceHeroHealth(Hero hero, int attack) {
+    hero.takeDamage(attack);
   }
 
   @Override
