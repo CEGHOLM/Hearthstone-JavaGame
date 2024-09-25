@@ -223,6 +223,7 @@ public class StandardHotStoneGame implements Game {
     // Execute attack
     executeAttack(attackingCard, defendingCard);
 
+    // Return status OK if attack i ok
     return Status.OK;
   }
 
