@@ -216,72 +216,108 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+    // Check if the attack is allowed
+    Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
+    if (status != Status.OK) return status;
+
+    // Execute attack
+    executeAttack(attackingCard, defendingCard);
+
+    // Return status OK if attack i ok
+    return Status.OK;
+  }
+
+  private void executeAttack(Card attackingCard, Card defendingCard) {
+    // Apply damage
+    reduceCardHealth(defendingCard, attackingCard.getAttack());
+    reduceCardHealth(attackingCard, defendingCard.getAttack());
+
+    // Remove defeated cards
+    removeIfDefeated(defendingCard);
+    removeIfDefeated(attackingCard);
+
+    // Mark the card as having attacked
+    deactivateCard(attackingCard);
+  }
+
+  private static void reduceCardHealth(Card card, int attack) {
+    card.takeDamage(attack);
+  }
+
+  private static void deactivateCard(Card attackingCard) {
+    attackingCard.attack();
+  }
+
+  private void removeIfDefeated(Card card) {
+    if (card.getHealth() <= 0) {
+      fields.get(card.getOwner()).remove(card);
+    }
+  }
+
+  private Status isAttackPossible(Player playerAttacking, Card attackingCard, Card defendingCard) {
     // Check it's the players turn
-    if (!playerAttacking.equals(getPlayerInTurn())) {
+    boolean isAttackingPlayersTurn = getPlayerInTurn() == playerAttacking;
+    if (!isAttackingPlayersTurn) {
       return Status.NOT_PLAYER_IN_TURN;
     }
     // Check the owner of the attacking card
-    if (!playerAttacking.equals(attackingCard.getOwner())) {
+    boolean isOwningAttackingCard = attackingCard.getOwner() == playerAttacking;
+    if (!isOwningAttackingCard) {
       return Status.NOT_OWNER;
     }
     // Check the card is active
-    if(!attackingCard.canAttack()) {
+    boolean cardCanAttack = attackingCard.canAttack();
+    if(!cardCanAttack) {
       return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
     }
-
-    List<Card> attackingPlayersField = fields.get(playerAttacking);
-    List<Card> defendingPlayersField = fields.get(Player.computeOpponent(playerAttacking));
-    if (attackingPlayersField.contains(defendingCard)) {
-      return  Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
+    // Check that you're not attacking your own minion
+    boolean isAttackingOwnMinion = defendingCard.getOwner() == playerAttacking;
+    if (isAttackingOwnMinion) {
+      return Status.ATTACK_NOT_ALLOWED_ON_OWN_MINION;
     }
-
-    // Get current health and attack values
-    int dCHealth = defendingCard.getHealth();
-    int dCAttack = defendingCard.getAttack();
-    int aCHealth = attackingCard.getHealth();
-    int aCAttack = attackingCard.getAttack();
-
-    // Apply damage
-    defendingCard.setHealth(dCHealth-aCAttack);
-    attackingCard.setHealth(aCHealth-dCAttack);
-
-    // Check if defending card's health is 0 or less, and remove it from the field if so
-    if (defendingCard.getHealth() == 0) {
-      defendingPlayersField.remove(defendingCard);
-    }
-
-    // Check if attacking card's health is 0 or less, and remove it from the field if so
-    if (attackingCard.getHealth() == 0) {
-      attackingPlayersField.remove(attackingCard);
-    }
-
-    ((StandardCard) attackingCard).attack(); // Mark the card as having attacked
-
     return Status.OK;
   }
 
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
-    // Check attacking player is player in turn
+    // Check if the attack is allowed
+    Status status = isHeroAttackPossible(playerAttacking, attackingCard);
+    if (status != Status.OK) {
+      return status;
+    }
+
+    // Apply damage to the opponent's hero
+    dealDamageToHero(attackingCard, playerAttacking);
+
+    // Mark the card as having attacked
+    deactivateCard(attackingCard);
+
+    return Status.OK;
+  }
+
+  //Check if the attack can be made
+  private Status isHeroAttackPossible(Player playerAttacking, Card attackingCard) {
     if (!playerAttacking.equals(getPlayerInTurn())) {
       return Status.NOT_PLAYER_IN_TURN;
     }
-    // Check that attacking player is owner of attacking card
     if (!playerAttacking.equals(attackingCard.getOwner())) {
       return Status.NOT_OWNER;
     }
-    // Check the card is active
-    if(!attackingCard.canAttack()) {
+    if (!attackingCard.canAttack()) {
       return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
     }
-
-    Hero attackedHero = getHero(Player.computeOpponent(playerAttacking));
-    int attack = attackingCard.getAttack();
-    attackedHero.takeDamage(attack);
-
-    ((StandardCard) attackingCard).attack(); // Mark the card as having attacked
-
     return Status.OK;
+  }
+
+  //Deal damage to the opponent's hero
+  private void dealDamageToHero(Card attackingCard, Player playerAttacking) {
+    Hero attackedHero = getHero(Player.computeOpponent(playerAttacking));
+    reduceHeroHealth(attackedHero, attackingCard.getAttack());
+  }
+
+  //Reduce the health of the hero
+  private void reduceHeroHealth(Hero hero, int attack) {
+    hero.takeDamage(attack);
   }
 
   @Override

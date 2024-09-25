@@ -57,8 +57,19 @@ public class TestBetaStone {
         TestHelper.advanceGameNRounds(game, 1);
         game.getHero(Player.PEDDERSEN).setHealth(0);
         Player winner = game.getWinner();
-        // Then the winner should be Peddersen
+        // Then the winner should be Findus
         assertThat(winner, is(Player.FINDUS));
+    }
+
+    @Test
+    public void shouldHaveNoWinnerAfterFourRounds() {
+        // Given a game
+        // When both players have positive health and i ask for the winner after 4 rounds
+        TestHelper.advanceGameNRounds(game, 4);
+        Player winner = game.getWinner();
+        // Then winner should be null
+        assertThat(winner, is(not(Player.FINDUS)));
+        assertThat(winner, is(not(Player.PEDDERSEN)));
     }
 
     @Test
