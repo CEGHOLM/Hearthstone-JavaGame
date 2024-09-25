@@ -278,6 +278,10 @@ public class StandardHotStoneGame implements Game {
     return Status.OK;
   }
 
+
+
+
+  //Det her er en test commit
   @Override
   public Status attackHero(Player playerAttacking, Card attackingCard) {
     // Check attacking player is player in turn
