@@ -62,6 +62,17 @@ public class TestBetaStone {
     }
 
     @Test
+    public void shouldHaveNoWinnerAfterFourRounds() {
+        // Given a game
+        // When both players have positive health and i ask for the winner after 4 rounds
+        TestHelper.advanceGameNRounds(game, 4);
+        Player winner = game.getWinner();
+        // Then winner should be null
+        assertThat(winner, is(not(Player.FINDUS)));
+        assertThat(winner, is(not(Player.PEDDERSEN)));
+    }
+
+    @Test
     public void shouldCapManaAtSeven() {
         // Given a game
         // When I ask for Findus mana in round 10

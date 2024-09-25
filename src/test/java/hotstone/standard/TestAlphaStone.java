@@ -94,6 +94,16 @@ public class TestAlphaStone {
   }
 
   @Test
+  public void shuouldHaveFindusAsWinnerAfterFourRounds() {
+      // Given a game
+      // When I ask for the winner after 4 rounds, then it should be Findus
+      TestHelper.advanceGameNRounds(game, 4);
+      Player gameWinner = game.getWinner();
+      // Then it should be Findus
+      assertThat(gameWinner, is(Player.FINDUS));
+  }
+
+  @Test
   public void findusShouldHaveDeckSizeAsFourInFirstRound() {
     // Given a Game
     // When I ask for the deck size of Findus in round 1
