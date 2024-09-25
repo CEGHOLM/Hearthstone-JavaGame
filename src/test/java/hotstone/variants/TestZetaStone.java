@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 
 public class TestZetaStone {
 
@@ -26,6 +27,17 @@ public class TestZetaStone {
     public void setUp() {
         game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new ZetaStoneWinnerStrategy(),
                 new AlphaStoneHeroStrategy(new AlphaStoneManaStrategy()), new AlphaStoneDeckBuilderStrategy());
+    }
+
+    @Test
+    public void shouldHaveNoWinnerInAlphaMode() {
+        // Given a game
+        // When I ask for the winner in round 2
+        TestHelper.advanceGameNRounds(game, 1);
+        Player winner = game.getWinner();
+        // Then neither player should be the winner
+        assertThat(winner, is(not(Player.FINDUS)));
+        assertThat(winner, is(not(Player.PEDDERSEN)));
     }
 
     @Test
