@@ -1,11 +1,10 @@
-package hotstone.variants;
+package hotstone.variants.gammastone;
 
 import hotstone.framework.*;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
 import hotstone.variants.alphastone.AlphaStoneManaStrategy;
-import hotstone.variants.gammastone.*;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;

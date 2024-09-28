@@ -69,21 +69,19 @@ public class StandardHotStoneGame implements Game {
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
     heroes.put(Player.PEDDERSEN, heroStrategy.getHero(Player.PEDDERSEN));
 
-    // Initialize hands
-    hands.put(Player.FINDUS, new ArrayList<>(List.of(
-            new StandardCard("Tres", 3, 3, 3, Player.FINDUS),
-            new StandardCard("Dos", 2, 2, 2, Player.FINDUS),
-            new StandardCard("Uno", 1, 1, 1, Player.FINDUS)
-    )));
-    hands.put(Player.PEDDERSEN, new ArrayList<>(List.of(
-            new StandardCard("Tres", 3, 3, 3, Player.PEDDERSEN),
-            new StandardCard("Dos", 2, 2, 2, Player.PEDDERSEN),
-            new StandardCard("Uno", 1, 1, 1, Player.PEDDERSEN)
-    )));
-
     // Initialize decks
     decks.put(Player.FINDUS, deckBuilderStrategy.buildDeck(Player.FINDUS));
     decks.put(Player.PEDDERSEN, deckBuilderStrategy.buildDeck(Player.PEDDERSEN));
+
+    // Initialize hands
+    for (Player player : Player.values()) {
+      List<Card> deck = decks.get(player);
+      List<Card> hand = new ArrayList<>();
+      for (int i = 0; i < 3 && !deck.isEmpty(); i++) {
+        hand.add(deck.remove(0)); // Remove the first card from the deck and add it to the hand
+      }
+      hands.put(player, hand);
+    }
 
     // Initialize fields
     fields.put(Player.FINDUS, new ArrayList<>());
@@ -93,6 +91,7 @@ public class StandardHotStoneGame implements Game {
     playerTurnCounts.put(Player.FINDUS, 1);
     playerTurnCounts.put(Player.PEDDERSEN, 1);
   }
+
   @Override
   public Player getPlayerInTurn() {
     return turnNumber%2 == 0 ? Player.FINDUS : Player.PEDDERSEN;
