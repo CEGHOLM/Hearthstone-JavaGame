@@ -7,9 +7,4 @@ public class BetaStoneManaStrategy implements ManaProductionStrategy {
     public int calculateMana(int turnNumber) {
         return Math.min(turnNumber, 7);
     }
-
-    @Override
-    public int getStartMana() {
-        return 1;
-    }
 }

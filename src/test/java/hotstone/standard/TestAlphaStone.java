@@ -49,7 +49,7 @@ public class TestAlphaStone {
   @BeforeEach
   public void setUp() {
     game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new AlphaStoneWinnerStrategy(),
-            new AlphaStoneHeroStrategy(new AlphaStoneManaStrategy()), new AlphaStoneDeckBuilderStrategy());
+            new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
   }
 
   // Example of an early, simple test case:

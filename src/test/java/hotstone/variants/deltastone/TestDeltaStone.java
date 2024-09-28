@@ -15,7 +15,7 @@ public class TestDeltaStone {
     @BeforeEach
     public void setUp() {
         game = new StandardHotStoneGame(new DeltaStoneManaStrategy(), new AlphaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(new DeltaStoneManaStrategy()), new DeltaStoneDeckBuilderStrategy());
+                new AlphaStoneHeroStrategy(), new DeltaStoneDeckBuilderStrategy());
     }
 
     @Test
@@ -34,6 +34,7 @@ public class TestDeltaStone {
         Card card = game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, card, 0);
 
+        game.endTurn();
         int mana = game.getHero(Player.PEDDERSEN).getMana();
         // The Peddersens mana should still be 5
         assertThat(mana, is(5));

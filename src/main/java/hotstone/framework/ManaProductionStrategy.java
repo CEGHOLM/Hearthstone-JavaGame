@@ -10,11 +10,5 @@ public interface ManaProductionStrategy {
      * @return The amount of mana given to the player.
      */
     int calculateMana(int turnNumber);
-
-    /**
-     * Decides the amount of mana a hero starts with
-     * @return Start mana.
-     */
-    int getStartMana();
 }
 

@@ -23,7 +23,7 @@ public class TestZetaStone {
     @BeforeEach
     public void setUp() {
         game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new ZetaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(new AlphaStoneManaStrategy()), new AlphaStoneDeckBuilderStrategy());
+                new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
     }
 
     @Test
