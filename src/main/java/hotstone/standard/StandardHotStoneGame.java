@@ -58,13 +58,12 @@ public class StandardHotStoneGame implements Game {
   private Map<Player, List<Card>> fields = new HashMap<>();
   private Map<Player, Integer> playerTurnCounts = new HashMap<>();
 
-  public StandardHotStoneGame(ManaProductionStrategy manaProductionStrategy, WinningStrategy winningStrategy,
-                              HeroStrategy heroStrategy, DeckBuilderStrategy deckBuilderStrategy) {
+  public StandardHotStoneGame(HotstoneFactory factory) {
     // Initialize strategies
-    this.manaProductionStrategy = manaProductionStrategy;
-    this.winningStrategy = winningStrategy;
-    this.heroStrategy = heroStrategy;
-    this.deckBuilderStrategy = deckBuilderStrategy;
+    this.manaProductionStrategy = factory.createManaProductionStrategy();
+    this.winningStrategy = factory.createWinningStrategy();
+    this.heroStrategy = factory.createHeroStrategy();
+    this.deckBuilderStrategy = factory.createDeckBuilderStrategy();
 
     // Initialize heroes
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
