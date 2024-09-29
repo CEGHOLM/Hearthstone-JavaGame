@@ -9,10 +9,10 @@ public class GammaStoneHeroStrategy implements HeroStrategy {
     @Override
     public Hero getHero(Player player) {
         if (player.equals(Player.FINDUS)) {
-            return new StandardHero(3, 21, "ThaiChef", player, chiliPower) {
+            return new StandardHero(3, 21, "Bunyasaranand", player, chiliPower) {
             };
         } else {
-            return new StandardHero(3, 21, "DanishChef", player, sovsPower) {
+            return new StandardHero(3, 21, "Meyer", player, sovsPower) {
             };
         }
 
