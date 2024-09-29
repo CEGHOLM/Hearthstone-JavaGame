@@ -1,4 +1,4 @@
-package hotstone.variants;
+package hotstone.variants.zetastone;
 
 import hotstone.framework.Card;
 import hotstone.framework.Game;
@@ -8,9 +8,6 @@ import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
 import hotstone.variants.alphastone.AlphaStoneHeroStrategy;
 import hotstone.variants.alphastone.AlphaStoneManaStrategy;
-import hotstone.variants.gammastone.GammaStoneHeroStrategy;
-import hotstone.variants.gammastone.GammaStoneWinnerStrategy;
-import hotstone.variants.zetastone.ZetaStoneWinnerStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +23,7 @@ public class TestZetaStone {
     @BeforeEach
     public void setUp() {
         game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new ZetaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(new AlphaStoneManaStrategy()), new AlphaStoneDeckBuilderStrategy());
+                new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
     }
 
     @Test

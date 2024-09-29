@@ -1,11 +1,10 @@
-package hotstone.variants;
+package hotstone.variants.betastone;
 
 import hotstone.framework.*;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
 import hotstone.variants.alphastone.AlphaStoneHeroStrategy;
-import hotstone.variants.betastone.*;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -17,7 +16,7 @@ public class TestBetaStone {
     @BeforeEach
     public void setUp() {
         game = new StandardHotStoneGame(new BetaStoneManaStrategy(), new BetaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(new BetaStoneManaStrategy()), new AlphaStoneDeckBuilderStrategy());
+                new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
     }
 
     @Test

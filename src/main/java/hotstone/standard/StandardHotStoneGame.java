@@ -65,34 +65,49 @@ public class StandardHotStoneGame implements Game {
     this.winningStrategy = winningStrategy;
     this.heroStrategy = heroStrategy;
     this.deckBuilderStrategy = deckBuilderStrategy;
+
     // Initialize heroes
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
     heroes.put(Player.PEDDERSEN, heroStrategy.getHero(Player.PEDDERSEN));
 
-    // Initialize hands
-    hands.put(Player.FINDUS, new ArrayList<>(List.of(
-            new StandardCard("Tres", 3, 3, 3, Player.FINDUS),
-            new StandardCard("Dos", 2, 2, 2, Player.FINDUS),
-            new StandardCard("Uno", 1, 1, 1, Player.FINDUS)
-    )));
-    hands.put(Player.PEDDERSEN, new ArrayList<>(List.of(
-            new StandardCard("Tres", 3, 3, 3, Player.PEDDERSEN),
-            new StandardCard("Dos", 2, 2, 2, Player.PEDDERSEN),
-            new StandardCard("Uno", 1, 1, 1, Player.PEDDERSEN)
-    )));
+    // Initialize player turn counts
+    playerTurnCounts.put(Player.FINDUS, 0);
+    playerTurnCounts.put(Player.PEDDERSEN, 0);
+
+    // Set initial mana for the starting player
+    Player startingPlayer = getPlayerInTurn(); // Assuming this method returns the starting player
+    incrementPlayerTurnCount(startingPlayer);
+    assignManaToPlayer(startingPlayer);
 
     // Initialize decks
     decks.put(Player.FINDUS, deckBuilderStrategy.buildDeck(Player.FINDUS));
     decks.put(Player.PEDDERSEN, deckBuilderStrategy.buildDeck(Player.PEDDERSEN));
 
+    // Initialize hands
+    for (Player player : Player.values()) {
+      List<Card> deck = decks.get(player);
+      List<Card> hand = new ArrayList<>();
+      for (int i = 0; i < 3 && !deck.isEmpty(); i++) {
+        hand.add(deck.remove(0)); // Remove the first card from the deck and add it to the hand
+      }
+      hands.put(player, hand);
+    }
+
     // Initialize fields
     fields.put(Player.FINDUS, new ArrayList<>());
     fields.put(Player.PEDDERSEN, new ArrayList<>());
-
-    // Initialize player turn counts
-    playerTurnCounts.put(Player.FINDUS, 1);
-    playerTurnCounts.put(Player.PEDDERSEN, 1);
   }
+
+  private void assignManaToPlayer(Player player) {
+    int turnCount = playerTurnCounts.get(player);
+    int mana = manaProductionStrategy.calculateMana(turnCount);
+    getHero(player).setMana(mana);
+  }
+
+  private void incrementPlayerTurnCount(Player player) {
+    playerTurnCounts.put(player, playerTurnCounts.get(player) + 1);
+  }
+
   @Override
   public Player getPlayerInTurn() {
     return turnNumber%2 == 0 ? Player.FINDUS : Player.PEDDERSEN;
@@ -155,39 +170,44 @@ public class StandardHotStoneGame implements Game {
 
   @Override
   public void endTurn() {
-    // Increment turn number for the current player
     Player currentPlayer = getPlayerInTurn();
-    int currentPlayerTurnCount = playerTurnCounts.get(currentPlayer) + 1;
-    playerTurnCounts.put(currentPlayer, currentPlayerTurnCount);
 
-    // Calculate and set the correct amount of mana based on turnNumber
-    int mana = manaProductionStrategy.calculateMana(currentPlayerTurnCount);
-    getHero(currentPlayer).setMana(mana);
+    // End-of-turn processing for current player
+    handleEndOfTurnEffects(currentPlayer);
 
-    // Increment turnsOnField for each card on the current player's field
-    List<Card> currentPlayerField = fields.get(getPlayerInTurn());
-    for (Card card : currentPlayerField) {
+    // Switch to the next player
+    turnNumber++;
+
+    Player nextPlayer = getPlayerInTurn();
+
+    // Start-of-turn processing for next player
+    incrementPlayerTurnCount(nextPlayer);
+    assignManaToPlayer(nextPlayer);
+    drawCardForPlayer(nextPlayer);
+  }
+
+  private void handleEndOfTurnEffects(Player player) {
+    // Increment turns on field for each card
+    List<Card> playerField = fields.get(player);
+    for (Card card : playerField) {
       ((StandardCard) card).incrementTurnsOnField();
     }
 
-    // Set power status for the current player's hero
-    getHero(currentPlayer).setPowerStatus(true);
+    // Reset hero power status
+    getHero(player).setPowerStatus(true);
 
-    // Decrease hero health by 2 if deck is empty
-    if (decks.get(currentPlayer).isEmpty()) {
-      getHero(currentPlayer).takeDamage(2);
+    // Damage hero if deck is empty
+    if (decks.get(player).isEmpty()) {
+      getHero(player).takeDamage(2);
     }
+  }
 
-    // Increment the turn number to switch to the next player
-    turnNumber++;
-
-    // Draw a card for the next player if the turn number is 2 or greater
-    Player nextPlayer = getPlayerInTurn();
-    if (turnNumber >= 2) {
-      List<Card> nextPlayerDeck = decks.get(nextPlayer);
-      List<Card> nextPlayerHand = hands.get(nextPlayer);
-      if (!nextPlayerDeck.isEmpty()) {
-        nextPlayerHand.add(0, nextPlayerDeck.remove(0)); // Add top card to hand and remove from deck
+  private void drawCardForPlayer(Player player) {
+    if (turnNumber >= 2) { // Ensure players don't draw on the first turn
+      List<Card> deck = decks.get(player);
+      List<Card> hand = hands.get(player);
+      if (!deck.isEmpty()) {
+        hand.add(0, deck.remove(0));
       }
     }
   }

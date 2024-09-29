@@ -7,9 +7,4 @@ public class DeltaStoneManaStrategy implements ManaProductionStrategy {
     public int calculateMana(int turnNumber) {
         return 5;
     }
-
-    @Override
-    public int getStartMana() {
-        return 5;
-    }
 }
