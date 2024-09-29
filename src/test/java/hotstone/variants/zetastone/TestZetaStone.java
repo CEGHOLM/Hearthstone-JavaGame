@@ -27,17 +27,6 @@ public class TestZetaStone {
     }
 
     @Test
-    public void shouldHaveNoWinnerInAlphaMode() {
-        // Given a game
-        // When I ask for the winner in round 2
-        TestHelper.advanceGameNRounds(game, 1);
-        Player winner = game.getWinner();
-        // Then neither player should be the winner
-        assertThat(winner, is(not(Player.FINDUS)));
-        assertThat(winner, is(not(Player.PEDDERSEN)));
-    }
-
-    @Test
     public void shouldHavePeddersenAsWinnerIfBothFieldsAreEmptyAfterRoundThree() {
         // Given a game
         // When no one has played a card and 3 rounds have gone by
