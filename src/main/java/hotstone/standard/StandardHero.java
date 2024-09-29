@@ -5,6 +5,8 @@ import hotstone.framework.Hero;
 import hotstone.framework.HeroPowerStrategy;
 import hotstone.framework.Player;
 
+import java.util.Random;
+
 public abstract class StandardHero implements Hero {
     private int mana;
     private int health;
@@ -12,6 +14,7 @@ public abstract class StandardHero implements Hero {
     private boolean powerStatus = true;
     private Player owner;
     private HeroPowerStrategy heroPowerStrategy;
+    private Random randomGenerator; // Random generator for hero powers
 
     public StandardHero(int mana, int health, String heroType, Player owner, HeroPowerStrategy heroPowerStrategy) {
         this.mana = mana;
@@ -19,7 +22,19 @@ public abstract class StandardHero implements Hero {
         this.heroType = heroType;
         this.owner = owner;
         this.heroPowerStrategy = heroPowerStrategy;
+        this.randomGenerator = new Random(); // Default random generator
     }
+
+    // Getter for random generator
+    public Random getRandomGenerator() {
+        return randomGenerator;
+    }
+
+    // Setter for random generator (used for test stubbing)
+    public void setRandomGenerator(Random randomGenerator) {
+        this.randomGenerator = randomGenerator;
+    }
+
     @Override
     public int getMana() {
         return mana;
@@ -58,13 +73,17 @@ public abstract class StandardHero implements Hero {
         return heroPowerStrategy.getEffectDescription();
     }
 
-    public void setHealth(int newHealth) {health = newHealth; }
+    public void setHealth(int newHealth) {
+        health = newHealth;
+    }
 
-    public void takeDamage(int damage) {health -= damage;}
+    public void takeDamage(int damage) {
+        health -= damage;
+    }
 
     @Override
     public void usePower(Game game) {
         heroPowerStrategy.usePower(game, this);
     }
-
 }
+

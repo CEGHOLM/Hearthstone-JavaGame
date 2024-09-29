@@ -66,6 +66,11 @@ public class StandardCard implements Card {
     }
 
     @Override
+    public void increaseAttack(int i) {
+        attack += i;
+    }
+
+    @Override
     public Player getOwner() {
         return owner;
     }
