@@ -22,8 +22,7 @@ public class TestZetaStone {
     // Fixture for BetaStone testing
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new ZetaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
+        game = new StandardHotStoneGame(new ZetaStoneFactory());
     }
 
     @Test

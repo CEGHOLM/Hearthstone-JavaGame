@@ -14,8 +14,7 @@ public class TestDeltaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new DeltaStoneManaStrategy(), new AlphaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(), new DeltaStoneDeckBuilderStrategy());
+        game = new StandardHotStoneGame(new DeltaStoneFactory());
     }
 
     @Test

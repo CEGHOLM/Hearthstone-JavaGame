@@ -21,8 +21,7 @@ public class TestEpsilonStone {
     /** Fixture for AlphaStone testing. */
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new AlphaStoneWinnerStrategy(),
-                new EpsilonStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
+        game = new StandardHotStoneGame(new EpsilonStoneFactory());
     }
 
     @Test

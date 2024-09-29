@@ -16,8 +16,7 @@ public class TestGammaStone {
     // Fixture for BetaStone testing
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new GammaStoneWinnerStrategy(),
-                new GammaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
+        game = new StandardHotStoneGame(new GammaStoneFactory());
     }
 
     @Test
