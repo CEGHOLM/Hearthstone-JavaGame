@@ -29,4 +29,13 @@ public class TestEpsilonStone {
         // Then it should be "Bocuse"
         assertThat(heroType, is(GameConstants.FRENCH_CHEF_HERO_TYPE));
     }
+
+    @Test
+    public void shouldHavePeddersenHeroAsItalianChef() {
+        // Given a game
+        // When I ask for Peddersens Hero type
+        String heroType = game.getHero(Player.PEDDERSEN).getType();
+        // Then it should be "Bocuse"
+        assertThat(heroType, is(GameConstants.ITALIAN_CHEF_HERO_TYPE));
+    }
 }
