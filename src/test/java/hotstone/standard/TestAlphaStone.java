@@ -48,8 +48,7 @@ public class TestAlphaStone {
   /** Fixture for AlphaStone testing. */
   @BeforeEach
   public void setUp() {
-    game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new AlphaStoneWinnerStrategy(),
-            new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
+    game = new StandardHotStoneGame(new AlphaStoneFactory());
   }
 
   // Example of an early, simple test case:

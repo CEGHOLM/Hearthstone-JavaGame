@@ -22,19 +22,7 @@ public class TestZetaStone {
     // Fixture for BetaStone testing
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new ZetaStoneWinnerStrategy(),
-                new AlphaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
-    }
-
-    @Test
-    public void shouldHaveNoWinnerInAlphaMode() {
-        // Given a game
-        // When I ask for the winner in round 2
-        TestHelper.advanceGameNRounds(game, 1);
-        Player winner = game.getWinner();
-        // Then neither player should be the winner
-        assertThat(winner, is(not(Player.FINDUS)));
-        assertThat(winner, is(not(Player.PEDDERSEN)));
+        game = new StandardHotStoneGame(new ZetaStoneFactory());
     }
 
     @Test

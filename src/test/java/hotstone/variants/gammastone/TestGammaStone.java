@@ -1,6 +1,7 @@
 package hotstone.variants.gammastone;
 
 import hotstone.framework.*;
+import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
@@ -15,8 +16,7 @@ public class TestGammaStone {
     // Fixture for BetaStone testing
     @BeforeEach
     public void setUp() {
-        game = new StandardHotStoneGame(new AlphaStoneManaStrategy(), new GammaStoneWinnerStrategy(),
-                new GammaStoneHeroStrategy(), new AlphaStoneDeckBuilderStrategy());
+        game = new StandardHotStoneGame(new GammaStoneFactory());
     }
 
     @Test
@@ -61,7 +61,7 @@ public class TestGammaStone {
         // When I ask for Findus hero
         String heroType = game.getHero(Player.FINDUS).getType();
         // Then type should be ThaiChef
-        assertThat(heroType, is("ThaiChef"));
+        assertThat(heroType, is(GameConstants.THAI_CHEF_HERO_TYPE));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class TestGammaStone {
         // When I ask for Peddersens hero
         String heroType = game.getHero(Player.PEDDERSEN).getType();
         // Then type should be ThaiChef
-        assertThat(heroType, is("DanishChef"));
+        assertThat(heroType, is(GameConstants.DANISH_CHEF_HERO_TYPE));
     }
 
     @Test

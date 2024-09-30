@@ -86,4 +86,5 @@ public interface Card {
 
     void attack();
 
+    void increaseAttack(int i);
 }

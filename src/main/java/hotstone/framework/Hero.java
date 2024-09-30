@@ -17,6 +17,8 @@
 
 package hotstone.framework;
 
+import java.util.Random;
+
 /** The role of a Hero in HotStone. The present interface presents a
  * read-only view of the hero to respect that a client may only alter
  * the internal state of a hero through the Game's mutator methods.
@@ -71,4 +73,6 @@ public interface Hero {
     void takeDamage(int i);
 
     void usePower(Game game);
+
+  Random getRandomGenerator();
 }
