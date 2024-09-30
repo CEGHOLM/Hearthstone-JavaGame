@@ -4,7 +4,7 @@ import hotstone.framework.ManaProductionStrategy;
 
 public class BetaStoneManaStrategy implements ManaProductionStrategy {
     @Override
-    public int calculateMana(int turnNumber) {
-        return Math.min(turnNumber, 7);
+    public int calculateMana(int roundNumber) {
+        return Math.min(roundNumber, 7);
     }
 }
