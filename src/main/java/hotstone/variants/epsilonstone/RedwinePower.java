@@ -3,7 +3,6 @@ package hotstone.variants.epsilonstone;
 
 import hotstone.framework.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 

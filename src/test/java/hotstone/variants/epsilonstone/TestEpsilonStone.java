@@ -157,10 +157,10 @@ public class TestEpsilonStone {
         TestHelper.advanceGameNRounds(game, 1);
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 1);
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 2);
-        game.endTurn(); // Tilbage til Findus' tur
+        game.endTurn();
 
         // Set up a RandomStub to always pick the first minion
-        RandomStub randomStub = new RandomStub(0); // Tvinger det til at vælge første minion
+        RandomStub randomStub = new RandomStub(0);
         frenchChef.setRandomGenerator(randomStub);
 
         // Use RedwinePower and verify the first minion is damaged
@@ -186,7 +186,7 @@ public class TestEpsilonStone {
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 2);
 
         // Set up a RandomStub to pick the second minion
-        RandomStub randomStub = new RandomStub(1); // Vælg den anden minion
+        RandomStub randomStub = new RandomStub(1);
         italianChef.setRandomGenerator(randomStub);
 
         // Use PastaPower and verify the second minion's attack increases by 2
