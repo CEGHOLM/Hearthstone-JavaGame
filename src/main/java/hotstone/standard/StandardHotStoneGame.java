@@ -56,7 +56,6 @@ public class StandardHotStoneGame implements Game {
   private Map<Player, List<Card>> hands = new HashMap<>();
   private Map<Player, List<Card>> decks = new HashMap<>();
   private Map<Player, List<Card>> fields = new HashMap<>();
-  private int roundNumber;
 
   public StandardHotStoneGame(HotstoneFactory factory) {
     // Initialize strategies
@@ -67,7 +66,6 @@ public class StandardHotStoneGame implements Game {
 
     // Initialize round and turn number
     this.turnNumber = 0;
-    this.roundNumber = 1;
 
     // Initialize heroes
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
@@ -96,7 +94,7 @@ public class StandardHotStoneGame implements Game {
   }
 
   private void assignManaToPlayer(Player player) {
-    int mana = manaProductionStrategy.calculateMana(roundNumber);
+    int mana = manaProductionStrategy.calculateMana(turnNumber);
     getHero(player).setMana(mana);
   }
 
@@ -169,19 +167,12 @@ public class StandardHotStoneGame implements Game {
 
     // Switch to the next player
     turnNumber++;
-    incrementRoundNumber();
 
     Player nextPlayer = getPlayerInTurn();
 
     // Start-of-turn processing for next player
     assignManaToPlayer(nextPlayer);
     drawCardForPlayer(nextPlayer);
-  }
-
-  private void incrementRoundNumber() {
-    if (turnNumber % 2 == 0) {
-      roundNumber++;
-    }
   }
 
   private void handleEndOfTurnEffects(Player player) {

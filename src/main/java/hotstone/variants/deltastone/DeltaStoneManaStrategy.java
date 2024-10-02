@@ -4,7 +4,7 @@ import hotstone.framework.ManaProductionStrategy;
 
 public class DeltaStoneManaStrategy implements ManaProductionStrategy {
     @Override
-    public int calculateMana(int roundNumber) {
+    public int calculateMana(int turnNumber) {
         return 5;
     }
 }
