@@ -6,14 +6,14 @@ package hotstone.framework;
  */
 public interface HotstoneFactory {
     /** Create an instance of the mana production strategy*/
-    public ManaProductionStrategy createManaProductionStrategy();
+    ManaProductionStrategy createManaProductionStrategy();
 
     /** Create an instance of the winning strategy*/
-    public WinningStrategy createWinningStrategy();
+    WinningStrategy createWinningStrategy();
 
     /** Create an instance of the hero strategy*/
-    public HeroStrategy createHeroStrategy();
+    HeroStrategy createHeroStrategy();
 
     /** Create an instance of the deck builder strategy*/
-    public DeckBuilderStrategy createDeckBuilderStrategy();
+    DeckBuilderStrategy createDeckBuilderStrategy();
 }

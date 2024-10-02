@@ -56,7 +56,6 @@ public class StandardHotStoneGame implements Game {
   private Map<Player, List<Card>> hands = new HashMap<>();
   private Map<Player, List<Card>> decks = new HashMap<>();
   private Map<Player, List<Card>> fields = new HashMap<>();
-  private Map<Player, Integer> playerTurnCounts = new HashMap<>();
 
   public StandardHotStoneGame(HotstoneFactory factory) {
     // Initialize strategies
@@ -65,18 +64,15 @@ public class StandardHotStoneGame implements Game {
     this.heroStrategy = factory.createHeroStrategy();
     this.deckBuilderStrategy = factory.createDeckBuilderStrategy();
 
+    // Initialize round and turn number
+    this.turnNumber = 0;
+
     // Initialize heroes
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
     heroes.put(Player.PEDDERSEN, heroStrategy.getHero(Player.PEDDERSEN));
 
-    // Initialize player turn counts
-    playerTurnCounts.put(Player.FINDUS, 0);
-    playerTurnCounts.put(Player.PEDDERSEN, 0);
-
     // Set initial mana for the starting player
-    Player startingPlayer = getPlayerInTurn(); // Assuming this method returns the starting player
-    incrementPlayerTurnCount(startingPlayer);
-    assignManaToPlayer(startingPlayer);
+    assignManaToPlayer(getPlayerInTurn());
 
     // Initialize decks
     decks.put(Player.FINDUS, deckBuilderStrategy.buildDeck(Player.FINDUS));
@@ -98,13 +94,8 @@ public class StandardHotStoneGame implements Game {
   }
 
   private void assignManaToPlayer(Player player) {
-    int turnCount = playerTurnCounts.get(player);
-    int mana = manaProductionStrategy.calculateMana(turnCount);
+    int mana = manaProductionStrategy.calculateMana(turnNumber);
     getHero(player).setMana(mana);
-  }
-
-  private void incrementPlayerTurnCount(Player player) {
-    playerTurnCounts.put(player, playerTurnCounts.get(player) + 1);
   }
 
   @Override
@@ -180,7 +171,6 @@ public class StandardHotStoneGame implements Game {
     Player nextPlayer = getPlayerInTurn();
 
     // Start-of-turn processing for next player
-    incrementPlayerTurnCount(nextPlayer);
     assignManaToPlayer(nextPlayer);
     drawCardForPlayer(nextPlayer);
   }
