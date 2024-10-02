@@ -17,11 +17,7 @@ public class ZetaStoneWinnerStrategy implements WinningStrategy {
     public Player getWinner(Game game) {
         int turn = game.getTurnNumber();
 
-        // Switch states based on the current round
-        if (turn <= 5) {
-            // Up to round 3, use Alphastone winner strategy
-            currentState = new AlphaStoneWinnerStrategy();
-        } else if (turn > 5 && turn <= 11) {
+        if (turn > 5 && turn <= 11) {
             // After round 3 up to and including round 6, use Gammastone winner strategy
             currentState = new GammaStoneWinnerStrategy();
         } else {
