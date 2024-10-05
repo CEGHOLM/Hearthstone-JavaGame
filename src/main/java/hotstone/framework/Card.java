@@ -79,12 +79,4 @@ public interface Card {
    * effect.
    */
   String getEffectDescription();
-
-  boolean canAttack();
-
-    int takeDamage(int i);
-
-    void attack();
-
-    void increaseAttack(int i);
 }

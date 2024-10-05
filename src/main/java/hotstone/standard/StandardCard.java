@@ -3,7 +3,7 @@ package hotstone.standard;
 import hotstone.framework.Card;
 import hotstone.framework.Player;
 
-public class StandardCard implements Card {
+public class StandardCard implements Card, MutableCard {
     private String name;
     private int manaCost;
     private int attack;
@@ -43,31 +43,30 @@ public class StandardCard implements Card {
 
     @Override
     public boolean isActive() {
-        return turnsOnField >= 1; // Active if it's been on the field for at least 1 turn;
+        return true;
     }
 
     public void incrementTurnsOnField() {
-        turnsOnField++;
         hasAttacked = false;
     }
 
     public boolean canAttack() {
-        return !hasAttacked && isActive(); // Can attack if it hasn't attacked yet this turn and is active
+        return !this.hasAttacked && isActive(); // Can attack if it hasn't attacked yet this turn and is active
     }
 
     @Override
     public int takeDamage(int damage) {
-        return health -= damage;
+        return this.health -= damage;
     }
 
     @Override
     public void attack() {
-        hasAttacked = true; // Mark the card as having attacked
+        this.hasAttacked = true; // Mark the card as having attacked
     }
 
     @Override
     public void increaseAttack(int i) {
-        attack += i;
+        this.attack += i;
     }
 
     @Override
