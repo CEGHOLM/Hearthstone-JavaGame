@@ -1,6 +1,7 @@
 package hotstone.variants.epsilonstone;
 
 import hotstone.framework.*;
+import hotstone.standard.MutableGame;
 
 import java.util.List;
 import java.util.Random;
@@ -9,13 +10,14 @@ public class PastaPower implements HeroPowerStrategy {
 
     @Override
     public void usePower(Game game, Hero hero) {
-        List<Card> friendlyMinions = (List<Card>) game.getField(hero.getOwner());
+        List<? extends Card> friendlyMinions = (List<? extends Card>) game.getField(hero.getOwner());
         if (!friendlyMinions.isEmpty()) {
             // Use the hero's random generator to pick a friendly minion
             Random random = hero.getRandomGenerator();
             int targetIndex = random.nextInt(friendlyMinions.size());
-            Card target = friendlyMinions.get(targetIndex);
-            target.increaseAttack(2); // Increase attack by 2
+
+            // Cast to MutableCard
+            ((MutableGame) game).increaseCardAttack(hero.getOwner(), targetIndex, 2);
         }
     }
 

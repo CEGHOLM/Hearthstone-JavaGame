@@ -3,7 +3,6 @@ package hotstone.variants.deltastone;
 import hotstone.framework.*;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
-import hotstone.variants.alphastone.*;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;

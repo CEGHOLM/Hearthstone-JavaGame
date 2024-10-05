@@ -31,8 +31,8 @@ package hotstone.standard;
  */
 
 import hotstone.framework.*;
+import hotstone.variants.alphastone.AlphaStoneFactory;
 import hotstone.utility.TestHelper;
-import hotstone.variants.alphastone.*;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
