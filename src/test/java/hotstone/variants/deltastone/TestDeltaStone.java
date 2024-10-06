@@ -10,7 +10,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestDeltaStone {
-    private Game game;
+    private MutableGame game;
 
     @BeforeEach
     public void setUp() {
@@ -30,7 +30,7 @@ public class TestDeltaStone {
     public void shouldHaveFiveManaIfFindusHaveUsedSomeMana() {
         // Given a game
         // When I ask for Peddersens mana after Findus has played a card
-        Card card = game.getCardInHand(Player.FINDUS, 1);
+        MutableCard card = game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, card, 0);
 
         game.endTurn();

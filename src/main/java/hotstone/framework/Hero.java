@@ -64,15 +64,5 @@ public interface Hero {
    */
   String getEffectDescription();
 
-  void setMana(int i); // ADDED
-
-    void setPowerStatus(boolean b);
-
-    void setHealth(int i);
-
-    void takeDamage(int i);
-
-    void usePower(Game game);
-
   Random getRandomGenerator();
 }

@@ -11,7 +11,7 @@ public interface HeroPowerStrategy {
      * @param game The current game context.
      * @param hero The hero using the power.
      */
-    void usePower(Game game, Hero hero);
+    void usePower(MutableGame game, MutableHero hero);
 
     /**
      * Get a description of the hero's power effect.

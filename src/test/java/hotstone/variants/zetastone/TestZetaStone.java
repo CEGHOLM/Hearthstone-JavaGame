@@ -1,8 +1,6 @@
 package hotstone.variants.zetastone;
 
-import hotstone.framework.Card;
-import hotstone.framework.Game;
-import hotstone.framework.Player;
+import hotstone.framework.*;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
@@ -17,7 +15,7 @@ import static org.hamcrest.Matchers.not;
 
 public class TestZetaStone {
 
-    private Game game;
+    private MutableGame game;
 
     // Fixture for BetaStone testing
     @BeforeEach
@@ -40,7 +38,7 @@ public class TestZetaStone {
     public void shouldHaveFindusAsWinnerIfPeddersensFieldIsEmptyAfterThreeRounds() {
         // Given a game
         // When I ask for the winner after 3 rounds where only Findus has played a card
-        Card cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, cardToPlay, 0);
         TestHelper.advanceGameNRounds(game, 3);
         Player winner = game.getWinner();
@@ -53,7 +51,7 @@ public class TestZetaStone {
         // Given a game
         // When I ask for the winner after 3 rounds where only Peddersen has played a card
         game.endTurn();
-        Card cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, cardToPlay, 0);
         TestHelper.advanceGameNRounds(game, 3);
         Player winner = game.getWinner();
@@ -67,12 +65,12 @@ public class TestZetaStone {
         // when I ask for the winner when Findus health is 0 after round 6
 
         // Findus plays a card
-        Card findusCard = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard findusCard = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, findusCard, 0);
         game.endTurn();
 
         // Peddersen plays a card so neither fields are empty
-        Card peddersenCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard peddersenCard = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, peddersenCard, 0);
 
         // Advance the game so the Beta state can be tested
@@ -90,12 +88,12 @@ public class TestZetaStone {
         // when I ask for the winner when Peddersens health is 0
 
         // Findus plays a card
-        Card findusCard = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard findusCard = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, findusCard, 0);
         game.endTurn();
 
         // Peddersen plays a card so neither fields are empty
-        Card peddersenCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard peddersenCard = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, peddersenCard, 0);
 
         // Advance the game so the Beta state can be tested

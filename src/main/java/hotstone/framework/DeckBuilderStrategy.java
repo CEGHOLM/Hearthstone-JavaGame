@@ -13,6 +13,6 @@ public interface DeckBuilderStrategy {
      * @param player The player for whom the deck is being built.
      * @return A list of cards representing the player's deck.
      */
-    List<Card> buildDeck(Player player);
+    List<MutableCard> buildDeck(Player player);
 }
 

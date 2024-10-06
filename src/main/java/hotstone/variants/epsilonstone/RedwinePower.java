@@ -9,14 +9,14 @@ import java.util.Random;
 public class RedwinePower implements HeroPowerStrategy {
 
     @Override
-    public void usePower(Game game, Hero hero) {
+    public void usePower(MutableGame game, MutableHero hero) {
         Player opponent = Player.computeOpponent(hero.getOwner());
-        List<Card> opponentMinions = (List<Card>) game.getField(opponent);
+        List<? extends Card> opponentMinions = (List<? extends Card>) game.getField(opponent);
         if (!opponentMinions.isEmpty()) {
             // Use the hero's random generator to pick a minion
             Random random = hero.getRandomGenerator();
             int targetIndex = random.nextInt(opponentMinions.size());
-            Card target = opponentMinions.get(targetIndex);
+            MutableCard target = (MutableCard) opponentMinions.get(targetIndex);
             target.takeDamage(2); // Deal 2 damage
         }
     }

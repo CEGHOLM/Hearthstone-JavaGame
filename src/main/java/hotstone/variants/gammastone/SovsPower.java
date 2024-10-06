@@ -7,8 +7,8 @@ import java.util.List;
 
 public class SovsPower implements HeroPowerStrategy {
     @Override
-    public void usePower(Game game, Hero hero) {
-        // Summon "Sove" card on the owner's field
+    public void usePower(MutableGame game, MutableHero hero) {
+        // Summon "Sovs" card on the owner's field
         Player owner = hero.getOwner();
         List<Card> ownerField = (List<Card>) game.getField(owner);
         ownerField.add(new StandardCard("Sovs", 0,1,1, owner));

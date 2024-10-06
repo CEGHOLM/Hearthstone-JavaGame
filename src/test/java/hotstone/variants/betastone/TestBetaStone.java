@@ -10,7 +10,7 @@ import org.junit.jupiter.api.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 public class TestBetaStone {
-    private Game game;
+    private MutableGame game;
 
     // Fixture for BetaStone testing
     @BeforeEach

@@ -10,6 +10,6 @@ public interface HeroStrategy {
      * @param player The player for whom the hero is assigned.
      * @return The hero assigned to the given player.
      */
-    Hero getHero(Player player);
+    MutableHero getHero(Player player);
 }
 

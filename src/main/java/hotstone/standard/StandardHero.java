@@ -1,13 +1,10 @@
 package hotstone.standard;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.HeroPowerStrategy;
-import hotstone.framework.Player;
+import hotstone.framework.*;
 
 import java.util.Random;
 
-public abstract class StandardHero implements Hero {
+public abstract class StandardHero implements Hero, MutableHero {
     private int mana;
     private int health;
     private String heroType;
@@ -40,8 +37,9 @@ public abstract class StandardHero implements Hero {
         return mana;
     }
 
+    @Override
     public void setMana(int newValue) {
-        mana = newValue;
+        this.mana = newValue;
     }
 
     @Override
@@ -54,8 +52,9 @@ public abstract class StandardHero implements Hero {
         return powerStatus;
     }
 
+    @Override
     public void setPowerStatus(boolean newStatus) {
-        powerStatus = newStatus;
+        this.powerStatus = newStatus;
     }
 
     @Override
@@ -73,17 +72,19 @@ public abstract class StandardHero implements Hero {
         return heroPowerStrategy.getEffectDescription();
     }
 
+    @Override
     public void setHealth(int newHealth) {
-        health = newHealth;
-    }
-
-    public void takeDamage(int damage) {
-        health -= damage;
+        this.health = newHealth;
     }
 
     @Override
-    public void usePower(Game game) {
-        heroPowerStrategy.usePower(game, this);
+    public void takeDamage(int damage) {
+        this.health -= damage;
+    }
+
+    @Override
+    public void usePower(MutableGame game) {
+        this.heroPowerStrategy.usePower(game, this);
     }
 }
 

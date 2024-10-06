@@ -7,7 +7,7 @@ public class GammaStoneHeroStrategy implements HeroStrategy {
     private final HeroPowerStrategy chiliPower = new ChiliPower();
     private final HeroPowerStrategy sovsPower = new SovsPower();
     @Override
-    public Hero getHero(Player player) {
+    public MutableHero getHero(Player player) {
         if (player.equals(Player.FINDUS)) {
             return new StandardHero(3, 21, "Bunyasaranand", player, chiliPower) {
             };

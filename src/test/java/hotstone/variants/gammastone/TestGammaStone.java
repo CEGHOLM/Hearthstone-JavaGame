@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 public class TestGammaStone {
-    private Game game;
+    private MutableGame game;
 
     // Fixture for BetaStone testing
     @BeforeEach
@@ -34,7 +34,7 @@ public class TestGammaStone {
     public void shouldHaveFindusAsWinnerIfPeddersensFieldIsEmptyAfterThreeRounds() {
         // Given a game
         // When I ask for the winner after 3 rounds where only Findus has played a card
-        Card cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, cardToPlay, 0);
         TestHelper.advanceGameNRounds(game, 3);
         Player winner = game.getWinner();
@@ -47,7 +47,7 @@ public class TestGammaStone {
         // Given a game
         // When I ask for the winner after 3 rounds where only Peddersen has played a card
         game.endTurn();
-        Card cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, cardToPlay, 0);
         TestHelper.advanceGameNRounds(game, 3);
         Player winner = game.getWinner();

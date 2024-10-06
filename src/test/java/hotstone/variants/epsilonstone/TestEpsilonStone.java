@@ -16,7 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestEpsilonStone {
 
-    private Game game;
+    private MutableGame game;
 
     /** Fixture for AlphaStone testing. */
     @BeforeEach
@@ -56,7 +56,7 @@ public class TestEpsilonStone {
 
         // Peddersens turn and plays a card
         game.endTurn();
-        Card card = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card, 0);
 
         // Findus turn
@@ -85,7 +85,7 @@ public class TestEpsilonStone {
 
         // Peddersen's turn and plays 1 card (minions)
         game.endTurn();
-        Card card = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card, 0);
 
         // Set up a RandomStub to control randomness (we want the first minion to be selected)

@@ -2,6 +2,7 @@ package hotstone.variants.alphastone;
 
 import hotstone.framework.Card;
 import hotstone.framework.DeckBuilderStrategy;
+import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
 import hotstone.standard.StandardCard;
 
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class AlphaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     @Override
-    public List<Card> buildDeck(Player player) {
-        List<Card> deck = new ArrayList<>();
+    public List<MutableCard> buildDeck(Player player) {
+        List<MutableCard> deck = new ArrayList<>();
 
         deck.add(new StandardCard("Tres", 3, 3, 3, player));
         deck.add(new StandardCard("Dos", 2, 2, 2, player));

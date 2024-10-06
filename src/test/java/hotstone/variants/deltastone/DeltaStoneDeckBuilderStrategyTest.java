@@ -2,6 +2,7 @@ package hotstone.variants.deltastone;
 
 import hotstone.framework.Card;
 import hotstone.framework.DeckBuilderStrategy;
+import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // Given a deck
         // When I ask for the size of the deck
         DeckBuilderStrategy deckBuilder = new DeltaStoneDeckBuilderStrategy();
-        List<Card> deck = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck = deckBuilder.buildDeck(Player.FINDUS);
         // Then it should be 18
         assertThat(deck.size(), is(18));
     }
@@ -27,7 +28,7 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // Given a deck
         // When I ask for the mana cost of the first card
         DeckBuilderStrategy deckBuilder = new DeltaStoneDeckBuilderStrategy();
-        List<Card> deck = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck = deckBuilder.buildDeck(Player.FINDUS);
         Card firstCard = deck.get(0);
         // Then it should be 1
         assertThat(firstCard.getManaCost(), is(1));
@@ -38,7 +39,7 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // Given a deck
         // When I ask for the mana cost of the second card
         DeckBuilderStrategy deckBuilder = new DeltaStoneDeckBuilderStrategy();
-        List<Card> deck = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck = deckBuilder.buildDeck(Player.FINDUS);
         Card secondCard = deck.get(1);
         // Then it should be 2 or less
         assertThat(secondCard.getManaCost(), lessThanOrEqualTo(2));
@@ -49,7 +50,7 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // Given a deck
         // When I ask for the mana cost of the third card
         DeckBuilderStrategy deckBuilder = new DeltaStoneDeckBuilderStrategy();
-        List<Card> deck = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck = deckBuilder.buildDeck(Player.FINDUS);
         Card thirdCard = deck.get(2);
         // Then it should be 4 or less
         assertThat(thirdCard.getManaCost(), lessThanOrEqualTo(4));
@@ -60,7 +61,7 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // Given a deck
         // When I check if every card appears twice
         DeckBuilderStrategy deckBuilder = new DeltaStoneDeckBuilderStrategy();
-        List<Card> deck = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck = deckBuilder.buildDeck(Player.FINDUS);
 
         Map<String, Integer> cardCountMap = new HashMap<>();
         for (Card card : deck) {
@@ -80,8 +81,8 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // When I check that they have been shuffled differently
         DeckBuilderStrategy deckBuilder = new DeltaStoneDeckBuilderStrategy();
 
-        List<Card> deck1 = deckBuilder.buildDeck(Player.FINDUS);
-        List<Card> deck2 = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck1 = deckBuilder.buildDeck(Player.FINDUS);
+        List<MutableCard> deck2 = deckBuilder.buildDeck(Player.FINDUS);
 
         // Compare the decks beyond the first three cards
         String card1 = deck1.get(3).getName();

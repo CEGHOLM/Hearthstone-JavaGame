@@ -2,6 +2,7 @@ package hotstone.variants.deltastone;
 
 import hotstone.framework.Card;
 import hotstone.framework.DeckBuilderStrategy;
+import hotstone.framework.MutableCard;
 import hotstone.framework.Player;
 import hotstone.standard.StandardCard;
 
@@ -11,9 +12,9 @@ import java.util.List;
 
 public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     @Override
-    public List<Card> buildDeck(Player player) {
+    public List<MutableCard> buildDeck(Player player) {
         // Define the 9 cards
-        List<Card> cards = new ArrayList<>();
+        List<MutableCard> cards = new ArrayList<>();
         cards.add(new StandardCard("Brown Rice", 1, 1, 2, player));
         cards.add(new StandardCard("French Fries", 1, 2, 1, player));
         cards.add(new StandardCard("Green Salad", 2, 2, 3, player));
@@ -34,8 +35,8 @@ public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
         cards.add(new StandardCard("Baked Salmon", 5, 8, 2, player));
 
         // Add every card to the deck twice
-        List<Card> deck = new ArrayList<>();
-        for (Card card : cards) {
+        List<MutableCard> deck = new ArrayList<>();
+        for (MutableCard card : cards) {
             deck.add(new StandardCard(card.getName(), card.getManaCost(), card.getAttack(), card.getHealth(), card.getOwner()));
         }
 
@@ -46,7 +47,7 @@ public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     }
 
     // Make sure the first 3 cards follow the mana cost specifications
-    private List<Card> enforceManaConstraints(List<Card> deck) {
+    private List<MutableCard> enforceManaConstraints(List<MutableCard> deck) {
         // find and move a 1 mana card to index 0
         moveCardWithManaCost(deck, 1, 0);
 
@@ -60,7 +61,7 @@ public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     }
 
     // A function to help find and move the cards around based in mana cost
-    private void moveCardWithManaCost(List<Card> deck, int maxMana, int position) {
+    private void moveCardWithManaCost(List<MutableCard> deck, int maxMana, int position) {
         for (int i = position; i < deck.size(); i++) {
             if (deck.get(i).getManaCost() <= maxMana) {
                 Collections.swap(deck, i, position);

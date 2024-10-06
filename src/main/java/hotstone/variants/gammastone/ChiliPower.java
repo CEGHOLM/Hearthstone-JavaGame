@@ -1,16 +1,13 @@
 package hotstone.variants.gammastone;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.HeroPowerStrategy;
-import hotstone.framework.Player;
+import hotstone.framework.*;
 
 public class ChiliPower implements HeroPowerStrategy {
     @Override
-    public void usePower(Game game, Hero hero) {
+    public void usePower(MutableGame game, MutableHero hero) {
         // Find oppponent and deal 2 damage to their hero
         Player opponent = Player.computeOpponent(hero.getOwner());
-        Hero opponentHero = game.getHero(opponent);
+        MutableHero opponentHero = (MutableHero) game.getHero(opponent);
         opponentHero.takeDamage(2);
     }
 
