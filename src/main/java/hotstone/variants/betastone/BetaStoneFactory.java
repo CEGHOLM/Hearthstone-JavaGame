@@ -1,6 +1,10 @@
 package hotstone.variants.betastone;
 
 import hotstone.framework.*;
+import hotstone.framework.strategies.DeckBuilderStrategy;
+import hotstone.framework.strategies.HeroStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
 import hotstone.variants.alphastone.AlphaStoneHeroStrategy;
 

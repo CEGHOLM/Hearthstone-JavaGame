@@ -1,4 +1,6 @@
-package hotstone.framework;
+package hotstone.framework.mutability;
+
+import hotstone.framework.Card;
 
 /** This interface handles all mutable
  * aspects of the card role

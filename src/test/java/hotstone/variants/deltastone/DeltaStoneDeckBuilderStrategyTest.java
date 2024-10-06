@@ -1,8 +1,8 @@
 package hotstone.variants.deltastone;
 
 import hotstone.framework.Card;
-import hotstone.framework.DeckBuilderStrategy;
-import hotstone.framework.MutableCard;
+import hotstone.framework.strategies.DeckBuilderStrategy;
+import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
 import org.junit.jupiter.api.Test;
 

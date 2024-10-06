@@ -1,11 +1,10 @@
 package hotstone.variants.zetastone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
-import hotstone.variants.alphastone.AlphaStoneDeckBuilderStrategy;
-import hotstone.variants.alphastone.AlphaStoneHeroStrategy;
-import hotstone.variants.alphastone.AlphaStoneManaStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

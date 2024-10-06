@@ -1,5 +1,5 @@
 
-package hotstone.framework;
+package hotstone.framework.strategies;
 
 public interface ManaProductionStrategy {
     /**

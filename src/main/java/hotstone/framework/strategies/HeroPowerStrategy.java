@@ -1,4 +1,7 @@
-package hotstone.framework;
+package hotstone.framework.strategies;
+
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 
 /**
  * HeroPowerStrategy defines the behavior for using a hero's power in the game.

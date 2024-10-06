@@ -1,6 +1,9 @@
 package hotstone.variants.gammastone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.strategies.HeroPowerStrategy;
+import hotstone.framework.strategies.HeroStrategy;
 import hotstone.standard.StandardHero;
 
 public class GammaStoneHeroStrategy implements HeroStrategy {

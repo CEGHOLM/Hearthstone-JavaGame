@@ -1,4 +1,6 @@
-package hotstone.framework;
+package hotstone.framework.mutability;
+
+import hotstone.framework.Hero;
 
 /** This interface handles all the mutable areas,
  * connected to the heroes.

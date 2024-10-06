@@ -1,7 +1,7 @@
 package hotstone.standard;
 
 import hotstone.framework.Card;
-import hotstone.framework.MutableCard;
+import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
 
 public class StandardCard implements Card, MutableCard {

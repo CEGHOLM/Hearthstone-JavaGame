@@ -1,4 +1,7 @@
-package hotstone.framework;
+package hotstone.framework.strategies;
+
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.Player;
 
 /**
  * HeroStrategy defines a strategy for assigning a hero to a player.

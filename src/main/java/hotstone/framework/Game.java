@@ -17,6 +17,9 @@
 
 package hotstone.framework;
 
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableHero;
+
 import java.util.List;
 
 /** The role of a single HotStone game, allowing clients to access and

@@ -1,6 +1,9 @@
 package hotstone.variants.gammastone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.strategies.HeroPowerStrategy;
 
 public class ChiliPower implements HeroPowerStrategy {
     @Override

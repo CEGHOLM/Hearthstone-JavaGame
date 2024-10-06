@@ -1,6 +1,10 @@
 package hotstone.variants.epsilonstone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.strategies.HeroPowerStrategy;
 
 import java.util.List;
 import java.util.Random;

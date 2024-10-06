@@ -1,5 +1,10 @@
 package hotstone.framework;
 
+import hotstone.framework.strategies.DeckBuilderStrategy;
+import hotstone.framework.strategies.HeroStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
+import hotstone.framework.strategies.WinningStrategy;
+
 /**
  * The factory for creating the objects that configure a game
  * for a specific hotstone variant

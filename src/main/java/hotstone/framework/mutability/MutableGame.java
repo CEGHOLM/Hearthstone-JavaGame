@@ -1,4 +1,8 @@
-package hotstone.framework;
+package hotstone.framework.mutability;
+
+import hotstone.framework.Game;
+import hotstone.framework.Player;
+import hotstone.framework.Status;
 
 public interface MutableGame extends Game {
     /**

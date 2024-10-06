@@ -18,6 +18,13 @@
 package hotstone.standard;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.strategies.DeckBuilderStrategy;
+import hotstone.framework.strategies.HeroStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -18,6 +18,8 @@
 package hotstone.utility;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

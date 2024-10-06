@@ -1,14 +1,14 @@
 package hotstone.variants.epsilonstone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHero;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
-import hotstone.variants.alphastone.*;
 import org.junit.jupiter.api.*;
 
-import java.util.List;
 import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.*;

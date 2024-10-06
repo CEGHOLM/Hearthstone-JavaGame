@@ -1,4 +1,7 @@
-package hotstone.framework;
+package hotstone.framework.strategies;
+
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.Player;
 
 import java.util.List;
 

@@ -1,6 +1,8 @@
 package hotstone.variants.alphastone;
 
-import hotstone.framework.*;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.strategies.HeroPowerStrategy;
 
 public class BabyPower implements HeroPowerStrategy {
     @Override

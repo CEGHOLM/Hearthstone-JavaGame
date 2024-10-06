@@ -1,6 +1,9 @@
 package hotstone.standard;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
+import hotstone.framework.strategies.HeroPowerStrategy;
 
 import java.util.Random;
 
