@@ -193,8 +193,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Damage hero if deck is empty
     if (decks.get(player).isEmpty()) {
-      heroes.get(player).takeDamage(2);
+      changeHeroHealth(player, 2);
     }
+  }
+
+  @Override
+  public void changeHeroHealth(Player who, int amount) {
+    getHero(who).takeDamage(amount);
   }
 
   private void drawCardForPlayer(Player player) {
@@ -221,10 +226,16 @@ public class StandardHotStoneGame implements Game, MutableGame {
     if (getHero(who).getMana() < card.getManaCost()) {
         return Status.NOT_ENOUGH_MANA;
     }
+
     int heroMana = getHero(who).getMana();
     int cardManaCost = card.getManaCost();
+
     heroes.get(who).setMana(heroMana-cardManaCost);
+
+    card.applyEffect(this);
+
     hands.get(who).remove(card);
+
     fields.get(who).add(card);
     return Status.OK;
   }

@@ -14,7 +14,7 @@ public class SovsPower implements HeroPowerStrategy {
         // Summon "Sovs" card on the owner's field
         Player owner = hero.getOwner();
         List<Card> ownerField = (List<Card>) game.getField(owner);
-        ownerField.add(new StandardCard("Sovs", 0,1,1, owner));
+        ownerField.add(new StandardCard("Sovs", 0,1,1, owner, null));
     }
 
     @Override

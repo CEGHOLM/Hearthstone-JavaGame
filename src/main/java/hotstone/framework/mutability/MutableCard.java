@@ -1,6 +1,7 @@
 package hotstone.framework.mutability;
 
 import hotstone.framework.Card;
+import hotstone.standard.StandardHotStoneGame;
 
 /** This interface handles all mutable
  * aspects of the card role
@@ -29,5 +30,7 @@ public interface MutableCard extends Card {
      * @param i
      */
     void increaseAttack(int i);
+
+    void applyEffect(MutableGame game);
 }
 

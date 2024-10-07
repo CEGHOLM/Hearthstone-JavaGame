@@ -79,4 +79,6 @@ public interface Card {
    * effect.
    */
   String getEffectDescription();
+
+  Effect getEffect();
 }

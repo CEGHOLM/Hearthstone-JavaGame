@@ -1,8 +1,10 @@
 package hotstone.standard;
 
 import hotstone.framework.Card;
+import hotstone.framework.Effect;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
+import hotstone.framework.mutability.MutableGame;
 
 public class StandardCard implements Card, MutableCard {
     private String name;
@@ -12,8 +14,9 @@ public class StandardCard implements Card, MutableCard {
     private Player owner;
     private int turnsOnField; // Flag to track if the card has attacked in the current turn
     private boolean hasAttacked;
+    private Effect effect;
 
-    public StandardCard(String name, int manaCost, int attack, int health, Player owner) {
+    public StandardCard(String name, int manaCost, int attack, int health, Player owner, Effect effect) {
         this.name = name;
         this.manaCost = manaCost;
         this.attack = attack;
@@ -21,6 +24,7 @@ public class StandardCard implements Card, MutableCard {
         this.turnsOnField = 0;
         this.hasAttacked = false;
         this.owner = owner;
+        this.effect = effect;
     }
     @Override
     public String getName() {
@@ -79,6 +83,18 @@ public class StandardCard implements Card, MutableCard {
 
     @Override
     public String getEffectDescription() {
-        return null;
+        return effect.getEffectDescription();
+    }
+
+    @Override
+    public Effect getEffect() {
+        return effect;
+    }
+
+    @Override
+    public void applyEffect(MutableGame game) {
+        if (effect != null) {
+            effect.applyEffect(game, owner);
+        }
     }
 }

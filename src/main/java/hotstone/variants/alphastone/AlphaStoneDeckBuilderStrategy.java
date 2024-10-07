@@ -13,13 +13,13 @@ public class AlphaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     public List<MutableCard> buildDeck(Player player) {
         List<MutableCard> deck = new ArrayList<>();
 
-        deck.add(new StandardCard("Tres", 3, 3, 3, player));
-        deck.add(new StandardCard("Dos", 2, 2, 2, player));
-        deck.add(new StandardCard("Uno", 1, 1, 1, player));
-        deck.add(new StandardCard("Cuatro", 2, 3, 1, player));
-        deck.add(new StandardCard("Cinco", 3, 5, 1, player));
-        deck.add(new StandardCard("Seis", 2, 1, 3, player));
-        deck.add(new StandardCard("Siete", 3, 2, 4, player));
+        deck.add(new StandardCard("Tres", 3, 3, 3, player, null));
+        deck.add(new StandardCard("Dos", 2, 2, 2, player, null));
+        deck.add(new StandardCard("Uno", 1, 1, 1, player, null));
+        deck.add(new StandardCard("Cuatro", 2, 3, 1, player, null));
+        deck.add(new StandardCard("Cinco", 3, 5, 1, player, null));
+        deck.add(new StandardCard("Seis", 2, 1, 3, player, null));
+        deck.add(new StandardCard("Siete", 3, 2, 4, player, null));
         return deck;
     }
 }

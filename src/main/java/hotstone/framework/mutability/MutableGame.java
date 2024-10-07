@@ -3,6 +3,7 @@ package hotstone.framework.mutability;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.standard.StandardCard;
 
 public interface MutableGame extends Game {
     /**
@@ -67,5 +68,7 @@ public interface MutableGame extends Game {
      *    invalid.
      */
     Status usePower(Player who);
+
+    void changeHeroHealth(Player player, int i);
 }
 

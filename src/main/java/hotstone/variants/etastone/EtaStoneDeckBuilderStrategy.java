@@ -3,39 +3,40 @@ package hotstone.variants.etastone;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.strategies.DeckBuilderStrategy;
-import hotstone.standard.StandardCard;
+import hotstone.standard.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class EtaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
+
     @Override
     public List<MutableCard> buildDeck(Player player) {
         List<MutableCard> cards = new ArrayList<>();
-        cards.add(new StandardCard("Brown Rice", 1, 1, 1, player));
-        cards.add(new StandardCard("French Fries", 1, 2, 1, player));
-        cards.add(new StandardCard("Green Salad", 2, 2, 3, player));
-        cards.add(new StandardCard("Tomato Salad", 2, 2, 2, player));
-        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player));
-        cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player));
-        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player));
-        cards.add(new StandardCard("Spring Rolls", 5, 3, 5, player));
-        cards.add(new StandardCard("Baked Salmon", 5, 7, 6, player));
-        cards.add(new StandardCard("Brown Rice", 1, 1, 1, player));
-        cards.add(new StandardCard("French Fries", 1, 2, 1, player));
-        cards.add(new StandardCard("Green Salad", 2, 2, 3, player));
-        cards.add(new StandardCard("Tomato Salad", 2, 2, 2, player));
-        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player));
-        cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player));
-        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player));
-        cards.add(new StandardCard("Spring Rolls", 5, 3, 5, player));
-        cards.add(new StandardCard("Baked Salmon", 5, 7, 6, player));
+        cards.add(new StandardCard("Brown Rice", 1, 1, 1, player, new BrownRiceEffect()));
+        cards.add(new StandardCard("French Fries", 1, 2, 1, player, null));
+        cards.add(new StandardCard("Green Salad", 2, 2, 3, player, null));
+        cards.add(new StandardCard("Tomato Salad", 2, 2, 2, player, null));
+        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player, null));
+        cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player, null));
+        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player, null));
+        cards.add(new StandardCard("Spring Rolls", 5, 3, 5, player, null));
+        cards.add(new StandardCard("Baked Salmon", 5, 7, 6, player, null));
+        cards.add(new StandardCard("Brown Rice", 1, 1, 1, player, new BrownRiceEffect()));
+        cards.add(new StandardCard("French Fries", 1, 2, 1, player, null));
+        cards.add(new StandardCard("Green Salad", 2, 2, 3, player, null));
+        cards.add(new StandardCard("Tomato Salad", 2, 2, 2, player, null));
+        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player, null));
+        cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player, null));
+        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player, null));
+        cards.add(new StandardCard("Spring Rolls", 5, 3, 5, player, null));
+        cards.add(new StandardCard("Baked Salmon", 5, 7, 6, player, null));
 
         // Add every card to the deck twice
         List<MutableCard> deck = new ArrayList<>();
         for (MutableCard card : cards) {
-            deck.add(new StandardCard(card.getName(), card.getManaCost(), card.getAttack(), card.getHealth(), card.getOwner()));
+            deck.add(new StandardCard(card.getName(), card.getManaCost(), card.getAttack(), card.getHealth(), card.getOwner(), card.getEffect()));
         }
 
         // Shuffle the deck
