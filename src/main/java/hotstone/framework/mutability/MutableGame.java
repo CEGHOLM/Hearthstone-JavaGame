@@ -70,5 +70,7 @@ public interface MutableGame extends Game {
     Status usePower(Player who);
 
     void changeHeroHealth(Player player, int i);
+
+    void drawCard(Player player);
 }
 

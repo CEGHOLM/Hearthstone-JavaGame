@@ -213,6 +213,15 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
+  public void drawCard(Player who){
+    List<MutableCard> deck = decks.get(who);
+    List<MutableCard> hand = hands.get(who);
+    if (!deck.isEmpty()) {
+      hand.add(0, deck.remove(0));
+    }
+  }
+
+  @Override
   public Status playCard(Player who, MutableCard card, int atIndex) {
     // Check it's the players turn
     if (!who.equals(getPlayerInTurn())) {

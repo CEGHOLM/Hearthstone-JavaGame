@@ -38,4 +38,18 @@ public class TestEtaStone {
         // Verify that the correct method in MutableGame was called
         verify(game).changeHeroHealth(Player.FINDUS, 2);
     }
+
+    @Test
+    public void shouldMakePlayerDrawACard() {
+        // Create a Test Spy for MutableGame
+        MutableGame game = mock(MutableGame.class);
+        Player player = Player.FINDUS;
+        NoodleSoupEffect noodleSoupEffect = new NoodleSoupEffect();
+
+        // Apply effect
+        noodleSoupEffect.applyEffect(game, player);
+
+        // Verify that the correct method in MutableGame was called
+        verify(game).drawCard(player);
+    }
 }
