@@ -3,7 +3,6 @@ package hotstone.variants.epsilonstone;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
-import hotstone.framework.strategies.HeroPowerStrategy;
 import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHero;
@@ -48,7 +47,7 @@ public class TestEpsilonStone {
     public void testRedwinePowerWithStub() {
         // Given Findus uses RedwinePower
         RandomStrategy randomStub = new StubRandomStrategy(0);  // Always pick the first minion
-        HeroPowerStrategy redwinePower = new RedwinePower(randomStub);
+        Effect redwinePower = new RedwinePower(randomStub);
         StandardHero frenchChef = new StandardHero(3, 21, "Bocuse", Player.FINDUS, redwinePower);
 
         // When Peddersen plays a minion and Findus uses RedwinePower
@@ -76,7 +75,7 @@ public class TestEpsilonStone {
     public void testPastaPowerWithStub() {
         // Given Peddersen uses PastaPower
         RandomStrategy randomStub = new StubRandomStrategy(0);  // Always pick the first minion
-        HeroPowerStrategy pastaPower = new PastaPower(randomStub);
+        Effect pastaPower = new PastaPower(randomStub);
         StandardHero italianChef = new StandardHero(3, 21, "Bottura", Player.PEDDERSEN, pastaPower);
 
         // When Peddersen plays a minion and uses PastaPower
@@ -136,7 +135,7 @@ public class TestEpsilonStone {
     public void shouldDamageMinionWithRedwinePowerWithStubAndMultipleMinions() {
         // Given Findus uses RedwinePower with multiple opponent minions
         RandomStrategy randomStub = new StubRandomStrategy(0);  // Always pick the first minion
-        HeroPowerStrategy redwinePower = new RedwinePower(randomStub);
+        Effect redwinePower = new RedwinePower(randomStub);
         StandardHero frenchChef = new StandardHero(3, 21, "Bocuse", Player.FINDUS, redwinePower);
 
         // When Peddersen plays 3 minions, and Findus uses RedwinePower
@@ -157,7 +156,7 @@ public class TestEpsilonStone {
     public void shouldIncreaseMinionAttackWithPastaPowerWithMultipleMinions() {
         // Given Peddersen uses PastaPower with multiple minions on the field
         RandomStrategy randomStub = new StubRandomStrategy(1);  // Always pick the second minion
-        HeroPowerStrategy pastaPower = new PastaPower(randomStub);
+        Effect pastaPower = new PastaPower(randomStub);
         StandardHero italianChef = new StandardHero(3, 21, "Bottura", Player.PEDDERSEN, pastaPower);
 
         // When Peddersen plays 3 minions and uses PastaPower

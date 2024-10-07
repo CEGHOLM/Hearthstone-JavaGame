@@ -373,6 +373,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     } else if (hero.getMana() < 2) {
       return Status.NOT_ENOUGH_MANA;
     }
+
     // Deduct mana and mark power as used
     hero.setMana(hero.getMana()-2);
     hero.setPowerStatus(false);

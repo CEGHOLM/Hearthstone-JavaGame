@@ -3,9 +3,6 @@ package hotstone.standard;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.mutability.MutableHero;
-import hotstone.framework.strategies.HeroPowerStrategy;
-
-import java.util.Random;
 
 public class StandardHero implements Hero, MutableHero {
     private int mana;
@@ -13,16 +10,14 @@ public class StandardHero implements Hero, MutableHero {
     private String heroType;
     private boolean powerStatus = true;
     private Player owner;
-    private HeroPowerStrategy heroPowerStrategy;
-    private Random randomGenerator; // Random generator for hero powers
+    private Effect heroPower;
 
-    public StandardHero(int mana, int health, String heroType, Player owner, HeroPowerStrategy heroPowerStrategy) {
+    public StandardHero(int mana, int health, String heroType, Player owner, Effect heroPower) {
         this.mana = mana;
         this.health = health;
         this.heroType = heroType;
         this.owner = owner;
-        this.heroPowerStrategy = heroPowerStrategy;
-        this.randomGenerator = new Random(); // Default random generator
+        this.heroPower = heroPower;
     }
 
     @Override
@@ -62,7 +57,7 @@ public class StandardHero implements Hero, MutableHero {
 
     @Override
     public String getEffectDescription() {
-        return heroPowerStrategy.getEffectDescription();
+        return heroPower.getEffectDescription();
     }
 
     @Override
@@ -77,7 +72,7 @@ public class StandardHero implements Hero, MutableHero {
 
     @Override
     public void usePower(MutableGame game) {
-        this.heroPowerStrategy.usePower(game, this);
+        heroPower.applyEffect(game, owner);  // Use the common Effect interface to apply power
     }
 }
 

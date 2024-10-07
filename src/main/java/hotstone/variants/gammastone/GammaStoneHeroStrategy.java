@@ -2,13 +2,12 @@ package hotstone.variants.gammastone;
 
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableHero;
-import hotstone.framework.strategies.HeroPowerStrategy;
 import hotstone.framework.strategies.HeroStrategy;
 import hotstone.standard.StandardHero;
 
 public class GammaStoneHeroStrategy implements HeroStrategy {
-    private final HeroPowerStrategy chiliPower = new ChiliPower();
-    private final HeroPowerStrategy sovsPower = new SovsPower();
+    private final Effect chiliPower = new ChiliPower();
+    private final Effect sovsPower = new SovsPower();
     @Override
     public MutableHero getHero(Player player) {
         if (player.equals(Player.FINDUS)) {

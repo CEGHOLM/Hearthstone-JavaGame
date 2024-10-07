@@ -4,13 +4,11 @@ package hotstone.variants.epsilonstone;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
-import hotstone.framework.mutability.MutableHero;
-import hotstone.framework.strategies.HeroPowerStrategy;
 import hotstone.framework.strategies.RandomStrategy;
 
 import java.util.List;
 
-public class RedwinePower implements HeroPowerStrategy {
+public class RedwinePower implements Effect {
 
     private RandomStrategy randomStrategy;
 
@@ -19,8 +17,8 @@ public class RedwinePower implements HeroPowerStrategy {
     }
 
     @Override
-    public void usePower(MutableGame game, MutableHero hero) {
-        Player opponent = Player.computeOpponent(hero.getOwner());
+    public void applyEffect(MutableGame game, Player player) {
+        Player opponent = Player.computeOpponent(player);
 
         List<? extends Card> opponentMinions = (List<? extends Card>) game.getField(opponent);
 
