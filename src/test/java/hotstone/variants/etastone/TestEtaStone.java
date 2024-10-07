@@ -60,7 +60,7 @@ public class TestEtaStone {
     }
 
     @Test
-    public void shouldAddOneAttackToRandomMinion() {
+    public void shouldAddOneAttackToRandomFriendlyMinion() {
         // Arrange: Create a Spy for MutableGame
         SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
@@ -102,5 +102,23 @@ public class TestEtaStone {
         assertThat(game.getFieldSize(opponent), is(1));  // One minion should be removed
     }
 
+    @Test
+    public void shouldAddTwoAttackToRandomEnemyMinion() {
+        // Arrange: Create a Spy for MutableGame
+        SpyMutableGame game = new SpyMutableGame();
+        Player player = Player.FINDUS;
+        RandomStrategy randomStub = new StubRandomStrategy(0);  // Always choose the first minion
+        BakedSalmonEffect bakedSalmonEffect = new BakedSalmonEffect(randomStub);
+
+        // Create a mock minion and add it to the field
+        MutableCard minion = mock(MutableCard.class);
+        game.addMinionToField(minion);  // Add the mock minion to the game's field
+
+        // Act: Apply the TomatoSaladEffect
+        bakedSalmonEffect.applyEffect(game, player);
+
+        // Assert: Verify that the first minion had its attack increased by 1
+        verify(minion).increaseAttack(2);
+    }
 
 }
