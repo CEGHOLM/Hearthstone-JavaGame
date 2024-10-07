@@ -59,6 +59,11 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
+    public void removeMinionFromField(Player player, MutableCard card) {
+        fieldMinions.remove(card);
+    }
+
+    @Override
     public Player getPlayerInTurn() {
         return null;
     }
@@ -110,7 +115,7 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public int getFieldSize(Player who) {
-        return 0;
+        return fieldMinions.size();
     }
 
     @Override

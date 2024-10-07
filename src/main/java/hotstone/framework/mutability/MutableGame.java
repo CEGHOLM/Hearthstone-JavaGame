@@ -72,5 +72,7 @@ public interface MutableGame extends Game {
     void changeHeroHealth(Player player, int i);
 
     void drawCard(Player player);
+
+    void removeMinionFromField(Player player, MutableCard card);
 }
 

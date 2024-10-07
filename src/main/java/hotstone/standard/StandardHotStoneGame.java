@@ -285,8 +285,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   private void removeIfDefeated(MutableCard card) {
     if (card.getHealth() <= 0) {
-      fields.get(card.getOwner()).remove(card);
+      removeMinionFromField(card.getOwner(), card);
     }
+  }
+
+  @Override
+  public void removeMinionFromField(Player who, MutableCard card) {
+    fields.get(who).remove(card);
   }
 
   private Status isAttackPossible(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {

@@ -8,12 +8,12 @@ import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.SpyMutableGame;
 import hotstone.variants.epsilonstone.StubRandomStrategy;
 import org.junit.jupiter.api.Test;
-import org.mockito.stubbing.OngoingStubbing;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.any;
 
 public class TestEtaStone {
 
@@ -77,5 +77,30 @@ public class TestEtaStone {
         // Assert: Verify that the first minion had its attack increased by 1
         verify(minion).increaseAttack(1);
     }
+
+    @Test
+    public void shouldDestroyRandomMinionOnOpponentField() {
+        // Arrange: Create a Spy for MutableGame
+        SpyMutableGame game = new SpyMutableGame();
+        Player player = Player.FINDUS;
+        Player opponent = Player.computeOpponent(player);
+
+        // Use a stub for RandomStrategy to always pick the first minion
+        RandomStrategy randomStub = new StubRandomStrategy(0);
+        SpringRollsEffect springRollsEffect = new SpringRollsEffect(randomStub);
+
+        // Create two mock minions and add them to the opponent's field
+        MutableCard minion1 = mock(MutableCard.class);
+        MutableCard minion2 = mock(MutableCard.class);
+        game.addMinionToField(minion1);  // Add the first mock minion to the opponent's field
+        game.addMinionToField(minion2);  // Add the second mock minion
+
+        // Act: Apply the SpringRollsEffect
+        springRollsEffect.applyEffect(game, player);
+
+        // Assert: Verify that the first minion was removed from the opponent's field
+        assertThat(game.getFieldSize(opponent), is(1));  // One minion should be removed
+    }
+
 
 }
