@@ -193,7 +193,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Damage hero if deck is empty
     if (decks.get(player).isEmpty()) {
-      changeHeroHealth(player, 2);
+      changeHeroHealth(player, -2);
     }
   }
 
@@ -338,7 +338,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   //Deal damage to the opponent's hero
   private void dealDamageToHero(Card attackingCard, Player playerAttacking) {
     MutableHero attackedHero = heroes.get(Player.computeOpponent(playerAttacking));
-    reduceHeroHealth(attackedHero, attackingCard.getAttack());
+    reduceHeroHealth(attackedHero, -attackingCard.getAttack());
   }
 
   //Reduce the health of the hero

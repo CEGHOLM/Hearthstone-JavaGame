@@ -82,7 +82,7 @@ public abstract class StandardHero implements Hero, MutableHero {
 
     @Override
     public void takeDamage(int damage) {
-        this.health -= damage;
+        this.health += damage;
     }
 
     @Override

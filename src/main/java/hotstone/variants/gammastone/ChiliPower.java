@@ -10,8 +10,8 @@ public class ChiliPower implements HeroPowerStrategy {
     public void usePower(MutableGame game, MutableHero hero) {
         // Find oppponent and deal 2 damage to their hero
         Player opponent = Player.computeOpponent(hero.getOwner());
-        MutableHero opponentHero = (MutableHero) game.getHero(opponent);
-        opponentHero.takeDamage(2);
+
+        game.changeHeroHealth(opponent, -2);
     }
 
     @Override
