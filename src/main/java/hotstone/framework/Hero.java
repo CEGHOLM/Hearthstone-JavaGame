@@ -63,6 +63,4 @@ public interface Hero {
    * @return short description of hero power/effect
    */
   String getEffectDescription();
-
-  Random getRandomGenerator();
 }

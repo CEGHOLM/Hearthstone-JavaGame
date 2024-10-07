@@ -18,18 +18,18 @@ public class EtaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
         cards.add(new StandardCard("French Fries", 1, 2, 1, player, null));
         cards.add(new StandardCard("Green Salad", 2, 2, 3, player, null));
         cards.add(new StandardCard("Tomato Salad", 2, 2, 2, player, null));
-        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player, null));
+        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player, new PokeBowlEffect()));
         cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player, null));
-        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player, null));
+        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player, new NoodleSoupEffect()));
         cards.add(new StandardCard("Spring Rolls", 5, 3, 5, player, null));
         cards.add(new StandardCard("Baked Salmon", 5, 7, 6, player, null));
         cards.add(new StandardCard("Brown Rice", 1, 1, 1, player, new BrownRiceEffect()));
         cards.add(new StandardCard("French Fries", 1, 2, 1, player, null));
         cards.add(new StandardCard("Green Salad", 2, 2, 3, player, null));
         cards.add(new StandardCard("Tomato Salad", 2, 2, 2, player, null));
-        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player, null));
+        cards.add(new StandardCard("Poke Bowl", 3, 2, 3, player, new PokeBowlEffect()));
         cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player, null));
-        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player, null));
+        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player, new NoodleSoupEffect()));
         cards.add(new StandardCard("Spring Rolls", 5, 3, 5, player, null));
         cards.add(new StandardCard("Baked Salmon", 5, 7, 6, player, null));
 

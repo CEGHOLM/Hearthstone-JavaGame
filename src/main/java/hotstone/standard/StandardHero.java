@@ -7,7 +7,7 @@ import hotstone.framework.strategies.HeroPowerStrategy;
 
 import java.util.Random;
 
-public abstract class StandardHero implements Hero, MutableHero {
+public class StandardHero implements Hero, MutableHero {
     private int mana;
     private int health;
     private String heroType;
@@ -23,16 +23,6 @@ public abstract class StandardHero implements Hero, MutableHero {
         this.owner = owner;
         this.heroPowerStrategy = heroPowerStrategy;
         this.randomGenerator = new Random(); // Default random generator
-    }
-
-    // Getter for random generator
-    public Random getRandomGenerator() {
-        return randomGenerator;
-    }
-
-    // Setter for random generator (used for test stubbing)
-    public void setRandomGenerator(Random randomGenerator) {
-        this.randomGenerator = randomGenerator;
     }
 
     @Override

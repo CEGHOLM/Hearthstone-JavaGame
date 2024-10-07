@@ -3,6 +3,8 @@ package hotstone.variants.epsilonstone;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.strategies.HeroPowerStrategy;
+import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHero;
 import hotstone.standard.StandardHotStoneGame;
@@ -44,28 +46,21 @@ public class TestEpsilonStone {
 
     @Test
     public void testRedwinePowerWithStub() {
-        // Given a game
-        // When Findus uses his hero power on one of Peddersens minions
+        // Given Findus uses RedwinePower
+        RandomStrategy randomStub = new StubRandomStrategy(0);  // Always pick the first minion
+        HeroPowerStrategy redwinePower = new RedwinePower(randomStub);
+        StandardHero frenchChef = new StandardHero(3, 21, "Bocuse", Player.FINDUS, redwinePower);
 
-        // Create a stub to control the random number generator
-        RandomStub randomStub = new RandomStub(0); // Force it to pick the first minion
-
-        // Inject stub into the game
-        StandardHero frenchChef = (StandardHero) game.getHero(Player.FINDUS);
-        frenchChef.setRandomGenerator(randomStub);
-
-        // Peddersens turn and plays a card
-        game.endTurn();
+        // When Peddersen plays a minion and Findus uses RedwinePower
+        game.endTurn();  // End Findus' turn
         MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card, 0);
+        game.endTurn();  // End Peddersen's turn
+        game.usePower(Player.FINDUS);
 
-        // Findus turn
-        game.endTurn();
-        frenchChef.usePower(game);
-
-        // Then Peddersens card should have 1 health left
+        // Then Peddersen's card should have 1 health left
         Card cardInField = game.getCardInField(Player.PEDDERSEN, 0);
-        assertThat(cardInField.getHealth(), is(1)); // Assuming the minion started with 3 health
+        assertThat(cardInField.getHealth(), is(1));
     }
 
     @Test
@@ -79,26 +74,19 @@ public class TestEpsilonStone {
 
     @Test
     public void testPastaPowerWithStub() {
-        // Given a game where Peddersen is the player with minions
-        // When Peddersen uses his power
-        StandardHero italianChef = (StandardHero) game.getHero(Player.PEDDERSEN);
+        // Given Peddersen uses PastaPower
+        RandomStrategy randomStub = new StubRandomStrategy(0);  // Always pick the first minion
+        HeroPowerStrategy pastaPower = new PastaPower(randomStub);
+        StandardHero italianChef = new StandardHero(3, 21, "Bottura", Player.PEDDERSEN, pastaPower);
 
-        // Peddersen's turn and plays 1 card (minions)
-        game.endTurn();
+        // When Peddersen plays a minion and uses PastaPower
+        game.endTurn();  // End Findus' turn
         MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card, 0);
-
-        // Set up a RandomStub to control randomness (we want the first minion to be selected)
-        RandomStub randomStub = new RandomStub(0);
-        italianChef.setRandomGenerator(randomStub);
-
-        // End Peddersen's turn and go back to Peddersen's turn to use power
-        TestHelper.advanceGameNRounds(game, 1);
-
-        // Use PastaPower to increase the attack of the first minion
+        TestHelper.advanceGameNRounds(game, 1);  // End Peddersen's turn, advance one round
         italianChef.usePower(game);
 
-        // Then the minions attack should be 5
+        // Then the minion's attack should be increased to 5
         Card minion = game.getCardInField(Player.PEDDERSEN, 0);
         assertThat(minion.getAttack(), is(5));
     }
@@ -146,69 +134,42 @@ public class TestEpsilonStone {
 
     @Test
     public void shouldDamageMinionWithRedwinePowerWithStubAndMultipleMinions() {
-        // Given Findus hero (FrenchChef) with RedwinePower
-        // When Peddersen has played 3 cards and Findus uses his power
-        StandardHero frenchChef = (StandardHero) game.getHero(Player.FINDUS);
+        // Given Findus uses RedwinePower with multiple opponent minions
+        RandomStrategy randomStub = new StubRandomStrategy(0);  // Always pick the first minion
+        HeroPowerStrategy redwinePower = new RedwinePower(randomStub);
+        StandardHero frenchChef = new StandardHero(3, 21, "Bocuse", Player.FINDUS, redwinePower);
 
-        // Peddersen's turn and plays 3 minions
-        game.endTurn(); // Slut Findus' tur
+        // When Peddersen plays 3 minions, and Findus uses RedwinePower
+        game.endTurn();  // End Findus' turn
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
-        // Advance 1 round so Peddersen can play the other two cards
-        TestHelper.advanceGameNRounds(game, 1);
+        TestHelper.advanceGameNRounds(game, 1);  // Play the remaining cards
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 1);
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 2);
-        game.endTurn();
-
-        // Set up a RandomStub to always pick the first minion
-        RandomStub randomStub = new RandomStub(0);
-        frenchChef.setRandomGenerator(randomStub);
-
-        // Use RedwinePower and verify the first minion is damaged
+        game.endTurn();  // End Peddersen's turn
         frenchChef.usePower(game);
 
-        // Then the first minion has taken 2 damage
+        // Then the first minion should have taken 2 damage
         Card firstMinion = game.getCardInField(Player.PEDDERSEN, 0);
         assertThat(firstMinion.getHealth(), is(1));
     }
 
     @Test
     public void shouldIncreaseMinionAttackWithPastaPowerWithMultipleMinions() {
-        // Given Peddersen hero (ItalianChef) with PastaPower
-        // When Peddersen has played 3 cards and uses his power
-        StandardHero italianChef = (StandardHero) game.getHero(Player.PEDDERSEN);
+        // Given Peddersen uses PastaPower with multiple minions on the field
+        RandomStrategy randomStub = new StubRandomStrategy(1);  // Always pick the second minion
+        HeroPowerStrategy pastaPower = new PastaPower(randomStub);
+        StandardHero italianChef = new StandardHero(3, 21, "Bottura", Player.PEDDERSEN, pastaPower);
 
-        // Peddersen's turn, and plays 3 minions
-        game.endTurn();
+        // When Peddersen plays 3 minions and uses PastaPower
+        game.endTurn();  // End Findus' turn
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
-        // Advance 1 round so Peddersen can play the other two cards
-        TestHelper.advanceGameNRounds(game, 1);
+        TestHelper.advanceGameNRounds(game, 1);  // Play the remaining cards
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 1);
         game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 2);
-
-        // Set up a RandomStub to pick the second minion
-        RandomStub randomStub = new RandomStub(1);
-        italianChef.setRandomGenerator(randomStub);
-
-        // Use PastaPower and verify the second minion's attack increases by 2
         italianChef.usePower(game);
 
-        // Then the second minion's attack has increased by 2
+        // Then the second minion's attack should have increased by 2
         Card secondMinion = game.getCardInField(Player.PEDDERSEN, 1);
         assertThat(secondMinion.getAttack(), is(4));
-    }
-
-
-    // Inner class for controlling randomness in this test class only
-    private class RandomStub extends Random {
-        private int nextValue;
-
-        public RandomStub(int nextValue) {
-            this.nextValue = nextValue;
-        }
-
-        @Override
-        public int nextInt(int bound) {
-            return nextValue;
-        }
     }
 }
