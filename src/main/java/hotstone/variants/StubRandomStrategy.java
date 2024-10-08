@@ -1,4 +1,4 @@
-package hotstone.variants.epsilonstone;
+package hotstone.variants;
 
 import hotstone.framework.strategies.RandomStrategy;
 

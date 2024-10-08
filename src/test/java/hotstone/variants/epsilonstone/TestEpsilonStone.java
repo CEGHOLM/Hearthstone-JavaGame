@@ -8,9 +8,8 @@ import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHero;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
+import hotstone.variants.StubRandomStrategy;
 import org.junit.jupiter.api.*;
-
-import java.util.Random;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
