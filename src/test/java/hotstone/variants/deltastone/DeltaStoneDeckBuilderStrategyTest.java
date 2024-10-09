@@ -4,6 +4,7 @@ import hotstone.framework.Card;
 import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
+import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ public class DeltaStoneDeckBuilderStrategyTest {
         // When I ask for the size of the deck
         List<MutableCard> deck = strategy.buildDeck(Player.FINDUS);
         // Then it should be 18
-        assertThat(deck.size(), is(18));
+        assertThat(deck.size(), is(GameConstants.DELTA_DECK_SIZE));
     }
 
     @Test

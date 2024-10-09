@@ -11,7 +11,7 @@ public class AlphaStoneHeroStrategy implements HeroStrategy {
 
     @Override
     public MutableHero getHero(Player player) {
-        return new StandardHero(0, 21, GameConstants.BABY_HERO_TYPE, player, babyPower) {
+        return new StandardHero(3, GameConstants.HERO_MAX_HEALTH, GameConstants.BABY_HERO_TYPE, player, babyPower) {
         };
     }
 }

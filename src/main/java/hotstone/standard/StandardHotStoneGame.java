@@ -193,7 +193,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Damage hero if deck is empty
     if (decks.get(player).isEmpty()) {
-      changeHeroHealth(player, -2);
+      changeHeroHealth(player, -GameConstants.HERO_HEALTH_PENALTY_ON_EMPTY_DECK);
     }
   }
 
@@ -375,7 +375,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
 
     // Deduct mana and mark power as used
-    hero.setMana(hero.getMana()-2);
+    hero.setMana(hero.getMana()-GameConstants.HERO_POWER_COST);
     hero.setPowerStatus(false);
 
     // Call the heroes power and execute it

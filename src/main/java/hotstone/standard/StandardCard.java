@@ -83,7 +83,10 @@ public class StandardCard implements Card, MutableCard {
 
     @Override
     public String getEffectDescription() {
-        return effect.getEffectDescription();
+        if (effect != null) {
+            return effect.getEffectDescription();
+        }
+        return null;
     }
 
     @Override

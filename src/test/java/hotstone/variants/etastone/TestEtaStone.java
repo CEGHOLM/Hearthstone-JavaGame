@@ -1,12 +1,18 @@
 package hotstone.variants.etastone;
 
+import hotstone.framework.Card;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.strategies.RandomStrategy;
+import hotstone.standard.GameConstants;
 import hotstone.standard.SpyMutableGame;
 import hotstone.variants.StubRandomStrategy;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -79,7 +85,7 @@ public class TestEtaStone {
 
     @Test
     public void shouldDestroyRandomMinionOnOpponentField() {
-        // Arrange: Create a Spy for MutableGame
+        // Create a Spy for MutableGame
         SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         Player opponent = Player.computeOpponent(player);
@@ -94,16 +100,16 @@ public class TestEtaStone {
         game.addMinionToField(minion1);  // Add the first mock minion to the opponent's field
         game.addMinionToField(minion2);  // Add the second mock minion
 
-        // Act: Apply the SpringRollsEffect
+        // Apply the SpringRollsEffect
         springRollsEffect.applyEffect(game, player);
 
-        // Assert: Verify that the first minion was removed from the opponent's field
+        // Verify that the first minion was removed from the opponent's field
         assertThat(game.getFieldSize(opponent), is(1));  // One minion should be removed
     }
 
     @Test
     public void shouldAddTwoAttackToRandomEnemyMinion() {
-        // Arrange: Create a Spy for MutableGame
+        // Create a Spy for MutableGame
         SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         RandomStrategy randomStub = new StubRandomStrategy(0);  // Always choose the first minion
@@ -113,11 +119,45 @@ public class TestEtaStone {
         MutableCard minion = mock(MutableCard.class);
         game.addMinionToField(minion);  // Add the mock minion to the game's field
 
-        // Act: Apply the TomatoSaladEffect
+        // Apply the TomatoSaladEffect
         bakedSalmonEffect.applyEffect(game, player);
 
-        // Assert: Verify that the first minion had its attack increased by 1
+        // Verify that the first minion had its attack increased by 1
         verify(minion).increaseAttack(2);
     }
+
+    @Test
+    public void shouldProduceProperDeck() {
+        // Given a EtaStone deck
+        // When I ask for the deck size and correct card specs
+        List<MutableCard> deck = new EtaStoneDeckBuilderStrategy().buildDeck(Player.FINDUS);
+
+        // Then it should have size 18 and the correct specs
+        assertThat(deck.size(), is(GameConstants.DELTA_DECK_SIZE));
+        verifyCardSpecs(deck, GameConstants.BROWN_RICE_CARD, 1, 1, 1, GameConstants.BROWN_RICE_EFFECT);
+        verifyCardSpecs(deck, GameConstants.FRENCH_FRIES_CARD, 1, 2, 1, null);
+        verifyCardSpecs(deck, GameConstants.GREEN_SALAD_CARD, 2, 2, 3, null);
+        verifyCardSpecs(deck, GameConstants.TOMATO_SALAD_CARD, 2, 2, 2, GameConstants.TOMATO_SALAD_EFFECT);
+        verifyCardSpecs(deck, GameConstants.POKE_BOWL_CARD, 3, 2, 3, GameConstants.POKE_BOWL_EFFECT);
+        verifyCardSpecs(deck, GameConstants.PUMPKIN_SOUP_CARD, 4, 2, 7, null);
+        verifyCardSpecs(deck, GameConstants.NOODLE_SOUP_CARD, 4, 5, 3, GameConstants.NOODLE_SOUP_EFFECT);
+        verifyCardSpecs(deck, GameConstants.SPRING_ROLLS_CARD, 5, 3, 5, GameConstants.SPRING_ROLLS_EFFECT);
+        verifyCardSpecs(deck, GameConstants.BAKED_SALMON_CARD, 5, 7, 6, GameConstants.BAKED_SALMON_EFFECT);
+    }
+
+    // Helper method to verify the card specifications
+    public void verifyCardSpecs(List<? extends Card> deck, String cardName, int cost, int attack, int health, String effectDescription) {
+        // Given the name of the card, find the first such
+        Card theCard = deck.stream().filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
+        // Then the card exists
+        assertThat(theCard, is(notNullValue()));
+        // Then the card has the correct cost, attack, health and effect description
+        assertThat(theCard.getManaCost(), is(cost));
+        assertThat(theCard.getAttack(), is(attack));
+        assertThat(theCard.getHealth(), is(health));
+        assertThat(theCard.getEffectDescription(), is(effectDescription));
+    }
+
+
 
 }
