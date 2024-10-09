@@ -178,4 +178,27 @@ public class TestEtaStone {
         verifyNoMoreInteractions(game);
     }
 
+    @Test
+    public void shouldNotDestroyAnyMinionIfNoOpponentMinionsOnField() {
+        // Given a game
+        // When Findus plays springRolls
+        MutableGame game = mock(MutableGame.class);
+        Player player = Player.FINDUS;
+        Player opponent = Player.computeOpponent(player);
+
+        // Stub for RandomStrategy
+        RandomStrategy randomStub = new StubRandomStrategy(0);
+        SpringRollsEffect springRollsEffect = new SpringRollsEffect(randomStub);
+
+        // Act: Apply SpringRollsEffect with no minions on opponent's field
+        springRollsEffect.applyEffect(game, player);
+
+        // Then the only interaction with the game should be getting the field
+        verify(game).getField(opponent);
+
+        // After that no more interaction with game, as no minions are present
+        verifyNoMoreInteractions(game);
+    }
+
+
 }
