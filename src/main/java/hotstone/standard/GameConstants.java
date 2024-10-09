@@ -88,3 +88,4 @@ public class GameConstants {
   public static final String SPRING_ROLLS_EFFECT = "Destroy a random opponent minion";
   public static final String BAKED_SALMON_EFFECT = "Add +2 attack to random opponent minion";
 }
+

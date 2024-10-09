@@ -5,7 +5,7 @@ import hotstone.framework.strategies.RandomStrategy;
 import java.util.Random;
 
 public class StandardRandomStrategy implements RandomStrategy {
-    private Random random;
+    private final Random random;
 
     public StandardRandomStrategy() {
         this.random = new Random();
@@ -16,3 +16,4 @@ public class StandardRandomStrategy implements RandomStrategy {
         return 0;
     }
 }
+
