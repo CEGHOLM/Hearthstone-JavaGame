@@ -1,6 +1,7 @@
 package hotstone.variants.etastone;
 
 import hotstone.framework.Card;
+import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
@@ -158,6 +159,23 @@ public class TestEtaStone {
         assertThat(theCard.getEffectDescription(), is(effectDescription));
     }
 
+    @Test
+    public void shouldNotIncreaseAttackIfNoFriendlyMinionsOnField() {
+        // Given a game
+        // When Findus plays tomatoSalad on a empty field
+        MutableGame game = mock(MutableGame.class);
+        Player player = Player.FINDUS;
+        RandomStrategy randomStub = new StubRandomStrategy(0);  // Stub for random choice
+        TomatoSaladEffect tomatoSaladEffect = new TomatoSaladEffect(randomStub);
 
+        // Apply TomatoSaladEffect with no minions on the field
+        tomatoSaladEffect.applyEffect(game, player);
+
+        // Then the only interaction with the game should be getting the field
+        verify(game).getField(player);
+
+        // After that no more interaction with game, as no minions are present
+        verifyNoMoreInteractions(game);
+    }
 
 }
