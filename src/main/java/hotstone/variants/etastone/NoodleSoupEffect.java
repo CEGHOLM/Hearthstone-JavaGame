@@ -7,8 +7,10 @@ import hotstone.framework.mutability.MutableGame;
 public class NoodleSoupEffect implements Effect {
     @Override
     public void applyEffect(MutableGame game, Player player) {
-        // Draw one card for the player
-        game.drawCard(player);
+        // Draw one card for the player if there is cards in the deck
+        if (game.getDeckSize(player) > 0) {
+            game.drawCard(player);
+        }
     }
 
     @Override

@@ -58,6 +58,9 @@ public class TestEtaStone {
         Player player = Player.FINDUS;
         NoodleSoupEffect noodleSoupEffect = new NoodleSoupEffect();
 
+        // Ensure that the deck has cards
+        when(game.getDeckSize(player)).thenReturn(1);
+
         // Apply effect
         noodleSoupEffect.applyEffect(game, player);
 
@@ -190,7 +193,7 @@ public class TestEtaStone {
         RandomStrategy randomStub = new StubRandomStrategy(0);
         SpringRollsEffect springRollsEffect = new SpringRollsEffect(randomStub);
 
-        // Act: Apply SpringRollsEffect with no minions on opponent's field
+        // Apply SpringRollsEffect with no minions on opponent's field
         springRollsEffect.applyEffect(game, player);
 
         // Then the only interaction with the game should be getting the field
@@ -198,6 +201,46 @@ public class TestEtaStone {
 
         // After that no more interaction with game, as no minions are present
         verifyNoMoreInteractions(game);
+    }
+
+    @Test
+    public void shouldNotIncreaseAttackIfNoOpponentMinionsOnField() {
+        // Given a game
+        // When Findus plays tomatoSalad on a empty field
+        MutableGame game = mock(MutableGame.class);
+        Player player = Player.FINDUS;
+        Player opponent = Player.computeOpponent(player);
+
+        // Stub for RandomStrategy
+        RandomStrategy randomStub = new StubRandomStrategy(0);
+        BakedSalmonEffect bakedSalmonEffect = new BakedSalmonEffect(randomStub);
+
+        // Apply BakedSalmonEffect with no minions on opponent's field
+        bakedSalmonEffect.applyEffect(game, player);
+
+        // Then the only interaction with the game should be getting the field
+        verify(game).getField(opponent);
+
+        // After that no more interaction with game, as no minions are present
+        verifyNoMoreInteractions(game);
+    }
+
+    @Test
+    public void shouldNotDrawCardIfNoCardsLeftInDeck() {
+        // Given a game
+        // When Findus plays noodleSoup with a empty deck
+        SpyMutableGame game = mock(SpyMutableGame.class);
+        Player player = Player.FINDUS;
+
+        // Set up the deck to be empty
+        when(game.getDeckSize(player)).thenReturn(0);
+
+        // Apply the noodleSoupEffect
+        NoodleSoupEffect noodleSoupEffect = new NoodleSoupEffect();
+        noodleSoupEffect.applyEffect(game, player);
+
+        // Then the draw card method should not be called
+        verify(game, never()).drawCard(player);
     }
 
 
