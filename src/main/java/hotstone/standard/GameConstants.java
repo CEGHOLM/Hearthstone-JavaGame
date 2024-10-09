@@ -80,6 +80,7 @@ public class GameConstants {
 
   // Other game constants
   public static final int DELTA_DECK_SIZE = 18;
+  public static final int ALPHA_DECK_SIZE = 7;
   public static final String BROWN_RICE_EFFECT = "Deal 1 damage to opponent hero";
   public static final String TOMATO_SALAD_EFFECT = "Add +1 attack to random minion";
   public static final String POKE_BOWL_EFFECT = "Restore +2 health to hero";

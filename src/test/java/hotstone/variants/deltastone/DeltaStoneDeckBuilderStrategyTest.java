@@ -6,11 +6,14 @@ import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.etastone.EtaStoneDeckBuilderStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -93,5 +96,36 @@ public class DeltaStoneDeckBuilderStrategyTest {
         String card2 = deck2.get(3).getName();
         // Then the two cards at index 3 in the two decks, should not be the same
         assertThat(card1, is(not(equalTo(card2))));
+    }
+
+    @Test
+    public void shouldProduceProperDeltaDeck() {
+        // Given a DeltaStone deck
+        // When I ask for the deck size and correct card specs
+        List<MutableCard> deck = new DeltaStoneDeckBuilderStrategy().buildDeck(Player.FINDUS);
+
+        // Then it should have size 18 and the correct specs
+        assertThat(deck.size(), is(GameConstants.DELTA_DECK_SIZE));
+        verifyCardSpecs(deck, GameConstants.BROWN_RICE_CARD, 1, 1, 2);
+        verifyCardSpecs(deck, GameConstants.FRENCH_FRIES_CARD, 1, 2, 1);
+        verifyCardSpecs(deck, GameConstants.GREEN_SALAD_CARD, 2, 2, 3);
+        verifyCardSpecs(deck, GameConstants.TOMATO_SALAD_CARD, 2, 3, 2);
+        verifyCardSpecs(deck, GameConstants.POKE_BOWL_CARD, 3, 2, 4);
+        verifyCardSpecs(deck, GameConstants.PUMPKIN_SOUP_CARD, 4, 2, 7);
+        verifyCardSpecs(deck, GameConstants.NOODLE_SOUP_CARD, 4, 5, 3);
+        verifyCardSpecs(deck, GameConstants.SPRING_ROLLS_CARD, 5, 3, 7);
+        verifyCardSpecs(deck, GameConstants.BAKED_SALMON_CARD, 5, 8, 2);
+    }
+
+    // Helper method to verify the card specifications
+    public void verifyCardSpecs(List<? extends Card> deck, String cardName, int cost, int attack, int health) {
+        // Given the name of the card, find the first such
+        Card theCard = deck.stream().filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
+        // Then the card exists
+        assertThat(theCard, is(notNullValue()));
+        // Then the card has the correct cost, attack, health and effect description
+        assertThat(theCard.getManaCost(), is(cost));
+        assertThat(theCard.getAttack(), is(attack));
+        assertThat(theCard.getHealth(), is(health));
     }
 }

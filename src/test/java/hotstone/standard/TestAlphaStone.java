@@ -35,7 +35,10 @@ import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.*;
+import hotstone.variants.deltastone.DeltaStoneDeckBuilderStrategy;
 import org.junit.jupiter.api.*;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -822,6 +825,35 @@ public class TestAlphaStone {
       Status cantAttack = game.attackHero(Player.FINDUS, card);
       // Then he should not be allowed
       assertThat(cantAttack, is(Status.NOT_PLAYER_IN_TURN));
+    }
+
+    @Test
+    public void shouldProduceProperAlphaDeck() {
+        // Given a AlphaStone deck
+        // When I ask for the deck size and correct card specs
+        List<MutableCard> deck = new AlphaStoneDeckBuilderStrategy().buildDeck(Player.FINDUS);
+
+        // Then it should have size 18 and the correct specs
+        assertThat(deck.size(), is(GameConstants.ALPHA_DECK_SIZE));
+        verifyCardSpecs(deck, GameConstants.UNO_CARD, 1, 1, 1);
+        verifyCardSpecs(deck, GameConstants.DOS_CARD, 2, 2, 2);
+        verifyCardSpecs(deck, GameConstants.TRES_CARD, 3, 3, 3);
+        verifyCardSpecs(deck, GameConstants.CUATRO_CARD, 2, 3, 1);
+        verifyCardSpecs(deck, GameConstants.CINCO_CARD, 3, 5, 1);
+        verifyCardSpecs(deck, GameConstants.SEIS_CARD, 2, 1, 3);
+        verifyCardSpecs(deck, GameConstants.SIETE_CARD, 3, 2, 4);
+    }
+
+    // Helper method to verify the card specifications
+    public void verifyCardSpecs(List<? extends Card> deck, String cardName, int cost, int attack, int health) {
+        // Given the name of the card, find the first such
+        Card theCard = deck.stream().filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
+        // Then the card exists
+        assertThat(theCard, is(notNullValue()));
+        // Then the card has the correct cost, attack, health and effect description
+        assertThat(theCard.getManaCost(), is(cost));
+        assertThat(theCard.getAttack(), is(attack));
+        assertThat(theCard.getHealth(), is(health));
     }
 
 }

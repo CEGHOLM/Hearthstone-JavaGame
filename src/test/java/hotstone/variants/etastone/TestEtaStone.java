@@ -127,7 +127,7 @@ public class TestEtaStone {
     }
 
     @Test
-    public void shouldProduceProperDeck() {
+    public void shouldProduceProperEtaDeck() {
         // Given a EtaStone deck
         // When I ask for the deck size and correct card specs
         List<MutableCard> deck = new EtaStoneDeckBuilderStrategy().buildDeck(Player.FINDUS);
