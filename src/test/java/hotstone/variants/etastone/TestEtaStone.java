@@ -206,7 +206,7 @@ public class TestEtaStone {
     @Test
     public void shouldNotIncreaseAttackIfNoOpponentMinionsOnField() {
         // Given a game
-        // When Findus plays tomatoSalad on a empty field
+        // When Findus plays bakedSalmon on a empty field
         MutableGame game = mock(MutableGame.class);
         Player player = Player.FINDUS;
         Player opponent = Player.computeOpponent(player);
