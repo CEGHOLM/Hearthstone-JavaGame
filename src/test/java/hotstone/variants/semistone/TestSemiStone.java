@@ -68,7 +68,7 @@ public class TestSemiStone {
         public void shouldUseEpsilonStoneHeroMechanicsCorrectly() {
             // Mocking the Game and Hero to simulate EpsilonStone behavior
             Hero mockHero = mock(Hero.class);
-            when(mockHero.getHealth()).thenReturn(20);  // Simulate hero health of 20 for EpsilonStone
+            when(mockHero.getHealth()).thenReturn(20);
 
             Game mockGame = mock(Game.class);
             when(mockGame.getHero(Player.FINDUS)).thenReturn(mockHero);
@@ -124,6 +124,7 @@ public class TestSemiStone {
         // When Findus draws cards at the start of each turn
         TestHelper.advanceGameNRounds(game, 3);
         int deckSize = game.getDeckSize(Player.FINDUS);
+
         // Then the deck size should be reduced appropriately
         assertThat(deckSize, is(1));
     }
@@ -134,6 +135,7 @@ public class TestSemiStone {
         game.getHero(Player.FINDUS).setMana(1);
         MutableCard card = game.getCardInHand(Player.FINDUS, 0);
         Status playStatus = game.playCard(Player.FINDUS, card, 0);
+
         // Then the game should not allow the card to be played
         assertThat(playStatus, is(Status.NOT_ENOUGH_MANA));
     }
