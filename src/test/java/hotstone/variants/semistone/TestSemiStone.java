@@ -112,6 +112,7 @@ public class TestSemiStone {
         // Given a game where Findus uses his hero power
         game.usePower(Player.FINDUS);
         TestHelper.advanceGameNRounds(game, 1);
+
         int mana = game.getHero(Player.FINDUS).getMana();
 
         // Then mana should reset to the appropriate value at the start of the new round
