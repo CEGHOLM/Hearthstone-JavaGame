@@ -1,11 +1,8 @@
 package hotstone.variants.etastone;
 
-import hotstone.framework.Card;
-import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
-import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.GameConstants;
 import hotstone.standard.SpyMutableGame;
@@ -14,11 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static hotstone.utility.TestHelper.verifyCardSpecs;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class TestEtaStone {
@@ -147,19 +144,6 @@ public class TestEtaStone {
         verifyCardSpecs(deck, GameConstants.NOODLE_SOUP_CARD, 4, 5, 3, GameConstants.NOODLE_SOUP_EFFECT);
         verifyCardSpecs(deck, GameConstants.SPRING_ROLLS_CARD, 5, 3, 5, GameConstants.SPRING_ROLLS_EFFECT);
         verifyCardSpecs(deck, GameConstants.BAKED_SALMON_CARD, 5, 7, 6, GameConstants.BAKED_SALMON_EFFECT);
-    }
-
-    // Helper method to verify the card specifications
-    public void verifyCardSpecs(List<? extends Card> deck, String cardName, int cost, int attack, int health, String effectDescription) {
-        // Given the name of the card, find the first such
-        Card theCard = deck.stream().filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
-        // Then the card exists
-        assertThat(theCard, is(notNullValue()));
-        // Then the card has the correct cost, attack, health and effect description
-        assertThat(theCard.getManaCost(), is(cost));
-        assertThat(theCard.getAttack(), is(attack));
-        assertThat(theCard.getHealth(), is(health));
-        assertThat(theCard.getEffectDescription(), is(effectDescription));
     }
 
     @Test

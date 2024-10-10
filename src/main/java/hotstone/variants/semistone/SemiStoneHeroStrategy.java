@@ -3,6 +3,7 @@ package hotstone.variants.semistone;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableHero;
 import hotstone.framework.strategies.HeroStrategy;
+import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.StandardHero;
 import hotstone.variants.gammastone.ChiliPower;
 import hotstone.variants.gammastone.SovsPower;
@@ -14,11 +15,15 @@ import hotstone.standard.GameConstants;
 import java.util.Random;
 
 public class SemiStoneHeroStrategy implements HeroStrategy {
-    private final Random random = new Random();
+    private final RandomStrategy randomStrategy;
+
+    public SemiStoneHeroStrategy(RandomStrategy randomStrategy) {
+        this.randomStrategy = randomStrategy;
+    }
 
     @Override
     public MutableHero getHero(Player player) {
-        int heroIndex = random.nextInt(4);
+        int heroIndex = randomStrategy.nextInt(4);
 
         switch (heroIndex) {
             case 0:

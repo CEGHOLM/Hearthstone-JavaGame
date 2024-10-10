@@ -96,4 +96,17 @@ public class TestHelper {
     assertThat(game.getCardInField(Player.PEDDERSEN, 0).getName(),
             is("Dos"));
   }
+
+  // Helper method to verify the card specifications
+  public static void verifyCardSpecs(List<? extends Card> deck, String cardName, int cost, int attack, int health, String effectDescription) {
+    // Given the name of the card, find the first such
+    Card theCard = deck.stream().filter(card -> card.getName().equals(cardName)).findFirst().orElse(null);
+    // Then the card exists
+    assertThat(theCard, is(notNullValue()));
+    // Then the card has the correct cost, attack, health and effect description
+    assertThat(theCard.getManaCost(), is(cost));
+    assertThat(theCard.getAttack(), is(attack));
+    assertThat(theCard.getHealth(), is(health));
+    assertThat(theCard.getEffectDescription(), is(effectDescription));
+  }
 }
