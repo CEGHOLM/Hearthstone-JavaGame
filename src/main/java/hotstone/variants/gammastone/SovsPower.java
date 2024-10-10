@@ -4,6 +4,7 @@ import hotstone.framework.*;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardCard;
+import hotstone.variants.NullEffect;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class SovsPower implements Effect {
     public void applyEffect(MutableGame game, Player player) {
         // Summon "Sovs" card on the owner's field
         List<Card> ownerField = (List<Card>) game.getField(player);
-        ownerField.add(new StandardCard(GameConstants.SOVS_CARD, 0,1,1, player, null));
+        ownerField.add(new StandardCard(GameConstants.SOVS_CARD, 0,1,1, player, new NullEffect()));
     }
 
     @Override

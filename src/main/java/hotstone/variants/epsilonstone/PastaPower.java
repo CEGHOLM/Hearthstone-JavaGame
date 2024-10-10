@@ -11,7 +11,7 @@ public class PastaPower implements Effect {
 
     private RandomStrategy randomStrategy;
 
-    // Brug RandomStrategy i stedet for Random
+    // Use RandomStrategy
     public PastaPower(RandomStrategy randomStrategy) {
         this.randomStrategy = randomStrategy;
     }
@@ -21,10 +21,10 @@ public class PastaPower implements Effect {
         List<? extends Card> friendlyMinions = (List<? extends Card>) game.getField(player);
 
         if (!friendlyMinions.isEmpty()) {
-            // Brug randomStrategy til at vælge en minion
+            // Use randomStrategy to choos a minion
             int targetIndex = randomStrategy.nextInt(friendlyMinions.size());
             MutableCard target = (MutableCard) friendlyMinions.get(targetIndex);
-            target.increaseAttack(2);  // Øg angrebet med 2
+            target.increaseAttack(2);  // Increase attack by 2
         }
     }
 

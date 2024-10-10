@@ -23,10 +23,10 @@ public class RedwinePower implements Effect {
         List<? extends Card> opponentMinions = (List<? extends Card>) game.getField(opponent);
 
         if (!opponentMinions.isEmpty()) {
-            // Brug randomStrategy til at vælge en minion
+            // Use randomStrategy to choose a minion
             int targetIndex = randomStrategy.nextInt(opponentMinions.size());
             MutableCard target = (MutableCard) opponentMinions.get(targetIndex);
-            target.takeDamage(2);  // Giv 2 skade
+            target.takeDamage(2);  // Give to damage
         }
     }
 
