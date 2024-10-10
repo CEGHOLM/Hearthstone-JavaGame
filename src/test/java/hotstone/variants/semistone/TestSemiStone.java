@@ -123,6 +123,7 @@ public class TestSemiStone {
         // Given a game
         // When Findus draws cards at the start of each turn
         TestHelper.advanceGameNRounds(game, 3);
+
         int deckSize = game.getDeckSize(Player.FINDUS);
 
         // Then the deck size should be reduced appropriately
