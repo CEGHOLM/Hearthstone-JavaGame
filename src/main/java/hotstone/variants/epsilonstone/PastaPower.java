@@ -1,21 +1,30 @@
 package hotstone.variants.epsilonstone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.strategies.RandomStrategy;
 
 import java.util.List;
-import java.util.Random;
 
-public class PastaPower implements HeroPowerStrategy {
+public class PastaPower implements Effect {
+
+    private RandomStrategy randomStrategy;
+
+    // Use RandomStrategy
+    public PastaPower(RandomStrategy randomStrategy) {
+        this.randomStrategy = randomStrategy;
+    }
 
     @Override
-    public void usePower(Game game, Hero hero) {
-        List<Card> friendlyMinions = (List<Card>) game.getField(hero.getOwner());
+    public void applyEffect(MutableGame game, Player player) {
+        List<? extends Card> friendlyMinions = (List<? extends Card>) game.getField(player);
+
         if (!friendlyMinions.isEmpty()) {
-            // Use the hero's random generator to pick a friendly minion
-            Random random = hero.getRandomGenerator();
-            int targetIndex = random.nextInt(friendlyMinions.size());
-            Card target = friendlyMinions.get(targetIndex);
-            target.increaseAttack(2); // Increase attack by 2
+            // Use randomStrategy to choos a minion
+            int targetIndex = randomStrategy.nextInt(friendlyMinions.size());
+            MutableCard target = (MutableCard) friendlyMinions.get(targetIndex);
+            target.increaseAttack(2);  // Increase attack by 2
         }
     }
 

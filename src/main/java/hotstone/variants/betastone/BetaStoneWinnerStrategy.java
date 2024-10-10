@@ -2,7 +2,7 @@ package hotstone.variants.betastone;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.WinningStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 
 public class BetaStoneWinnerStrategy implements WinningStrategy {
     @Override

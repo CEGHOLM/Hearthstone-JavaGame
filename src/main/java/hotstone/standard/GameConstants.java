@@ -77,4 +77,15 @@ public class GameConstants {
   public static final String TZATZIKI_CARD = "Tzatziki";
   public static final String LASAGNA_CARD = "Lasagna";
   public static final String MUSLI_BAR_CARD = "Musli-Bar";
+
+  // Other game constants
+  public static final int DELTA_DECK_SIZE = 18;
+  public static final int ALPHA_DECK_SIZE = 7;
+  public static final String BROWN_RICE_EFFECT = "Deal 1 damage to opponent hero";
+  public static final String TOMATO_SALAD_EFFECT = "Add +1 attack to random minion";
+  public static final String POKE_BOWL_EFFECT = "Restore +2 health to hero";
+  public static final String NOODLE_SOUP_EFFECT = "Draw a card";
+  public static final String SPRING_ROLLS_EFFECT = "Destroy a random opponent minion";
+  public static final String BAKED_SALMON_EFFECT = "Add +2 attack to random opponent minion";
 }
+

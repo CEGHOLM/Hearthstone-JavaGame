@@ -2,7 +2,7 @@ package hotstone.variants.alphastone;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.WinningStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 
 public class AlphaStoneWinnerStrategy implements WinningStrategy {
 

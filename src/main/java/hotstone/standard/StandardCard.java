@@ -1,9 +1,12 @@
 package hotstone.standard;
 
 import hotstone.framework.Card;
+import hotstone.framework.Effect;
+import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
+import hotstone.framework.mutability.MutableGame;
 
-public class StandardCard implements Card {
+public class StandardCard implements Card, MutableCard {
     private String name;
     private int manaCost;
     private int attack;
@@ -11,8 +14,9 @@ public class StandardCard implements Card {
     private Player owner;
     private int turnsOnField; // Flag to track if the card has attacked in the current turn
     private boolean hasAttacked;
+    private Effect effect;
 
-    public StandardCard(String name, int manaCost, int attack, int health, Player owner) {
+    public StandardCard(String name, int manaCost, int attack, int health, Player owner, Effect effect) {
         this.name = name;
         this.manaCost = manaCost;
         this.attack = attack;
@@ -20,6 +24,7 @@ public class StandardCard implements Card {
         this.turnsOnField = 0;
         this.hasAttacked = false;
         this.owner = owner;
+        this.effect = effect;
     }
     @Override
     public String getName() {
@@ -51,23 +56,24 @@ public class StandardCard implements Card {
         hasAttacked = false;
     }
 
+    @Override
     public boolean canAttack() {
-        return !hasAttacked && isActive(); // Can attack if it hasn't attacked yet this turn and is active
+        return !this.hasAttacked && isActive(); // Can attack if it hasn't attacked yet this turn and is active
     }
 
     @Override
     public int takeDamage(int damage) {
-        return health -= damage;
+        return this.health -= damage;
     }
 
     @Override
     public void attack() {
-        hasAttacked = true; // Mark the card as having attacked
+        this.hasAttacked = true; // Mark the card as having attacked
     }
 
     @Override
     public void increaseAttack(int i) {
-        attack += i;
+        this.attack += i;
     }
 
     @Override
@@ -77,6 +83,17 @@ public class StandardCard implements Card {
 
     @Override
     public String getEffectDescription() {
-        return null;
+        return effect.getEffectDescription();
+
+    }
+
+    @Override
+    public Effect getEffect() {
+        return effect;
+    }
+
+    @Override
+    public void applyEffect(MutableGame game) {
+        effect.applyEffect(game, owner);
     }
 }

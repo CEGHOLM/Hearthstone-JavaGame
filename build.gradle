@@ -35,6 +35,10 @@ dependencies {
     // Use the Hamcrest matcher library
     testImplementation group: 'org.hamcrest',
             name: 'hamcrest-library', version: '2.2'
+
+    // Mockito for JUnit 5
+    testImplementation 'org.mockito:mockito-core:4.1.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.1.0'
 }
 
 test {

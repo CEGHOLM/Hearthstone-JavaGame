@@ -1,6 +1,6 @@
 package hotstone.variants.betastone;
 
-import hotstone.framework.ManaProductionStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
 
 public class BetaStoneManaStrategy implements ManaProductionStrategy {
     @Override

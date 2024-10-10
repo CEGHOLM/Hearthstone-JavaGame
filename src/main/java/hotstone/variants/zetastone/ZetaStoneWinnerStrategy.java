@@ -1,6 +1,7 @@
 package hotstone.variants.zetastone;
 
 import hotstone.framework.*;
+import hotstone.framework.strategies.WinningStrategy;
 import hotstone.variants.alphastone.AlphaStoneWinnerStrategy;
 import hotstone.variants.betastone.BetaStoneWinnerStrategy;
 import hotstone.variants.gammastone.GammaStoneWinnerStrategy;

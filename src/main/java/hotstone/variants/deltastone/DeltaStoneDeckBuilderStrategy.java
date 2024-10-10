@@ -1,9 +1,11 @@
 package hotstone.variants.deltastone;
 
-import hotstone.framework.Card;
-import hotstone.framework.DeckBuilderStrategy;
+import hotstone.framework.strategies.DeckBuilderStrategy;
+import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
+import hotstone.standard.GameConstants;
 import hotstone.standard.StandardCard;
+import hotstone.variants.NullEffect;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,32 +13,32 @@ import java.util.List;
 
 public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     @Override
-    public List<Card> buildDeck(Player player) {
+    public List<MutableCard> buildDeck(Player player) {
         // Define the 9 cards
-        List<Card> cards = new ArrayList<>();
-        cards.add(new StandardCard("Brown Rice", 1, 1, 2, player));
-        cards.add(new StandardCard("French Fries", 1, 2, 1, player));
-        cards.add(new StandardCard("Green Salad", 2, 2, 3, player));
-        cards.add(new StandardCard("Tomato Salad", 2, 3, 2, player));
-        cards.add(new StandardCard("Poke Bowl", 3, 2, 4, player));
-        cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player));
-        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player));
-        cards.add(new StandardCard("Spring Rolls", 5, 3, 7, player));
-        cards.add(new StandardCard("Baked Salmon", 5, 8, 2, player));
-        cards.add(new StandardCard("Brown Rice", 1, 1, 2, player));
-        cards.add(new StandardCard("French Fries", 1, 2, 1, player));
-        cards.add(new StandardCard("Green Salad", 2, 2, 3, player));
-        cards.add(new StandardCard("Tomato Salad", 2, 3, 2, player));
-        cards.add(new StandardCard("Poke Bowl", 3, 2, 4, player));
-        cards.add(new StandardCard("Pumpkin Soup", 4, 2, 7, player));
-        cards.add(new StandardCard("Noodle Soup", 4, 5, 3, player));
-        cards.add(new StandardCard("Spring Rolls", 5, 3, 7, player));
-        cards.add(new StandardCard("Baked Salmon", 5, 8, 2, player));
+        List<MutableCard> cards = new ArrayList<>();
+        cards.add(new StandardCard(GameConstants.BROWN_RICE_CARD, 1, 1, 2, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.FRENCH_FRIES_CARD, 1, 2, 1, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.GREEN_SALAD_CARD, 2, 2, 3, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.TOMATO_SALAD_CARD, 2, 3, 2, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.POKE_BOWL_CARD, 3, 2, 4, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.PUMPKIN_SOUP_CARD, 4, 2, 7, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.NOODLE_SOUP_CARD, 4, 5, 3, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.SPRING_ROLLS_CARD, 5, 3, 7, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.BAKED_SALMON_CARD, 5, 8, 2, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.BROWN_RICE_CARD, 1, 1, 2, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.FRENCH_FRIES_CARD, 1, 2, 1, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.GREEN_SALAD_CARD, 2, 2, 3, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.TOMATO_SALAD_CARD, 2, 3, 2, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.POKE_BOWL_CARD, 3, 2, 4, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.PUMPKIN_SOUP_CARD, 4, 2, 7, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.NOODLE_SOUP_CARD, 4, 5, 3, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.SPRING_ROLLS_CARD, 5, 3, 7, player, new NullEffect()));
+        cards.add(new StandardCard(GameConstants.BAKED_SALMON_CARD, 5, 8, 2, player, new NullEffect()));
 
         // Add every card to the deck twice
-        List<Card> deck = new ArrayList<>();
-        for (Card card : cards) {
-            deck.add(new StandardCard(card.getName(), card.getManaCost(), card.getAttack(), card.getHealth(), card.getOwner()));
+        List<MutableCard> deck = new ArrayList<>();
+        for (MutableCard card : cards) {
+            deck.add(new StandardCard(card.getName(), card.getManaCost(), card.getAttack(), card.getHealth(), card.getOwner(), card.getEffect()));
         }
 
         // Shuffle the deck
@@ -46,7 +48,7 @@ public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     }
 
     // Make sure the first 3 cards follow the mana cost specifications
-    private List<Card> enforceManaConstraints(List<Card> deck) {
+    private List<MutableCard> enforceManaConstraints(List<MutableCard> deck) {
         // find and move a 1 mana card to index 0
         moveCardWithManaCost(deck, 1, 0);
 
@@ -60,7 +62,7 @@ public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
     }
 
     // A function to help find and move the cards around based in mana cost
-    private void moveCardWithManaCost(List<Card> deck, int maxMana, int position) {
+    private void moveCardWithManaCost(List<MutableCard> deck, int maxMana, int position) {
         for (int i = position; i < deck.size(); i++) {
             if (deck.get(i).getManaCost() <= maxMana) {
                 Collections.swap(deck, i, position);

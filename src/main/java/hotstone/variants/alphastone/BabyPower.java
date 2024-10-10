@@ -1,12 +1,13 @@
 package hotstone.variants.alphastone;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.HeroPowerStrategy;
+import hotstone.framework.Effect;
+import hotstone.framework.Player;
+import hotstone.framework.mutability.MutableGame;
 
-public class BabyPower implements HeroPowerStrategy {
+public class BabyPower implements Effect {
+
     @Override
-    public void usePower(Game game, Hero hero) {
+    public void applyEffect(MutableGame game, Player player) {
     }
 
     @Override

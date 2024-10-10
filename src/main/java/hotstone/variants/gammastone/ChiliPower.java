@@ -1,17 +1,15 @@
 package hotstone.variants.gammastone;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.HeroPowerStrategy;
-import hotstone.framework.Player;
+import hotstone.framework.*;
+import hotstone.framework.mutability.MutableGame;
 
-public class ChiliPower implements HeroPowerStrategy {
+public class ChiliPower implements Effect {
     @Override
-    public void usePower(Game game, Hero hero) {
+    public void applyEffect(MutableGame game, Player player) {
         // Find oppponent and deal 2 damage to their hero
-        Player opponent = Player.computeOpponent(hero.getOwner());
-        Hero opponentHero = game.getHero(opponent);
-        opponentHero.takeDamage(2);
+        Player opponent = Player.computeOpponent(player);
+
+        game.changeHeroHealth(opponent, -2);
     }
 
     @Override

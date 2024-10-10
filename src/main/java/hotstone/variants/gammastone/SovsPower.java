@@ -1,17 +1,20 @@
 package hotstone.variants.gammastone;
 
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.standard.GameConstants;
 import hotstone.standard.StandardCard;
+import hotstone.variants.NullEffect;
 
 import java.util.List;
 
-public class SovsPower implements HeroPowerStrategy {
+public class SovsPower implements Effect {
+
     @Override
-    public void usePower(Game game, Hero hero) {
-        // Summon "Sove" card on the owner's field
-        Player owner = hero.getOwner();
-        List<Card> ownerField = (List<Card>) game.getField(owner);
-        ownerField.add(new StandardCard("Sovs", 0,1,1, owner));
+    public void applyEffect(MutableGame game, Player player) {
+        // Summon "Sovs" card on the owner's field
+        List<Card> ownerField = (List<Card>) game.getField(player);
+        ownerField.add(new StandardCard(GameConstants.SOVS_CARD, 0,1,1, player, new NullEffect()));
     }
 
     @Override

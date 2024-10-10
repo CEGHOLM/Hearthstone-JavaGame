@@ -1,6 +1,10 @@
 package hotstone.variants.alphastone;
 
 import hotstone.framework.*;
+import hotstone.framework.strategies.DeckBuilderStrategy;
+import hotstone.framework.strategies.HeroStrategy;
+import hotstone.framework.strategies.ManaProductionStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 
 public class AlphaStoneFactory implements HotstoneFactory {
     @Override

@@ -17,6 +17,9 @@
 
 package hotstone.framework;
 
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableHero;
+
 import java.util.List;
 
 /** The role of a single HotStone game, allowing clients to access and
@@ -39,7 +42,7 @@ public interface Game {
    * @param who the owning player
    * @return the hero
    */
-  Hero getHero(Player who);
+  MutableHero getHero(Player who);
 
   /** Get who has won the game.
    *
@@ -79,7 +82,7 @@ public interface Game {
    *                    0..handsize-1.
    * @return the card in the hand at that position.
    */
-  Card getCardInHand(Player who, int indexInHand);
+  MutableCard getCardInHand(Player who, int indexInHand);
 
   /** Get an iterable over the cards in the hand. Convenience method
    * to allow writing code ala 
@@ -145,70 +148,5 @@ public interface Game {
    */
   int getFieldSize(Player who);
 
-  // === Mutators
-
-  /**
-   * Perform end of turn for current player, to prepare for the
-   * opponent's turn.  PRECONDITION: The client MUST ensure that
-   * endTurn() is never called by the player which is NOT in turn.
-   */
-  void endTurn();
-
-  /** Play a card from the hand to the field.
-   *
-   * PRECONDITION: 'who' is never null.
-   * PRECONDITION: the card is a non-null card retrieved by the
-   * 'getCardInHand()' method.
-   * PRECONDITION: atIndex in range 0 .. getFieldSize(who)
-   *
-   * @param who player to play card
-   * @param card card to play
-   * @param atIndex index at which the card should be
-   *                entered on the field. 0 = left of
-   *                leftmost minion, 1 = between first
-   *                and second minion, etc.
-   * @return Status of operation
-   */
-  public Status playCard(Player who, Card card, int atIndex);
-
-  /** Attack one card with another on the fields.
-   *
-   * PRECONDITION: 'who' is never null.
-   * PRECONDITION: both cards are a non-null card retrieved by the
-   * 'getCardInField()' method.
-   *
-   * @param playerAttacking the player making the attack
-   * @param attackingCard the card attacking
-   * @param defendingCard the card defending
-   * @return a status identifying the outcome of the attack, which is
-   *    either OK or some value explaining why the action was invalid.
-   */
-  Status attackCard(Player playerAttacking,
-                    Card attackingCard, Card defendingCard);
-
-  /** Attack a hero with a card in the field.
-   *
-   * PRECONDITION: 'who' is never null.
-   * PRECONDITION: the card is a non-null card retrieved by the
-   * 'getCardInField()' method.
-   *
-   * @param playerAttacking the player making the attack
-   * @param attackingCard the card attacking
-   * @return a status identifying the outcome of the attack, which is
-   *    either OK or some value explaining why the action was invalid.
-   */
-  Status attackHero(Player playerAttacking, Card attackingCard);
-
-  /** Use a hero's special power/effect.
-   *
-   * PRECONDITION: 'who' is never null.
-   *
-   * @param who the player using his/her hero's power
-   * @return a status identifying the outcome of the power use, which
-   *    is either OK or some value explaining why the action was
-   *    invalid.
-   */
-  Status usePower(Player who);
-
-  List<Card> getDeck(Player who);
+  List<? extends Card> getDeck(Player who);
 }

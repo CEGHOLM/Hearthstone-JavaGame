@@ -2,7 +2,7 @@ package hotstone.variants.gammastone;
 
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.framework.WinningStrategy;
+import hotstone.framework.strategies.WinningStrategy;
 
 public class GammaStoneWinnerStrategy implements WinningStrategy {
     @Override

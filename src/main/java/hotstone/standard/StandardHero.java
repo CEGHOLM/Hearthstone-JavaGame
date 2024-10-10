@@ -1,38 +1,23 @@
 package hotstone.standard;
 
-import hotstone.framework.Game;
-import hotstone.framework.Hero;
-import hotstone.framework.HeroPowerStrategy;
-import hotstone.framework.Player;
+import hotstone.framework.*;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 
-import java.util.Random;
-
-public abstract class StandardHero implements Hero {
+public class StandardHero implements Hero, MutableHero {
     private int mana;
     private int health;
     private String heroType;
     private boolean powerStatus = true;
     private Player owner;
-    private HeroPowerStrategy heroPowerStrategy;
-    private Random randomGenerator; // Random generator for hero powers
+    private Effect heroPower;
 
-    public StandardHero(int mana, int health, String heroType, Player owner, HeroPowerStrategy heroPowerStrategy) {
+    public StandardHero(int mana, int health, String heroType, Player owner, Effect heroPower) {
         this.mana = mana;
         this.health = health;
         this.heroType = heroType;
         this.owner = owner;
-        this.heroPowerStrategy = heroPowerStrategy;
-        this.randomGenerator = new Random(); // Default random generator
-    }
-
-    // Getter for random generator
-    public Random getRandomGenerator() {
-        return randomGenerator;
-    }
-
-    // Setter for random generator (used for test stubbing)
-    public void setRandomGenerator(Random randomGenerator) {
-        this.randomGenerator = randomGenerator;
+        this.heroPower = heroPower;
     }
 
     @Override
@@ -40,8 +25,9 @@ public abstract class StandardHero implements Hero {
         return mana;
     }
 
+    @Override
     public void setMana(int newValue) {
-        mana = newValue;
+        this.mana = newValue;
     }
 
     @Override
@@ -54,8 +40,9 @@ public abstract class StandardHero implements Hero {
         return powerStatus;
     }
 
+    @Override
     public void setPowerStatus(boolean newStatus) {
-        powerStatus = newStatus;
+        this.powerStatus = newStatus;
     }
 
     @Override
@@ -70,20 +57,22 @@ public abstract class StandardHero implements Hero {
 
     @Override
     public String getEffectDescription() {
-        return heroPowerStrategy.getEffectDescription();
-    }
-
-    public void setHealth(int newHealth) {
-        health = newHealth;
-    }
-
-    public void takeDamage(int damage) {
-        health -= damage;
+        return heroPower.getEffectDescription();
     }
 
     @Override
-    public void usePower(Game game) {
-        heroPowerStrategy.usePower(game, this);
+    public void setHealth(int newHealth) {
+        this.health = newHealth;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        this.health += damage;
+    }
+
+    @Override
+    public void usePower(MutableGame game) {
+        heroPower.applyEffect(game, owner);  // Use the common Effect interface to apply power
     }
 }
 
