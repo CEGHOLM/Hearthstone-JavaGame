@@ -27,7 +27,7 @@ public class TomatoSaladEffect implements Effect {
             MutableCard minion = minionsOnField.get(randomIndex);
 
             // Increase the minions attack by 1
-            minion.increaseAttack(1);
+            game.changeMinionAttack(minion, 1);
         }
     }
 

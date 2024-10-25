@@ -9,15 +9,20 @@ import hotstone.framework.mutability.MutableHero;
 import hotstone.observer.GameObserver;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpyMutableGame implements MutableGame {
-    private List<MutableCard> fieldMinions;
     private String lastCall; // Record the last method that was called
+    private Map<Player, List<MutableCard>> fields = new HashMap<>();
+
 
     public SpyMutableGame() {
-        fieldMinions = new ArrayList<>();
         lastCall = null;
+        // Each player has an empty list as field at the start of the game
+        fields.put(Player.FINDUS, new ArrayList<>());
+        fields.put(Player.PEDDERSEN, new ArrayList<>());
     }
 
     public String getLastCall() {
@@ -28,10 +33,9 @@ public class SpyMutableGame implements MutableGame {
         this.lastCall = methodCall;
     }
 
-    public void addMinionToField(MutableCard minion) {
-        fieldMinions.add(minion);
+    public void addMinionToField(Player who, MutableCard minion) {
+        fields.get(who).add(minion);
     }
-
 
     @Override
     public void endTurn() {
@@ -41,7 +45,6 @@ public class SpyMutableGame implements MutableGame {
     @Override
     public Status playCard(Player who, MutableCard card, int atIndex) {
         recordMethodCall("playCard");
-        card.applyEffect(this);
         return Status.OK;
     }
 
@@ -75,8 +78,12 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public void removeMinionFromField(Player player, MutableCard card) {
-        recordMethodCall("removeMinionFromField");
-        fieldMinions.remove(card);
+        recordMethodCall("removeMinionFromField from " + player + " field");
+    }
+
+    @Override
+    public void changeMinionAttack(MutableCard card, int i) {
+        recordMethodCall("changeMinionAttack by " + i);
     }
 
     @Override
@@ -126,12 +133,12 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public Iterable<? extends Card> getField(Player who) {
-        return fieldMinions;
+        return fields.get(who);
     }
 
     @Override
     public int getFieldSize(Player who) {
-        return fieldMinions.size();
+        return fields.get(who).size();
     }
 
     @Override

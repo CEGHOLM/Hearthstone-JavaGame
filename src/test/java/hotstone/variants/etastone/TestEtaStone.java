@@ -72,13 +72,13 @@ public class TestEtaStone {
 
         // Create a mock minion and add it to the field
         MutableCard minion = mock(MutableCard.class);
-        game.addMinionToField(minion);  // Add the mock minion to the game's field
+        game.addMinionToField(player, minion);  // Add the mock minion to the game's field
 
         // Apply the TomatoSaladEffect
         tomatoSaladEffect.applyEffect(game, player);
 
         // Verify that the first minion had its attack increased by 1
-        verify(minion).increaseAttack(1);
+        assertThat(game.getLastCall(), is("changeMinionAttack by 1"));
     }
 
     @Test
@@ -95,14 +95,14 @@ public class TestEtaStone {
         // Create two mock minions and add them to the opponent's field
         MutableCard minion1 = mock(MutableCard.class);
         MutableCard minion2 = mock(MutableCard.class);
-        game.addMinionToField(minion1);  // Add the first mock minion to the opponent's field
-        game.addMinionToField(minion2);  // Add the second mock minion
+        game.addMinionToField(Player.PEDDERSEN, minion1);  // Add the first mock minion to the opponent's field
+        game.addMinionToField(Player.PEDDERSEN, minion2);  // Add the second mock minion
 
         // Apply the SpringRollsEffect
         springRollsEffect.applyEffect(game, player);
 
         // Verify that the first minion was removed from the opponent's field
-        assertThat(game.getFieldSize(opponent), is(1));  // One minion should be removed
+        assertThat(game.getLastCall(), is("removeMinionFromField from PEDDERSEN field"));  // One minion should be removed
     }
 
     @Test
@@ -115,13 +115,13 @@ public class TestEtaStone {
 
         // Create a mock minion and add it to the field
         MutableCard minion = mock(MutableCard.class);
-        game.addMinionToField(minion);  // Add the mock minion to the game's field
+        game.addMinionToField(Player.PEDDERSEN, minion);  // Add the mock minion to the game's field
 
         // Apply the TomatoSaladEffect
         bakedSalmonEffect.applyEffect(game, player);
 
         // Verify that the first minion had its attack increased by 1
-        verify(minion).increaseAttack(2);
+        assertThat(game.getLastCall(), is("changeMinionAttack by 2"));
     }
 
     @Test

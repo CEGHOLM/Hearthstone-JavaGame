@@ -26,6 +26,7 @@ import hotstone.framework.strategies.HeroStrategy;
 import hotstone.framework.strategies.ManaProductionStrategy;
 import hotstone.framework.strategies.WinningStrategy;
 import hotstone.observer.GameObserver;
+import hotstone.observer.ObserverHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   private Map<Player, List<MutableCard>> hands = new HashMap<>();
   private Map<Player, List<MutableCard>> decks = new HashMap<>();
   private Map<Player, List<MutableCard>> fields = new HashMap<>();
+  private ObserverHandler observerHandler = new ObserverHandler();
 
   public StandardHotStoneGame(HotstoneFactory factory) {
     // Initialize strategies
@@ -295,6 +297,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
     fields.get(who).remove(card);
   }
 
+  @Override
+  public void changeMinionAttack(MutableCard card, int i) {
+    card.changeAttack(i);
+  }
+
   private Status isAttackPossible(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
     // Check it's the players turn
     boolean isAttackingPlayersTurn = getPlayerInTurn() == playerAttacking;
@@ -387,6 +394,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   @Override
   public void addObserver(GameObserver observer) {
-
+    observerHandler.addObserver(observer);
   }
 }

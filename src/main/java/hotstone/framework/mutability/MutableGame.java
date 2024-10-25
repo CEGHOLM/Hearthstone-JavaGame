@@ -27,5 +27,7 @@ public interface MutableGame extends Game {
      * @param card The minion we're removing (when cards are played, they become minions)
      */
     void removeMinionFromField(Player player, MutableCard card);
+
+    void changeMinionAttack(MutableCard card, int i);
 }
 

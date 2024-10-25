@@ -72,7 +72,7 @@ public class StandardCard implements Card, MutableCard {
     }
 
     @Override
-    public void increaseAttack(int i) {
+    public void changeAttack(int i) {
         this.attack += i;
     }
 
