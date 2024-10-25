@@ -35,7 +35,6 @@ import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.*;
-import hotstone.variants.deltastone.DeltaStoneDeckBuilderStrategy;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

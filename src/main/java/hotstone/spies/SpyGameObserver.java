@@ -1,0 +1,92 @@
+package hotstone.spies;
+
+import hotstone.framework.Card;
+import hotstone.framework.Player;
+import hotstone.observer.GameObserver;
+
+public class SpyGameObserver implements GameObserver {
+
+    private String lastCall; // Record last method call
+    private Player lastPlayer; // Record last player
+    private Card lastCard; // Record last card
+    private int lastIndex; // Record last index
+
+    public SpyGameObserver() {
+        this.lastCall = null;
+        this.lastPlayer = null;
+        this.lastCard = null;
+        this.lastIndex = -1;
+    }
+
+    public String getLastCall() {
+        return lastCall;
+    }
+
+    public Player getLastPlayer() {
+        return lastPlayer;
+    }
+
+    public Card getLastCard() {
+        return lastCard;
+    }
+
+    public int getLastIndex() {
+        return lastIndex;
+    }
+
+    public void recordMethodCall(String methodCall, Player player, Card card, int index) {
+        this.lastCall = methodCall;
+        this.lastPlayer = player;
+        this.lastCard = card;
+        this.lastIndex = index;
+    }
+    @Override
+    public void onPlayCard(Player who, Card card, int atIndex) {
+        recordMethodCall("onPlayCard", who, card, atIndex);
+    }
+
+    @Override
+    public void onChangeTurnTo(Player playerBecomingActive) {
+
+    }
+
+    @Override
+    public void onAttackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+
+    }
+
+    @Override
+    public void onAttackHero(Player playerAttacking, Card attackingCard) {
+
+    }
+
+    @Override
+    public void onUsePower(Player who) {
+
+    }
+
+    @Override
+    public void onCardDraw(Player who, Card drawnCard) {
+
+    }
+
+    @Override
+    public void onCardUpdate(Card card) {
+
+    }
+
+    @Override
+    public void onCardRemove(Player who, Card card) {
+
+    }
+
+    @Override
+    public void onHeroUpdate(Player who) {
+
+    }
+
+    @Override
+    public void onGameWon(Player playerWinning) {
+
+    }
+}

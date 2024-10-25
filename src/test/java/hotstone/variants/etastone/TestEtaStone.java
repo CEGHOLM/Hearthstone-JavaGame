@@ -5,8 +5,9 @@ import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.GameConstants;
-import hotstone.standard.SpyMutableGame;
+import hotstone.spies.SpyMutableGame;
 import hotstone.variants.StubRandomStrategy;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -19,53 +20,55 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class TestEtaStone {
+    private SpyMutableGame game;
+
+    @BeforeEach
+    public void setUp() {
+        game = new SpyMutableGame();
+    }
 
     @Test
     public void shouldDealOneDamageToOpponentHero() {
         // Given a SpyMutableGame
-        SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         BrownRiceEffect brownRiceEffect = new BrownRiceEffect();
 
         // Apply the effect
         brownRiceEffect.applyEffect(game, player);
 
-        // Assert that the correct method in MutableGame was called
+        // Assert that the correct method in game was called
         assertThat(game.getLastCall(), is("changeHeroHealth for: PEDDERSEN with amount: -1"));
     }
 
     @Test
     public void shouldAddTwoHealthToHero() {
         // Given a SpyMutableGame
-        SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         PokeBowlEffect pokeBowlEffect = new PokeBowlEffect();
 
         // Apply effect
         pokeBowlEffect.applyEffect(game, player);
 
-        // Assert that the correct method in MutableGame was called
+        // Assert that the correct method in game was called
         assertThat(game.getLastCall(), is("changeHeroHealth for: FINDUS with amount: 2"));
     }
 
     @Test
     public void shouldMakePlayerDrawACard() {
         // Given a SpyMutableGame
-        SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         NoodleSoupEffect noodleSoupEffect = new NoodleSoupEffect();
 
         // Apply effect
         noodleSoupEffect.applyEffect(game, player);
 
-        // Assert that the correct method in MutableGame was called
+        // Assert that the correct method in game was called
         assertThat(game.getLastCall(), is("drawCard"));
     }
 
     @Test
     public void shouldAddOneAttackToRandomFriendlyMinion() {
-        // Create a Spy for MutableGame
-        SpyMutableGame game = new SpyMutableGame();
+        // Given a SpyMutableGame
         Player player = Player.FINDUS;
         RandomStrategy randomStub = new StubRandomStrategy(0);  // Always choose the first minion
         TomatoSaladEffect tomatoSaladEffect = new TomatoSaladEffect(randomStub);
@@ -77,14 +80,13 @@ public class TestEtaStone {
         // Apply the TomatoSaladEffect
         tomatoSaladEffect.applyEffect(game, player);
 
-        // Verify that the first minion had its attack increased by 1
+        // Assert that the correct method in game was called
         assertThat(game.getLastCall(), is("changeMinionAttack by 1"));
     }
 
     @Test
     public void shouldDestroyRandomMinionOnOpponentField() {
-        // Create a Spy for MutableGame
-        SpyMutableGame game = new SpyMutableGame();
+        // Given a SpyMutableGame
         Player player = Player.FINDUS;
         Player opponent = Player.computeOpponent(player);
 
@@ -95,20 +97,19 @@ public class TestEtaStone {
         // Create two mock minions and add them to the opponent's field
         MutableCard minion1 = mock(MutableCard.class);
         MutableCard minion2 = mock(MutableCard.class);
-        game.addMinionToField(Player.PEDDERSEN, minion1);  // Add the first mock minion to the opponent's field
-        game.addMinionToField(Player.PEDDERSEN, minion2);  // Add the second mock minion
+        game.addMinionToField(opponent, minion1);  // Add the first mock minion to the opponent's field
+        game.addMinionToField(opponent, minion2);  // Add the second mock minion
 
         // Apply the SpringRollsEffect
         springRollsEffect.applyEffect(game, player);
 
-        // Verify that the first minion was removed from the opponent's field
+        // Assert that the correct method in game was called
         assertThat(game.getLastCall(), is("removeMinionFromField from PEDDERSEN field"));  // One minion should be removed
     }
 
     @Test
     public void shouldAddTwoAttackToRandomEnemyMinion() {
-        // Create a Spy for MutableGame
-        SpyMutableGame game = new SpyMutableGame();
+        // Given a SpyMutableGame
         Player player = Player.FINDUS;
         RandomStrategy randomStub = new StubRandomStrategy(0);  // Always choose the first minion
         BakedSalmonEffect bakedSalmonEffect = new BakedSalmonEffect(randomStub);
@@ -120,7 +121,7 @@ public class TestEtaStone {
         // Apply the TomatoSaladEffect
         bakedSalmonEffect.applyEffect(game, player);
 
-        // Verify that the first minion had its attack increased by 1
+        // Assert that the correct method in game was called
         assertThat(game.getLastCall(), is("changeMinionAttack by 2"));
     }
 
@@ -210,7 +211,7 @@ public class TestEtaStone {
     public void shouldNotDrawCardIfNoCardsLeftInDeck() {
         // Given a game
         // When Findus plays noodleSoup with a empty deck
-        SpyMutableGame game = mock(SpyMutableGame.class);
+        MutableGame game = mock(MutableGame.class);
         Player player = Player.FINDUS;
 
         // Set up the deck to be empty

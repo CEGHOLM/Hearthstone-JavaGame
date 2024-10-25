@@ -1,4 +1,4 @@
-package hotstone.standard;
+package hotstone.spies;
 
 import hotstone.framework.Card;
 import hotstone.framework.Player;
