@@ -19,6 +19,7 @@ package hotstone.framework;
 
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableHero;
+import hotstone.observer.Observable;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * modify the state of a game.
  * 
  */
-public interface Game {
+public interface Game extends Observable {
   // === Accessors for Game state
 
   /** Get the player who currently can make actions (call mutators) on

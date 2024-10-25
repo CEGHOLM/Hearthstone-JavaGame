@@ -6,6 +6,7 @@ import hotstone.framework.Status;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.mutability.MutableHero;
+import hotstone.observer.GameObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,5 +137,10 @@ public class SpyMutableGame implements MutableGame {
     @Override
     public List<? extends Card> getDeck(Player who) {
         return List.of();
+    }
+
+    @Override
+    public void addObserver(GameObserver observer) {
+
     }
 }

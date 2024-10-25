@@ -25,6 +25,7 @@ import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.strategies.HeroStrategy;
 import hotstone.framework.strategies.ManaProductionStrategy;
 import hotstone.framework.strategies.WinningStrategy;
+import hotstone.observer.GameObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -382,5 +383,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
     hero.usePower(this);
 
     return Status.OK;
+  }
+
+  @Override
+  public void addObserver(GameObserver observer) {
+
   }
 }
