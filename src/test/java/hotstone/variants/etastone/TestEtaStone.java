@@ -22,47 +22,44 @@ public class TestEtaStone {
 
     @Test
     public void shouldDealOneDamageToOpponentHero() {
-        // Create a Test Spy for MutableGame
-        MutableGame game = mock(MutableGame.class);
-        Player attackingPlayer = Player.FINDUS;
+        // Given a SpyMutableGame
+        SpyMutableGame game = new SpyMutableGame();
+        Player player = Player.FINDUS;
         BrownRiceEffect brownRiceEffect = new BrownRiceEffect();
 
         // Apply the effect
-        brownRiceEffect.applyEffect(game, attackingPlayer);
+        brownRiceEffect.applyEffect(game, player);
 
-        // Verify that the correct method in MutableGame was called
-        verify(game).changeHeroHealth(Player.PEDDERSEN, -1);
+        // Assert that the correct method in MutableGame was called
+        assertThat(game.getLastCall(), is("changeHeroHealth for: PEDDERSEN with amount: -1"));
     }
 
     @Test
     public void shouldAddTwoHealthToHero() {
-        // Create a Test Spy for MutableGame
-        MutableGame game = mock(MutableGame.class);
+        // Given a SpyMutableGame
+        SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         PokeBowlEffect pokeBowlEffect = new PokeBowlEffect();
 
         // Apply effect
         pokeBowlEffect.applyEffect(game, player);
 
-        // Verify that the correct method in MutableGame was called
-        verify(game).changeHeroHealth(Player.FINDUS, 2);
+        // Assert that the correct method in MutableGame was called
+        assertThat(game.getLastCall(), is("changeHeroHealth for: FINDUS with amount: 2"));
     }
 
     @Test
     public void shouldMakePlayerDrawACard() {
-        // Create a Test Spy for MutableGame
-        MutableGame game = mock(MutableGame.class);
+        // Given a SpyMutableGame
+        SpyMutableGame game = new SpyMutableGame();
         Player player = Player.FINDUS;
         NoodleSoupEffect noodleSoupEffect = new NoodleSoupEffect();
-
-        // Ensure that the deck has cards
-        when(game.getDeckSize(player)).thenReturn(1);
 
         // Apply effect
         noodleSoupEffect.applyEffect(game, player);
 
-        // Verify that the correct method in MutableGame was called
-        verify(game).drawCard(player);
+        // Assert that the correct method in MutableGame was called
+        assertThat(game.getLastCall(), is("drawCard"));
     }
 
     @Test
@@ -226,6 +223,4 @@ public class TestEtaStone {
         // Then the draw card method should not be called
         verify(game, never()).drawCard(player);
     }
-
-
 }

@@ -12,9 +12,19 @@ import java.util.List;
 
 public class SpyMutableGame implements MutableGame {
     private List<MutableCard> fieldMinions;
+    private String lastCall; // Record the last method that was called
 
     public SpyMutableGame() {
         fieldMinions = new ArrayList<>();
+        lastCall = null;
+    }
+
+    public String getLastCall() {
+        return lastCall;
+    }
+
+    public void recordMethodCall(String methodCall) {
+        this.lastCall = methodCall;
     }
 
     public void addMinionToField(MutableCard minion) {
@@ -24,42 +34,47 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public void endTurn() {
-
+        recordMethodCall("endTurn");
     }
 
     @Override
     public Status playCard(Player who, MutableCard card, int atIndex) {
+        recordMethodCall("playCard");
         card.applyEffect(this);
         return Status.OK;
     }
 
     @Override
     public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+        recordMethodCall("attackCard");
         return null;
     }
 
     @Override
     public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+        recordMethodCall("attackHero");
         return null;
     }
 
     @Override
     public Status usePower(Player who) {
+        recordMethodCall("usePower");
         return null;
     }
 
     @Override
     public void changeHeroHealth(Player player, int i) {
-
+        recordMethodCall("changeHeroHealth for: " + player + " with amount: " + i);
     }
 
     @Override
     public void drawCard(Player player) {
-
+        recordMethodCall("drawCard");
     }
 
     @Override
     public void removeMinionFromField(Player player, MutableCard card) {
+        recordMethodCall("removeMinionFromField");
         fieldMinions.remove(card);
     }
 
@@ -85,7 +100,7 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public int getDeckSize(Player who) {
-        return 0;
+        return 1;
     }
 
     @Override
