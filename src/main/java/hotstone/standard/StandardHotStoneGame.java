@@ -179,6 +179,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     Player nextPlayer = getPlayerInTurn();
 
+    // Notify the observer
+    observerHandler.notifyChangeTurnTo(nextPlayer);
+
     // Start-of-turn processing for next player
     assignManaToPlayer(nextPlayer);
     drawCardForPlayer(nextPlayer);
@@ -250,6 +253,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     card.applyEffect(this);
 
+    // Notify the observer
     observerHandler.notifyPlayCard(who, card, atIndex);
 
     return Status.OK;

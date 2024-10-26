@@ -42,6 +42,17 @@ public class TestObserverHandling {
         assertThat("onPlayCard", is(spyObserver.getLastCall()));
         assertThat(Player.FINDUS, is(spyObserver.getLastPlayer()));
         assertThat(card, is(spyObserver.getLastCard()));
+        assertThat(0, is(spyObserver.getLastIndex()));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenTurnIsChanged() {
+        // Given a game
+        // When the turn ends
+        game.endTurn();
+        // Then the observer should be correctly notified
+        assertThat("onChangeTurnTo", is(spyObserver.getLastCall()));
+        assertThat(Player.PEDDERSEN, is(spyObserver.getLastPlayer()));
     }
 
 }

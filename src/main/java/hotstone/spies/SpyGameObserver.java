@@ -47,7 +47,7 @@ public class SpyGameObserver implements GameObserver {
 
     @Override
     public void onChangeTurnTo(Player playerBecomingActive) {
-
+        recordMethodCall("onChangeTurnTo", playerBecomingActive, lastCard, lastIndex);
     }
 
     @Override
