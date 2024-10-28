@@ -187,8 +187,7 @@ public class TestObserverHandling {
         game.attackHero(Player.FINDUS, card);
 
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onAttackHero"));
-        assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
+        assertThat(spyObserver.getCallHistory(), hasItem("onAttackHero"));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
     }
 
@@ -212,7 +211,7 @@ public class TestObserverHandling {
         game.attackHero(Player.FINDUS, card);
 
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onHeroUpdate"));
         assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
     }
 
@@ -238,12 +237,27 @@ public class TestObserverHandling {
     }
 
     @Test
-    public void shouldNotNotifyTheObserverIfWinnerIsNull() {
+    public void shouldNotNotifyObserverIfWinnerIsNull() {
         // Given a game (gammaStone)
         // When the asked for the winner after two rounds
         TestHelper.advanceGameNRounds(game, 2);
         game.getWinner();
         // Then the observer should not be notified of a winner
         assertThat(spyObserver.getLastCall(), is(not("onGameWon")));
+    }
+
+    @Test
+    public void shouldNotifyObserverIfCardIsDrawn() {
+        // Given a game
+        // When a card is drawn
+
+        // Advance game so Findus draws a card
+        TestHelper.advanceGameNRounds(game, 1);
+        Card card = game.getCardInHand(Player.FINDUS, 0);
+
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onCardDraw"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
+        assertThat(spyObserver.getLastAttackingCard(), is(card));
     }
 }

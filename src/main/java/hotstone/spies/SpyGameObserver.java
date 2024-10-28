@@ -91,7 +91,7 @@ public class SpyGameObserver implements GameObserver {
 
     @Override
     public void onCardDraw(Player who, Card drawnCard) {
-
+        recordMethodCall("onCardDraw", who, drawnCard, lastIndex);
     }
 
     @Override

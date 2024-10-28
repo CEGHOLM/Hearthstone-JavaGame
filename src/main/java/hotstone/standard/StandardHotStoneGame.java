@@ -207,6 +207,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   @Override
   public void changeHeroHealth(Player who, int amount) {
     getHero(who).takeDamage(amount);
+    observerHandler.notifyHeroUpdate(who);
   }
 
   @Override
@@ -216,6 +217,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
       List<MutableCard> hand = hands.get(who);
       if (!deck.isEmpty()) {
         hand.add(0, deck.remove(0));
+        observerHandler.notifyCardDraw(who, hand.get(0));
       }
     }
   }
@@ -351,7 +353,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     observerHandler.notifyAttackHero(playerAttacking, attackingCard);
 
     // Apply damage to the opponent's hero
-    dealDamageToHero(attackingCard, playerAttacking);
+    changeHeroHealth(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
 
     // Mark the card as having attacked
     deactivateCard(attackingCard);
@@ -371,20 +373,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
       return Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION;
     }
     return Status.OK;
-  }
-
-  //Deal damage to the opponent's hero
-  private void dealDamageToHero(Card attackingCard, Player playerAttacking) {
-    if (attackingCard.getAttack() > 0) {
-      MutableHero attackedHero = heroes.get(Player.computeOpponent(playerAttacking));
-      reduceHeroHealth(attackedHero, -attackingCard.getAttack());
-      observerHandler.notifyHeroUpdate(Player.computeOpponent(playerAttacking));
-    }
-  }
-
-  //Reduce the health of the hero
-  private void reduceHeroHealth(MutableHero hero, int attack) {
-    hero.takeDamage(attack);
   }
 
   @Override
