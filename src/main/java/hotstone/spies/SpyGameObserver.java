@@ -4,8 +4,12 @@ import hotstone.framework.Card;
 import hotstone.framework.Player;
 import hotstone.observer.GameObserver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpyGameObserver implements GameObserver {
 
+    private List<String> callHistory = new ArrayList<>();
     private String lastCall; // Record last method call
     private Player lastPlayer; // Record last player
     private int lastIndex; // Record last index
@@ -40,12 +44,17 @@ public class SpyGameObserver implements GameObserver {
         return lastIndex;
     }
 
+    public List<String> getCallHistory() {
+        return callHistory;
+    }
+
     // Overbelastede recordMethodCall-metoder for forskellige observer-opkald
     private void recordMethodCall(String methodCall, Player player, Card card, int index) {
         this.lastCall = methodCall;
         this.lastPlayer = player;
         this.lastAttackingCard = card;
         this.lastIndex = index;
+        callHistory.add(methodCall);
     }
 
     private void recordMethodCall(String methodCall, Player player, Card attackingCard, Card defendingCard) {
@@ -53,6 +62,7 @@ public class SpyGameObserver implements GameObserver {
         this.lastPlayer = player;
         this.lastAttackingCard = attackingCard;
         this.lastDefendingCard = defendingCard;
+        callHistory.add(methodCall);
     }
     @Override
     public void onPlayCard(Player who, Card card, int atIndex) {
@@ -76,7 +86,7 @@ public class SpyGameObserver implements GameObserver {
 
     @Override
     public void onUsePower(Player who) {
-
+        recordMethodCall("onUsePower", who, lastAttackingCard, lastIndex);
     }
 
     @Override

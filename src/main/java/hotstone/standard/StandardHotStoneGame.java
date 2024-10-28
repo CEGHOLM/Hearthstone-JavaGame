@@ -377,7 +377,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     if (attackingCard.getAttack() > 0) {
       MutableHero attackedHero = heroes.get(Player.computeOpponent(playerAttacking));
       reduceHeroHealth(attackedHero, -attackingCard.getAttack());
-      observerHandler.notifyHeroUpdate(playerAttacking);
+      observerHandler.notifyHeroUpdate(Player.computeOpponent(playerAttacking));
     }
   }
 
@@ -400,12 +400,15 @@ public class StandardHotStoneGame implements Game, MutableGame {
       return Status.NOT_ENOUGH_MANA;
     }
 
+    // Call the heroes power and execute it
+    hero.usePower(this);
+
+    // Notify observer
+    observerHandler.notifyUsePower(who);
+
     // Deduct mana and mark power as used
     hero.setMana(hero.getMana()-GameConstants.HERO_POWER_COST);
     hero.setPowerStatus(false);
-
-    // Call the heroes power and execute it
-    hero.usePower(this);
 
     return Status.OK;
   }

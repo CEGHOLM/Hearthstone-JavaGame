@@ -133,7 +133,7 @@ public class TestObserverHandling {
         game.usePower(Player.PEDDERSEN);
 
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onCardUpdate"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onCardUpdate"));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
     }
 
@@ -210,5 +210,16 @@ public class TestObserverHandling {
 
         // Then the observer should be correctly notified
         assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenUsingHeroPower() {
+        // Given a game
+        // When Findus uses his hero power
+        game.usePower(Player.FINDUS);
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onUsePower"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
     }
 }
