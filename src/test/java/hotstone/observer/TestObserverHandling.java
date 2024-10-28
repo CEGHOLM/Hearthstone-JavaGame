@@ -67,6 +67,8 @@ public class TestObserverHandling {
         MutableCard defendingCard = mock(MutableCard.class);
 
         // Add the cards to each players field
+        when(attackingCard.getHealth()).thenReturn(1);
+        when(defendingCard.getHealth()).thenReturn(1);
         when(attackingCard.getOwner()).thenReturn(Player.FINDUS);
         when(defendingCard.getOwner()).thenReturn(Player.PEDDERSEN);
         game.addCardToField(Player.FINDUS, attackingCard);
@@ -103,6 +105,7 @@ public class TestObserverHandling {
         when(attackingCard.getHealth()).thenReturn(5);
         when(attackingCard.canAttack()).thenReturn(true);
         when(defendingCard.getAttack()).thenReturn(3);
+        when(defendingCard.getHealth()).thenReturn(1);
 
         // Initiate the attack
         game.attackCard(Player.FINDUS, attackingCard, defendingCard);
@@ -132,5 +135,33 @@ public class TestObserverHandling {
         // Then the observer should be correctly notified
         assertThat(spyObserver.getLastCall(), is("onCardUpdate"));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenCardIsRemoved() {
+        // Given a game
+        // When a card loses health
+        // Create mocks of the cards
+        MutableCard attackingCard = mock(MutableCard.class);
+        MutableCard defendingCard = mock(MutableCard.class);
+
+        // Add the cards to each players field
+        when(attackingCard.getOwner()).thenReturn(Player.FINDUS);
+        when(defendingCard.getOwner()).thenReturn(Player.PEDDERSEN);
+        game.addCardToField(Player.FINDUS, attackingCard);
+        game.addCardToField(Player.PEDDERSEN, defendingCard);
+
+        // Set necessary card stats and activate
+        when(attackingCard.getHealth()).thenReturn(1);
+        when(attackingCard.canAttack()).thenReturn(true);
+        when(defendingCard.getHealth()).thenReturn(0);
+
+        // Initiate the attack
+        game.attackCard(Player.FINDUS, attackingCard, defendingCard);
+
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onCardRemove"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
+        assertThat(spyObserver.getLastAttackingCard(), is(defendingCard));
     }
 }

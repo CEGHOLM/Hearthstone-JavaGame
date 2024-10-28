@@ -269,14 +269,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   private void executeAttack(MutableCard attackingCard, MutableCard defendingCard) {
     // Apply damage and notify the observer
-    reduceCardHealth(defendingCard, attackingCard.getAttack());
     if (defendingCard.getHealth() > 0) {
-      observerHandler.notifyCardUpdate(defendingCard);
+      reduceCardHealth(defendingCard, attackingCard.getAttack());
     }
 
-    reduceCardHealth(attackingCard, defendingCard.getAttack());
     if (attackingCard.getHealth() > 0) {
-      observerHandler.notifyCardUpdate(attackingCard);
+      reduceCardHealth(attackingCard, defendingCard.getAttack());
     }
 
     // Remove defeated cards
@@ -287,8 +285,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
     deactivateCard(attackingCard);
   }
 
-  private static void reduceCardHealth(MutableCard card, int attack) {
-    card.takeDamage(attack);
+  private void reduceCardHealth(MutableCard card, int attack) {
+    if (attack > 0) {
+      card.takeDamage(attack);
+      observerHandler.notifyCardUpdate(card);
+    }
   }
 
   private static void deactivateCard(MutableCard attackingCard) {
@@ -298,6 +299,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   private void removeIfDefeated(MutableCard card) {
     if (card.getHealth() <= 0) {
       removeMinionFromField(card.getOwner(), card);
+      observerHandler.notifyCardRemove(card.getOwner(), card);
     }
   }
 
