@@ -346,6 +346,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
       return status;
     }
 
+    // Notify the observer
+    observerHandler.notifyAttackHero(playerAttacking, attackingCard);
+
     // Apply damage to the opponent's hero
     dealDamageToHero(attackingCard, playerAttacking);
 

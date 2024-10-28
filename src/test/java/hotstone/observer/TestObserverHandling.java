@@ -140,7 +140,7 @@ public class TestObserverHandling {
     @Test
     public void shouldNotifyObserverWhenCardIsRemoved() {
         // Given a game
-        // When a card loses health
+        // When a card is removed
         // Create mocks of the cards
         MutableCard attackingCard = mock(MutableCard.class);
         MutableCard defendingCard = mock(MutableCard.class);
@@ -163,5 +163,30 @@ public class TestObserverHandling {
         assertThat(spyObserver.getLastCall(), is("onCardRemove"));
         assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
         assertThat(spyObserver.getLastAttackingCard(), is(defendingCard));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenHeroIsAttacked() {
+        // Given a game
+        // When a card attack a hero
+        // Create a mock of the card
+        MutableCard card = mock(MutableCard.class);
+
+        // Add card to field
+        when(card.getOwner()).thenReturn(Player.FINDUS);
+        game.addCardToField(Player.FINDUS, card);
+
+        // Set necessary card stats and activate
+        when(card.getHealth()).thenReturn(1);
+        when(card.getAttack()).thenReturn(1);
+        when(card.canAttack()).thenReturn(true);
+
+        // Initiate the attack
+        game.attackHero(Player.FINDUS, card);
+
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onAttackHero"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
+        assertThat(spyObserver.getLastAttackingCard(), is(card));
     }
 }
