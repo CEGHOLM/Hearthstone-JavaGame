@@ -257,20 +257,27 @@ public class StandardHotStoneGame implements Game, MutableGame {
     Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
     if (status != Status.OK) return status;
 
-    // Execute attack
-    executeAttack(attackingCard, defendingCard);
-
     // Notify the observer
     observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
+
+    // Execute attack
+    executeAttack(attackingCard, defendingCard);
 
     // Return status OK if attack is ok
     return Status.OK;
   }
 
   private void executeAttack(MutableCard attackingCard, MutableCard defendingCard) {
-    // Apply damage
+    // Apply damage and notify the observer
     reduceCardHealth(defendingCard, attackingCard.getAttack());
+    if (defendingCard.getHealth() > 0) {
+      observerHandler.notifyCardUpdate(defendingCard);
+    }
+
     reduceCardHealth(attackingCard, defendingCard.getAttack());
+    if (attackingCard.getHealth() > 0) {
+      observerHandler.notifyCardUpdate(attackingCard);
+    }
 
     // Remove defeated cards
     removeIfDefeated(defendingCard);
