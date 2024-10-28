@@ -184,7 +184,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Start-of-turn processing for next player
     assignManaToPlayer(nextPlayer);
-    drawCardForPlayer(nextPlayer);
+    drawCard(nextPlayer);
   }
 
   private void handleEndOfTurnEffects(Player player) {
@@ -208,22 +208,14 @@ public class StandardHotStoneGame implements Game, MutableGame {
     getHero(who).takeDamage(amount);
   }
 
-  private void drawCardForPlayer(Player player) {
+  @Override
+  public void drawCard(Player who){
     if (turnNumber >= 2) { // Ensure players don't draw on the first turn
-      List<MutableCard> deck = decks.get(player);
-      List<MutableCard> hand = hands.get(player);
+      List<MutableCard> deck = decks.get(who);
+      List<MutableCard> hand = hands.get(who);
       if (!deck.isEmpty()) {
         hand.add(0, deck.remove(0));
       }
-    }
-  }
-
-  @Override
-  public void drawCard(Player who){
-    List<MutableCard> deck = decks.get(who);
-    List<MutableCard> hand = hands.get(who);
-    if (!deck.isEmpty()) {
-      hand.add(0, deck.remove(0));
     }
   }
 
@@ -268,7 +260,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
     // Execute attack
     executeAttack(attackingCard, defendingCard);
 
-    // Return status OK if attack i ok
+    // Notify the observer
+    observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
+
+    // Return status OK if attack is ok
     return Status.OK;
   }
 
@@ -402,5 +397,17 @@ public class StandardHotStoneGame implements Game, MutableGame {
   @Override
   public void addObserver(GameObserver observer) {
     observerHandler.addObserver(observer);
+  }
+
+  /** Method to help make some unit test easier to test
+   *
+   * @param player The player whose field we want to add a card to
+   * @param card The card we add to the field
+   */
+  public void addCardToField(Player player, MutableCard card) {
+    List<MutableCard> playerField = fields.get(player);
+    if (playerField != null) {
+      playerField.add(card);
+    }
   }
 }

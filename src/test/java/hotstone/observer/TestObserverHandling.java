@@ -1,8 +1,10 @@
 package hotstone.observer;
 
 import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
 import hotstone.spies.SpyGameObserver;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.utility.TestHelper;
 import hotstone.variants.gammastone.GammaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ public class TestObserverHandling {
         // Then the observer was correctly notified
         assertThat("onPlayCard", is(spyObserver.getLastCall()));
         assertThat(Player.FINDUS, is(spyObserver.getLastPlayer()));
-        assertThat(card, is(spyObserver.getLastCard()));
+        assertThat(card, is(spyObserver.getLastAttackingCard()));
         assertThat(0, is(spyObserver.getLastIndex()));
     }
 
@@ -53,6 +55,31 @@ public class TestObserverHandling {
         // Then the observer should be correctly notified
         assertThat("onChangeTurnTo", is(spyObserver.getLastCall()));
         assertThat(Player.PEDDERSEN, is(spyObserver.getLastPlayer()));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenAttackingACard() {
+        // Given a game
+        // When attacking another card
+        // Create mocks of the cards
+        MutableCard attackingCard = mock(MutableCard.class);
+        MutableCard defendingCard = mock(MutableCard.class);
+
+        // Add the cards to each players field
+        when(attackingCard.getOwner()).thenReturn(Player.FINDUS);
+        when(defendingCard.getOwner()).thenReturn(Player.PEDDERSEN);
+        game.addCardToField(Player.FINDUS, attackingCard);
+        game.addCardToField(Player.PEDDERSEN, defendingCard);
+
+        // Activate cards
+        when(attackingCard.canAttack()).thenReturn(true);
+        when(defendingCard.canAttack()).thenReturn(true);
+
+        // Then the observer should be correctly notified
+        assertThat("onAttackCard", is(spyObserver.getLastCall()));
+        assertThat(Player.FINDUS, is(spyObserver.getLastPlayer()));
+        assertThat(attackingCard, is(spyObserver.getLastAttackingCard()));
+        assertThat(defendingCard, is(spyObserver.getLastDefendingCard()));
     }
 
 }
