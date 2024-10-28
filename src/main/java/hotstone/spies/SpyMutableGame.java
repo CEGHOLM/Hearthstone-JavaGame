@@ -87,6 +87,11 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
+    public void addCardToField(Player who, MutableCard card) {
+        recordMethodCall("addCardToField");
+    }
+
+    @Override
     public Player getPlayerInTurn() {
         return null;
     }

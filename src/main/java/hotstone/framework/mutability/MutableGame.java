@@ -29,5 +29,7 @@ public interface MutableGame extends Game {
     void removeMinionFromField(Player player, MutableCard card);
 
     void changeMinionAttack(MutableCard card, int i);
+
+    void addCardToField(Player who, MutableCard card);
 }
 

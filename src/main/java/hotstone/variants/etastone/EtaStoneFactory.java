@@ -1,6 +1,6 @@
 package hotstone.variants.etastone;
 
-import hotstone.framework.HotstoneFactory;
+import hotstone.framework.strategies.HotstoneFactory;
 import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.strategies.HeroStrategy;
 import hotstone.framework.strategies.ManaProductionStrategy;

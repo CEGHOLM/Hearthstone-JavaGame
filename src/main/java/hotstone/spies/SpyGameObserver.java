@@ -111,6 +111,6 @@ public class SpyGameObserver implements GameObserver {
 
     @Override
     public void onGameWon(Player playerWinning) {
-
+        recordMethodCall("onGameWon", playerWinning, lastAttackingCard, lastIndex);
     }
 }

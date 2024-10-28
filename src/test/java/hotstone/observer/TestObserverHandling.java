@@ -2,9 +2,12 @@ package hotstone.observer;
 
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.strategies.WinningStrategy;
 import hotstone.spies.SpyGameObserver;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
+import hotstone.variants.alphastone.AlphaStoneFactory;
+import hotstone.variants.alphastone.AlphaStoneWinnerStrategy;
 import hotstone.variants.epsilonstone.EpsilonStoneFactory;
 import hotstone.variants.gammastone.GammaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestObserverHandling {
 
-    private StandardHotStoneGame game;
+    private MutableGame game;
     private SpyGameObserver spyObserver;
 
     @BeforeEach
@@ -221,5 +224,26 @@ public class TestObserverHandling {
         // Then the observer should be correctly notified
         assertThat(spyObserver.getLastCall(), is("onUsePower"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenSomeOneWinsTheGame() {
+        // Given a game (gammaStone)
+        // When the winner is found
+        TestHelper.advanceGameNRounds(game, 3);
+        game.getWinner();
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onGameWon"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
+    }
+
+    @Test
+    public void shouldNotNotifyTheObserverIfWinnerIsNull() {
+        // Given a game (gammaStone)
+        // When the asked for the winner after two rounds
+        TestHelper.advanceGameNRounds(game, 2);
+        game.getWinner();
+        // Then the observer should not be notified of a winner
+        assertThat(spyObserver.getLastCall(), is(not("onGameWon")));
     }
 }

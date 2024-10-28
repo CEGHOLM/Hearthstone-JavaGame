@@ -21,10 +21,7 @@ import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.mutability.MutableHero;
-import hotstone.framework.strategies.DeckBuilderStrategy;
-import hotstone.framework.strategies.HeroStrategy;
-import hotstone.framework.strategies.ManaProductionStrategy;
-import hotstone.framework.strategies.WinningStrategy;
+import hotstone.framework.strategies.*;
 import hotstone.observer.GameObserver;
 import hotstone.observer.ObserverHandler;
 
@@ -119,7 +116,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   @Override
   public Player getWinner() {
-    return winningStrategy.getWinner(this);
+    Player winner = winningStrategy.getWinner(this);
+    if (winner != null) {
+      observerHandler.notifyGameWon(winner);
+    }
+    return winner;
   }
 
   @Override
@@ -423,6 +424,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
    * @param player The player whose field we want to add a card to
    * @param card The card we add to the field
    */
+  @Override
   public void addCardToField(Player player, MutableCard card) {
     List<MutableCard> playerField = fields.get(player);
     if (playerField != null) {

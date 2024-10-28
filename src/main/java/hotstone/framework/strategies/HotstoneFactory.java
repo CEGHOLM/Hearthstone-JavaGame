@@ -1,4 +1,4 @@
-package hotstone.framework;
+package hotstone.framework.strategies;
 
 import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.strategies.HeroStrategy;
