@@ -374,8 +374,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   //Deal damage to the opponent's hero
   private void dealDamageToHero(Card attackingCard, Player playerAttacking) {
-    MutableHero attackedHero = heroes.get(Player.computeOpponent(playerAttacking));
-    reduceHeroHealth(attackedHero, -attackingCard.getAttack());
+    if (attackingCard.getAttack() > 0) {
+      MutableHero attackedHero = heroes.get(Player.computeOpponent(playerAttacking));
+      reduceHeroHealth(attackedHero, -attackingCard.getAttack());
+      observerHandler.notifyHeroUpdate(playerAttacking);
+    }
   }
 
   //Reduce the health of the hero

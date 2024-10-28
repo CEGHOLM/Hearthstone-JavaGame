@@ -178,7 +178,6 @@ public class TestObserverHandling {
 
         // Set necessary card stats and activate
         when(card.getHealth()).thenReturn(1);
-        when(card.getAttack()).thenReturn(1);
         when(card.canAttack()).thenReturn(true);
 
         // Initiate the attack
@@ -188,5 +187,28 @@ public class TestObserverHandling {
         assertThat(spyObserver.getLastCall(), is("onAttackHero"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenHeroHealthChanges() {
+        // Given a game
+        // When a hero loses health
+        // Create a mock of the card
+        MutableCard card = mock(MutableCard.class);
+
+        // Add card to field
+        when(card.getOwner()).thenReturn(Player.FINDUS);
+        game.addCardToField(Player.FINDUS, card);
+
+        // Set necessary card stats and activate
+        when(card.getHealth()).thenReturn(1);
+        when(card.getAttack()).thenReturn(1);
+        when(card.canAttack()).thenReturn(true);
+
+        // Initiate the attack
+        game.attackHero(Player.FINDUS, card);
+
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
     }
 }
