@@ -309,6 +309,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   @Override
   public void changeMinionAttack(MutableCard card, int i) {
     card.changeAttack(i);
+    observerHandler.notifyCardUpdate(card);
   }
 
   private Status isAttackPossible(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {

@@ -5,6 +5,7 @@ import hotstone.framework.mutability.MutableGame;
 import hotstone.spies.SpyGameObserver;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
+import hotstone.variants.epsilonstone.EpsilonStoneFactory;
 import hotstone.variants.gammastone.GammaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -109,5 +110,27 @@ public class TestObserverHandling {
         // Then the observer should be correctly notified
         assertThat(spyObserver.getLastCall(), is("onCardUpdate"));
         assertThat(spyObserver.getLastAttackingCard(), is(attackingCard));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenCardAttackStatChanges() {
+        // Given a game
+        game = new StandardHotStoneGame(new EpsilonStoneFactory());
+        game.addObserver(spyObserver);
+        // When a card gains attack
+        // Create a mock of the card
+        MutableCard card = mock(MutableCard.class);
+
+        // Add the card to field
+        when(card.getOwner()).thenReturn(Player.PEDDERSEN);
+        game.addCardToField(Player.PEDDERSEN, card);
+
+        // Use hero power
+        game.endTurn();
+        game.usePower(Player.PEDDERSEN);
+
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onCardUpdate"));
+        assertThat(spyObserver.getLastAttackingCard(), is(card));
     }
 }
