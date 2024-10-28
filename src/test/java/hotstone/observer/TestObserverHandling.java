@@ -221,7 +221,7 @@ public class TestObserverHandling {
         // When Findus uses his hero power
         game.usePower(Player.FINDUS);
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onUsePower"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onUsePower"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
     }
 
@@ -261,7 +261,7 @@ public class TestObserverHandling {
     }
 
     @Test
-    public void shouldNotifyObserverWhenHeroManaIsChanged() {
+    public void shouldNotifyObserverWhenHeroManaIsChangedByPlayingACard() {
         // Given a game
         // When a player uses mana on playing a card
         // Create a mock of card
@@ -272,6 +272,16 @@ public class TestObserverHandling {
         // Play the card
         game.playCard(Player.FINDUS, card, 0);
 
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenHeroManaIsChangedByUsingHeroPower() {
+        // Given a game
+        // When Findus uses his hero power
+        game.usePower(Player.FINDUS);
         // Then the observer should be correctly notified
         assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));

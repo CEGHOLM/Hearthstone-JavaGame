@@ -314,13 +314,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
   private void removeIfDefeated(MutableCard card) {
     if (card.getHealth() <= 0) {
       removeMinionFromField(card.getOwner(), card);
-      observerHandler.notifyCardRemove(card.getOwner(), card);
     }
   }
 
   @Override
   public void removeMinionFromField(Player who, MutableCard card) {
     fields.get(who).remove(card);
+    observerHandler.notifyCardRemove(who, card);
   }
 
   @Override
@@ -408,7 +408,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     observerHandler.notifyUsePower(who);
 
     // Deduct mana and mark power as used
-    hero.setMana(hero.getMana()-GameConstants.HERO_POWER_COST);
+    changeHeroMana(hero, hero.getMana()-GameConstants.HERO_POWER_COST);
     hero.setPowerStatus(false);
 
     return Status.OK;
