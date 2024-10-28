@@ -224,6 +224,33 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   @Override
   public Status playCard(Player who, MutableCard card, int atIndex) {
+    // Check that the attack is possible
+    Status status = isPlayPossible(who, card);
+    if (status != Status.OK) return status;
+
+    // Notify the observer
+    observerHandler.notifyPlayCard(who, card, atIndex);
+
+    // Change the mana of the hero based in mana cost
+    int heroMana = getHero(who).getMana();
+    int cardManaCost = card.getManaCost();
+
+    changeHeroMana(heroes.get(who), heroMana - cardManaCost);
+
+    // Move card from hand to field
+    addCardToField(who, card);
+
+    card.applyEffect(this);
+
+    return Status.OK;
+  }
+
+  private void changeHeroMana(MutableHero heroes, int amount) {
+    heroes.setMana(amount);
+    observerHandler.notifyHeroUpdate(heroes.getOwner());
+  }
+
+  private Status isPlayPossible(Player who, MutableCard card) {
     // Check it's the players turn
     if (!who.equals(getPlayerInTurn())) {
       return Status.NOT_PLAYER_IN_TURN;
@@ -234,23 +261,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
     // Check the player has enough mana
     if (getHero(who).getMana() < card.getManaCost()) {
-        return Status.NOT_ENOUGH_MANA;
+      return Status.NOT_ENOUGH_MANA;
     }
-
-    int heroMana = getHero(who).getMana();
-    int cardManaCost = card.getManaCost();
-
-    heroes.get(who).setMana(heroMana-cardManaCost);
-
-    hands.get(who).remove(card);
-
-    fields.get(who).add(card);
-
-    card.applyEffect(this);
-
-    // Notify the observer
-    observerHandler.notifyPlayCard(who, card, atIndex);
-
     return Status.OK;
   }
 
@@ -414,9 +426,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
    */
   @Override
   public void addCardToField(Player player, MutableCard card) {
-    List<MutableCard> playerField = fields.get(player);
-    if (playerField != null) {
-      playerField.add(card);
-    }
+    hands.get(player).remove(card);
+    fields.get(player).add(card);
   }
 }

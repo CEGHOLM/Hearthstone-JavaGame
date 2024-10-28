@@ -45,7 +45,7 @@ public class TestObserverHandling {
         game.playCard(Player.FINDUS, card, 0);
 
         // Then the observer was correctly notified
-        assertThat(spyObserver.getLastCall(), is("onPlayCard"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onPlayCard"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
         assertThat(spyObserver.getLastIndex(), is(0));
@@ -250,7 +250,6 @@ public class TestObserverHandling {
     public void shouldNotifyObserverIfCardIsDrawn() {
         // Given a game
         // When a card is drawn
-
         // Advance game so Findus draws a card
         TestHelper.advanceGameNRounds(game, 1);
         Card card = game.getCardInHand(Player.FINDUS, 0);
@@ -259,5 +258,22 @@ public class TestObserverHandling {
         assertThat(spyObserver.getLastCall(), is("onCardDraw"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenHeroManaIsChanged() {
+        // Given a game
+        // When a player uses mana on playing a card
+        // Create a mock of card
+        MutableCard card = mock(MutableCard.class);
+        when(card.getOwner()).thenReturn(Player.FINDUS);
+        when(card.getManaCost()).thenReturn(2);
+
+        // Play the card
+        game.playCard(Player.FINDUS, card, 0);
+
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
     }
 }
