@@ -12,18 +12,18 @@ import java.util.List;
 
 public class TranscriptionDecorator implements MutableGame {
     private final MutableGame wrappedGame;
-    private boolean isTranscriping = true; // Control variable to enable/disable transcription
+    private boolean isTranscribing = true; // Control variable to enable/disable transcription
 
     public TranscriptionDecorator(MutableGame game) {
         this.wrappedGame = game;
     }
 
-    public void setTranscriping(boolean transcriping) {
-        this.isTranscriping = transcriping;
+    public void setTranscribing(boolean transcriping) {
+        this.isTranscribing = transcriping;
     }
 
     private void log(String message) {
-        if (isTranscriping) {
+        if (isTranscribing) {
             System.out.println(message);
         }
     }
@@ -119,13 +119,13 @@ public class TranscriptionDecorator implements MutableGame {
 
     @Override
     public void changeHeroHealth(Player player, int i) {
-        log(player + " Hero " + i + " health");
+        log("Hero health changed by " + i + " for player " + player);
         wrappedGame.changeHeroHealth(player, i);
     }
 
     @Override
     public void drawCard(Player player) {
-        log(player + " drawed a card");
+        log(player + " drew a card");
         wrappedGame.drawCard(player);
     }
 
