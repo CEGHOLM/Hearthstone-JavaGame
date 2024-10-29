@@ -12,7 +12,6 @@ import hotstone.variants.epsilonstone.RedwinePower;
 import hotstone.standard.StandardRandomStrategy;
 import hotstone.standard.GameConstants;
 
-import java.util.Random;
 
 public class SemiStoneHeroStrategy implements HeroStrategy {
     private final RandomStrategy randomStrategy;
