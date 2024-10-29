@@ -13,8 +13,7 @@ public class SovsPower implements Effect {
     @Override
     public void applyEffect(MutableGame game, Player player) {
         // Summon "Sovs" card on the owner's field
-        List<Card> ownerField = (List<Card>) game.getField(player);
-        ownerField.add(new StandardCard(GameConstants.SOVS_CARD, 0,1,1, player, new NullEffect()));
+        game.playCard(player, new StandardCard(GameConstants.SOVS_CARD, 0,1,1, player, new NullEffect()), 0);
     }
 
     @Override

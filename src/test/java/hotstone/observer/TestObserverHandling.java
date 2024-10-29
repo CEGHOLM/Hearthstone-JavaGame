@@ -286,4 +286,18 @@ public class TestObserverHandling {
         assertThat(spyObserver.getLastCall(), is("onHeroUpdate"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
     }
+
+    @Test
+    public void shouldTriggerTheCorrectObserversWhenPeddersenUsesSovsPower() {
+        // Given a game
+        // When Peddersen uses his hero power (sovs power)
+        game.endTurn();
+        game.usePower(Player.PEDDERSEN);
+        // Then all the correct observers should be triggered
+        assertThat(spyObserver.getCallHistory(), hasItem("onPlayCard"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onUsePower"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onHeroUpdate"));
+        assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
+        assertThat(spyObserver.getLastAttackingCard().getName(), is("Sovs"));
+    }
 }

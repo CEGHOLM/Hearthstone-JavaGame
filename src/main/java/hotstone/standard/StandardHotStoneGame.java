@@ -180,7 +180,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     Player nextPlayer = getPlayerInTurn();
 
-    // Notify the observer
+    // Notify the observer that the turn has changed
     observerHandler.notifyChangeTurnTo(nextPlayer);
 
     // Start-of-turn processing for next player
@@ -228,7 +228,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     Status status = isPlayPossible(who, card);
     if (status != Status.OK) return status;
 
-    // Notify the observer
+    // Notify the observer that a card has been played
     observerHandler.notifyPlayCard(who, card, atIndex);
 
     // Change the mana of the hero based in mana cost
@@ -272,7 +272,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
     if (status != Status.OK) return status;
 
-    // Notify the observer
+    // Notify the observer of the attack on a card
     observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
 
     // Execute attack
@@ -283,7 +283,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   private void executeAttack(MutableCard attackingCard, MutableCard defendingCard) {
-    // Apply damage and notify the observer
+    // Apply damage
     if (defendingCard.getHealth() > 0) {
       reduceCardHealth(defendingCard, attackingCard.getAttack());
     }
@@ -361,7 +361,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
       return status;
     }
 
-    // Notify the observer
+    // Notify the observer of the attack on a hero
     observerHandler.notifyAttackHero(playerAttacking, attackingCard);
 
     // Apply damage to the opponent's hero
@@ -389,22 +389,24 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   @Override
   public Status usePower(Player who) {
-    if (!who.equals(getPlayerInTurn())) {
-      return Status.NOT_PLAYER_IN_TURN;
-    }
     // To get the correct hero for either Findus of Peddersen
     MutableHero hero = heroes.get(who);
 
+    // Check if it is possible to use power
+    if (!who.equals(getPlayerInTurn())) {
+      return Status.NOT_PLAYER_IN_TURN;
+    }
     if (!hero.canUsePower()) {
       return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
-    } else if (hero.getMana() < 2) {
+    }
+    if (hero.getMana() < 2) {
       return Status.NOT_ENOUGH_MANA;
     }
 
     // Call the heroes power and execute it
     hero.usePower(this);
 
-    // Notify observer
+    // Notify observer about hero power usage
     observerHandler.notifyUsePower(who);
 
     // Deduct mana and mark power as used
