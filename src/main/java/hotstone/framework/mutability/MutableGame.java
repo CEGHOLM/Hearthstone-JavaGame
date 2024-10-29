@@ -31,5 +31,9 @@ public interface MutableGame extends Game {
     void changeMinionAttack(MutableCard card, int i);
 
     void addCardToField(Player who, MutableCard card);
+
+    int getMinionCount(int i);
+
+    Object getMinion(int player, int index);
 }
 
