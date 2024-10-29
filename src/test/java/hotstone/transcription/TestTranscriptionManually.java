@@ -18,6 +18,10 @@ public class TestTranscriptionManually {
         testUsePower(createNewGameWithTranscript());
         testChangeHeroHealth(createNewGameWithTranscript());
         testDrawCard(createNewGameWithTranscript());
+        testRemoveMinionFromField(createNewGameWithTranscript());
+        testChangeMinionAttack(createNewGameWithTranscript());
+        testNoTranscript(createNewGameWithTranscript());
+        testMidwayTranscriptTurnOff(createNewGameWithTranscript());
     }
 
     private static MutableGame createNewGameWithTranscript() {
@@ -81,4 +85,51 @@ public class TestTranscriptionManually {
         game.drawCard(Player.FINDUS);
     }
 
+    private static void testRemoveMinionFromField(MutableGame game) {
+        System.out.println("Test: Remove minion from field");
+
+        // Play card
+        MutableCard card = game.getCardInHand(Player.FINDUS, 2);
+        game.playCard(Player.FINDUS, card, 0);
+
+        // Remove card
+        game.removeMinionFromField(Player.FINDUS, card);
+    }
+
+    private static void testChangeMinionAttack(MutableGame game) {
+        System.out.println("Test: Change minion attack");
+
+        // Play card
+        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        game.playCard(Player.FINDUS, card, 0);
+
+        // Change minion attack
+        game.changeMinionAttack(card, 1);
+    }
+
+    private static void testNoTranscript(MutableGame game) {
+        System.out.println("Test: No transcription");
+
+        // Turn off transcription
+        ((TranscriptionDecorator) game).setTranscribing(false);
+
+        // Call methods that normally would be logged
+        game.endTurn();
+        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        game.playCard(Player.FINDUS, card, 0);
+        game.usePower(Player.FINDUS);
+    }
+
+    private static void testMidwayTranscriptTurnOff(MutableGame game) {
+        System.out.println("Test: Turn off transcription mid game");
+
+        // Call methods that normally would be logged
+        game.endTurn();
+        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        game.playCard(Player.FINDUS, card, 0);
+
+        // Turn off transcription
+        ((TranscriptionDecorator) game).setTranscribing(false);
+        game.usePower(Player.FINDUS);
+    }
 }
