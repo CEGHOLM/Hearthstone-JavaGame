@@ -16,6 +16,7 @@ public class TestTranscriptionManually {
         testAttackCard(createNewGameWithTranscript());
         testAttackHero(createNewGameWithTranscript());
         testUsePower(createNewGameWithTranscript());
+        testChangeHeroHealth(createNewGameWithTranscript());
     }
 
     private static MutableGame createNewGameWithTranscript() {
@@ -68,4 +69,11 @@ public class TestTranscriptionManually {
         System.out.println("Test: Use power");
         game.usePower(Player.FINDUS);
     }
+
+    private static void testChangeHeroHealth(MutableGame game) {
+        System.out.println("Test: Change hero health");
+        game.changeHeroHealth(Player.FINDUS, 2);
+    }
+
+
 }

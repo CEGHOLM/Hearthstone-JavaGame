@@ -108,7 +108,11 @@ public class TranscriptionDecorator implements MutableGame {
     @Override
     public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
         log(playerAttacking + " attacked Hero with " + attackingCard.getName());
-        return wrappedGame.attackHero(playerAttacking, attackingCard);
+
+        // Call `changeHeroHealth` through `this` makes sure the TranscriptionDecorator logic is used
+        this.changeHeroHealth(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
+
+        return Status.OK;
     }
 
     @Override
