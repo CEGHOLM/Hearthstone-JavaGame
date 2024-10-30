@@ -19,6 +19,7 @@ public class MutableGameAdapter implements HotStoneGameTarget {
         return convertPlayerToInt(game.getPlayerInTurn());
     }
 
+    // Helper methods for conversion
     private int convertPlayerToInt(Player player) {
         return player == Player.FINDUS ? 0 : 1;
     }
