@@ -80,5 +80,9 @@ public interface Card {
    */
   String getEffectDescription();
 
+  /** Get the effect of the card
+   * @return The effect that card has
+   * if the card has no effect, it will return NullEffect.
+   */
   Effect getEffect();
 }

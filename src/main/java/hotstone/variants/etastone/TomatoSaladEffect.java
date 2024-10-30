@@ -1,3 +1,5 @@
+
+
 package hotstone.variants.etastone;
 
 import hotstone.framework.Effect;
@@ -5,6 +7,8 @@ import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.strategies.RandomStrategy;
+import hotstone.adapter.MutableGameAdapter;
+import wizardhub.EffectWizard;
 
 import java.util.List;
 
@@ -17,17 +21,15 @@ public class TomatoSaladEffect implements Effect {
 
     @Override
     public void applyEffect(MutableGame game, Player player) {
-        // Get the players minions on the field
+        // Get the minions of the players field
         List<? extends MutableCard> minionsOnField = (List<? extends MutableCard>) game.getField(player);
 
-        // If the field is not empty
         if (!minionsOnField.isEmpty()) {
-            // Pick a random minion
             int randomIndex = randomStrategy.nextInt(minionsOnField.size());
-            MutableCard minion = minionsOnField.get(randomIndex);
-
-            // Increase the minions attack by 1
-            minion.increaseAttack(1);
+            new EffectWizard(new MutableGameAdapter(game))
+                    .forMe()
+                    .forMinionAt(randomIndex)
+                    .doChangeAttack(+1);
         }
     }
 
@@ -36,3 +38,4 @@ public class TomatoSaladEffect implements Effect {
         return "Add +1 attack to random minion";
     }
 }
+

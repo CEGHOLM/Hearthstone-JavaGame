@@ -6,73 +6,30 @@ import hotstone.framework.Status;
 import hotstone.standard.StandardCard;
 
 public interface MutableGame extends Game {
-    /**
-     * Perform end of turn for current player, to prepare for the
-     * opponent's turn.  PRECONDITION: The client MUST ensure that
-     * endTurn() is never called by the player which is NOT in turn.
-     */
-    void endTurn();
 
-    /** Play a card from the hand to the field.
+    /** Change the health of the players hero,
+     * when losing or gaining health
      *
-     * PRECONDITION: 'who' is never null.
-     * PRECONDITION: the card is a non-null card retrieved by the
-     * 'getCardInHand()' method.
-     * PRECONDITION: atIndex in range 0 .. getFieldSize(who)
-     *
-     * @param who player to play card
-     * @param card card to play
-     * @param atIndex index at which the card should be
-     *                entered on the field. 0 = left of
-     *                leftmost minion, 1 = between first
-     *                and second minion, etc.
-     * @return Status of operation
+     * @param player The player whose hero's health we are changing
+     * @param i The amount the health is changed by
      */
-    public Status playCard(Player who, MutableCard card, int atIndex);
-
-    /** Attack one card with another on the fields.
-     *
-     * PRECONDITION: 'who' is never null.
-     * PRECONDITION: both cards are a non-null card retrieved by the
-     * 'getCardInField()' method.
-     *
-     * @param playerAttacking the player making the attack
-     * @param attackingCard the card attacking
-     * @param defendingCard the card defending
-     * @return a status identifying the outcome of the attack, which is
-     *    either OK or some value explaining why the action was invalid.
-     */
-    Status attackCard(Player playerAttacking,
-                      MutableCard attackingCard, MutableCard defendingCard);
-
-    /** Attack a hero with a card in the field.
-     *
-     * PRECONDITION: 'who' is never null.
-     * PRECONDITION: the card is a non-null card retrieved by the
-     * 'getCardInField()' method.
-     *
-     * @param playerAttacking the player making the attack
-     * @param attackingCard the card attacking
-     * @return a status identifying the outcome of the attack, which is
-     *    either OK or some value explaining why the action was invalid.
-     */
-    Status attackHero(Player playerAttacking, MutableCard attackingCard);
-
-    /** Use a hero's special power/effect.
-     *
-     * PRECONDITION: 'who' is never null.
-     *
-     * @param who the player using his/her hero's power
-     * @return a status identifying the outcome of the power use, which
-     *    is either OK or some value explaining why the action was
-     *    invalid.
-     */
-    Status usePower(Player who);
-
     void changeHeroHealth(Player player, int i);
 
+    /** Draw a card from the players deck
+     *
+     * @param player The player whose deck we're drawing from
+     */
     void drawCard(Player player);
 
+    /** Remove minions from the field, when dead or eliminated
+     *
+     * @param player The players whose field we're removing from.
+     * @param card The minion we're removing (when cards are played, they become minions)
+     */
     void removeMinionFromField(Player player, MutableCard card);
+
+    void changeMinionAttack(MutableCard card, int i);
+
+    void addCardToField(Player who, MutableCard card);
 }
 

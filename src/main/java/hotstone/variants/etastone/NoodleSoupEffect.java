@@ -18,3 +18,4 @@ public class NoodleSoupEffect implements Effect {
         return "Draw a card";
     }
 }
+

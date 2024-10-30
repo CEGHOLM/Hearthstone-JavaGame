@@ -29,7 +29,7 @@ public interface MutableCard extends Card {
      *
      * @param i
      */
-    void increaseAttack(int i);
+    void changeAttack(int i);
 
     void applyEffect(MutableGame game);
 }

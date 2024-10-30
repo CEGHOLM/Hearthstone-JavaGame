@@ -3,16 +3,17 @@ package hotstone.variants.etastone;
 import hotstone.framework.Effect;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableGame;
-import hotstone.framework.mutability.MutableHero;
+import hotstone.adapter.MutableGameAdapter;
+import wizardhub.EffectWizard;
 
 public class BrownRiceEffect implements Effect {
+
     @Override
     public void applyEffect(MutableGame game, Player player) {
-        // Find the opponent
-        Player opponent = Player.computeOpponent(player);
-
-        // Deal two damage to opponent hero
-        game.changeHeroHealth(opponent, -1);
+        new EffectWizard(new MutableGameAdapter(game))
+                .forOpponent()
+                .forHero()
+                .doChangeHealthOrRemove(-1);
     }
 
     @Override
@@ -20,3 +21,5 @@ public class BrownRiceEffect implements Effect {
         return "Deal 1 damage to opponent hero";
     }
 }
+
+

@@ -21,10 +21,9 @@ import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.mutability.MutableHero;
-import hotstone.framework.strategies.DeckBuilderStrategy;
-import hotstone.framework.strategies.HeroStrategy;
-import hotstone.framework.strategies.ManaProductionStrategy;
-import hotstone.framework.strategies.WinningStrategy;
+import hotstone.framework.strategies.*;
+import hotstone.observer.GameObserver;
+import hotstone.observer.ObserverHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +61,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   private Map<Player, List<MutableCard>> hands = new HashMap<>();
   private Map<Player, List<MutableCard>> decks = new HashMap<>();
   private Map<Player, List<MutableCard>> fields = new HashMap<>();
+  private ObserverHandler observerHandler = new ObserverHandler();
 
   public StandardHotStoneGame(HotstoneFactory factory) {
     // Initialize strategies
@@ -116,7 +116,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
   @Override
   public Player getWinner() {
-    return winningStrategy.getWinner(this);
+    Player winner = winningStrategy.getWinner(this);
+    if (winner != null) {
+      observerHandler.notifyGameWon(winner);
+    }
+    return winner;
   }
 
   @Override
@@ -176,9 +180,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     Player nextPlayer = getPlayerInTurn();
 
+    // Notify the observer that the turn has changed
+    observerHandler.notifyChangeTurnTo(nextPlayer);
+
     // Start-of-turn processing for next player
     assignManaToPlayer(nextPlayer);
-    drawCardForPlayer(nextPlayer);
+    drawCard(nextPlayer);
   }
 
   private void handleEndOfTurnEffects(Player player) {
@@ -200,29 +207,50 @@ public class StandardHotStoneGame implements Game, MutableGame {
   @Override
   public void changeHeroHealth(Player who, int amount) {
     getHero(who).takeDamage(amount);
+    observerHandler.notifyHeroUpdate(who);
   }
 
-  private void drawCardForPlayer(Player player) {
+  @Override
+  public void drawCard(Player who){
     if (turnNumber >= 2) { // Ensure players don't draw on the first turn
-      List<MutableCard> deck = decks.get(player);
-      List<MutableCard> hand = hands.get(player);
+      List<MutableCard> deck = decks.get(who);
+      List<MutableCard> hand = hands.get(who);
       if (!deck.isEmpty()) {
         hand.add(0, deck.remove(0));
+        observerHandler.notifyCardDraw(who, hand.get(0));
       }
     }
   }
 
   @Override
-  public void drawCard(Player who){
-    List<MutableCard> deck = decks.get(who);
-    List<MutableCard> hand = hands.get(who);
-    if (!deck.isEmpty()) {
-      hand.add(0, deck.remove(0));
-    }
+  public Status playCard(Player who, MutableCard card, int atIndex) {
+    // Check that the attack is possible
+    Status status = isPlayPossible(who, card);
+    if (status != Status.OK) return status;
+
+    // Notify the observer that a card has been played
+    observerHandler.notifyPlayCard(who, card, atIndex);
+
+    // Change the mana of the hero based in mana cost
+    int heroMana = getHero(who).getMana();
+    int cardManaCost = card.getManaCost();
+
+    changeHeroMana(heroes.get(who), heroMana - cardManaCost);
+
+    // Move card from hand to field
+    addCardToField(who, card);
+
+    card.applyEffect(this);
+
+    return Status.OK;
   }
 
-  @Override
-  public Status playCard(Player who, MutableCard card, int atIndex) {
+  private void changeHeroMana(MutableHero heroes, int amount) {
+    heroes.setMana(amount);
+    observerHandler.notifyHeroUpdate(heroes.getOwner());
+  }
+
+  private Status isPlayPossible(Player who, MutableCard card) {
     // Check it's the players turn
     if (!who.equals(getPlayerInTurn())) {
       return Status.NOT_PLAYER_IN_TURN;
@@ -233,19 +261,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     }
     // Check the player has enough mana
     if (getHero(who).getMana() < card.getManaCost()) {
-        return Status.NOT_ENOUGH_MANA;
+      return Status.NOT_ENOUGH_MANA;
     }
-
-    int heroMana = getHero(who).getMana();
-    int cardManaCost = card.getManaCost();
-
-    heroes.get(who).setMana(heroMana-cardManaCost);
-
-    card.applyEffect(this);
-
-    hands.get(who).remove(card);
-
-    fields.get(who).add(card);
     return Status.OK;
   }
 
@@ -255,17 +272,25 @@ public class StandardHotStoneGame implements Game, MutableGame {
     Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
     if (status != Status.OK) return status;
 
+    // Notify the observer of the attack on a card
+    observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
+
     // Execute attack
     executeAttack(attackingCard, defendingCard);
 
-    // Return status OK if attack i ok
+    // Return status OK if attack is ok
     return Status.OK;
   }
 
   private void executeAttack(MutableCard attackingCard, MutableCard defendingCard) {
     // Apply damage
-    reduceCardHealth(defendingCard, attackingCard.getAttack());
-    reduceCardHealth(attackingCard, defendingCard.getAttack());
+    if (defendingCard.getHealth() > 0) {
+      reduceCardHealth(defendingCard, attackingCard.getAttack());
+    }
+
+    if (attackingCard.getHealth() > 0) {
+      reduceCardHealth(attackingCard, defendingCard.getAttack());
+    }
 
     // Remove defeated cards
     removeIfDefeated(defendingCard);
@@ -275,8 +300,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
     deactivateCard(attackingCard);
   }
 
-  private static void reduceCardHealth(MutableCard card, int attack) {
-    card.takeDamage(attack);
+  private void reduceCardHealth(MutableCard card, int attack) {
+    if (attack > 0) {
+      card.takeDamage(attack);
+      observerHandler.notifyCardUpdate(card);
+    }
   }
 
   private static void deactivateCard(MutableCard attackingCard) {
@@ -292,6 +320,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
   @Override
   public void removeMinionFromField(Player who, MutableCard card) {
     fields.get(who).remove(card);
+    observerHandler.notifyCardRemove(who, card);
+  }
+
+  @Override
+  public void changeMinionAttack(MutableCard card, int i) {
+    card.changeAttack(i);
+    observerHandler.notifyCardUpdate(card);
   }
 
   private Status isAttackPossible(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
@@ -326,8 +361,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
       return status;
     }
 
+    // Notify the observer of the attack on a hero
+    observerHandler.notifyAttackHero(playerAttacking, attackingCard);
+
     // Apply damage to the opponent's hero
-    dealDamageToHero(attackingCard, playerAttacking);
+    changeHeroHealth(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
 
     // Mark the card as having attacked
     deactivateCard(attackingCard);
@@ -349,38 +387,48 @@ public class StandardHotStoneGame implements Game, MutableGame {
     return Status.OK;
   }
 
-  //Deal damage to the opponent's hero
-  private void dealDamageToHero(Card attackingCard, Player playerAttacking) {
-    MutableHero attackedHero = heroes.get(Player.computeOpponent(playerAttacking));
-    reduceHeroHealth(attackedHero, -attackingCard.getAttack());
-  }
-
-  //Reduce the health of the hero
-  private void reduceHeroHealth(MutableHero hero, int attack) {
-    hero.takeDamage(attack);
-  }
-
   @Override
   public Status usePower(Player who) {
-    if (!who.equals(getPlayerInTurn())) {
-      return Status.NOT_PLAYER_IN_TURN;
-    }
     // To get the correct hero for either Findus of Peddersen
     MutableHero hero = heroes.get(who);
 
+    // Check if it is possible to use power
+    if (!who.equals(getPlayerInTurn())) {
+      return Status.NOT_PLAYER_IN_TURN;
+    }
     if (!hero.canUsePower()) {
       return Status.POWER_USE_NOT_ALLOWED_TWICE_PR_ROUND;
-    } else if (hero.getMana() < 2) {
+    }
+    if (hero.getMana() < 2) {
       return Status.NOT_ENOUGH_MANA;
     }
-
-    // Deduct mana and mark power as used
-    hero.setMana(hero.getMana()-GameConstants.HERO_POWER_COST);
-    hero.setPowerStatus(false);
 
     // Call the heroes power and execute it
     hero.usePower(this);
 
+    // Notify observer about hero power usage
+    observerHandler.notifyUsePower(who);
+
+    // Deduct mana and mark power as used
+    changeHeroMana(hero, hero.getMana()-GameConstants.HERO_POWER_COST);
+    hero.setPowerStatus(false);
+
     return Status.OK;
+  }
+
+  @Override
+  public void addObserver(GameObserver observer) {
+    observerHandler.addObserver(observer);
+  }
+
+  /** Method to help make some unit test easier to test
+   *
+   * @param player The player whose field we want to add a card to
+   * @param card The card we add to the field
+   */
+  @Override
+  public void addCardToField(Player player, MutableCard card) {
+    hands.get(player).remove(card);
+    fields.get(player).add(card);
   }
 }
