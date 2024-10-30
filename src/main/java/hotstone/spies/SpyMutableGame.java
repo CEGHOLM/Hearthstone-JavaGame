@@ -14,11 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 public class SpyMutableGame implements MutableGame {
+    private final MutableGame wrappedGame;
     private String lastCall; // Record the last method that was called
     private Map<Player, List<MutableCard>> fields = new HashMap<>();
 
 
-    public SpyMutableGame() {
+    public SpyMutableGame(MutableGame game) {
+        this.wrappedGame = game;
         lastCall = null;
         // Each player has an empty list as field at the start of the game
         fields.put(Player.FINDUS, new ArrayList<>());
@@ -40,100 +42,106 @@ public class SpyMutableGame implements MutableGame {
     @Override
     public void endTurn() {
         recordMethodCall("endTurn");
+        wrappedGame.endTurn();
     }
 
     @Override
     public Status playCard(Player who, MutableCard card, int atIndex) {
         recordMethodCall("playCard");
-        return Status.OK;
+        return wrappedGame.playCard(who, card, atIndex);
     }
 
     @Override
     public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
         recordMethodCall("attackCard");
-        return null;
+        return wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
     }
 
     @Override
     public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
         recordMethodCall("attackHero");
-        return null;
+        return wrappedGame.attackHero(playerAttacking, attackingCard);
     }
 
     @Override
     public Status usePower(Player who) {
         recordMethodCall("usePower");
-        return null;
+        return wrappedGame.usePower(who);
     }
 
     @Override
     public void changeHeroHealth(Player player, int i) {
         recordMethodCall("changeHeroHealth for: " + player + " with amount: " + i);
+        wrappedGame.changeHeroHealth(player, i);
     }
 
     @Override
     public void drawCard(Player player) {
         recordMethodCall("drawCard");
+        wrappedGame.drawCard(player);
     }
 
     @Override
     public void removeMinionFromField(Player player, MutableCard card) {
         recordMethodCall("removeMinionFromField from " + player + " field");
+        wrappedGame.removeMinionFromField(player, card);
     }
 
     @Override
     public void changeMinionAttack(MutableCard card, int i) {
         recordMethodCall("changeMinionAttack by " + i);
+        wrappedGame.changeMinionAttack(card, i);
     }
 
     @Override
     public void addCardToField(Player who, MutableCard card) {
         recordMethodCall("addCardToField");
+        wrappedGame.addCardToField(who, card);
     }
 
     @Override
     public Player getPlayerInTurn() {
-        return null;
+        return wrappedGame.getPlayerInTurn();
     }
 
     @Override
     public MutableHero getHero(Player who) {
-        return null;
+        return wrappedGame.getHero(who);
     }
 
     @Override
     public Player getWinner() {
-        return null;
+        return wrappedGame.getWinner();
     }
 
     @Override
     public int getTurnNumber() {
-        return 0;
+        return wrappedGame.getTurnNumber();
     }
 
     @Override
     public int getDeckSize(Player who) {
-        return 1;
+        return wrappedGame.getDeckSize(who);
     }
 
     @Override
     public MutableCard getCardInHand(Player who, int indexInHand) {
-        return null;
+        return wrappedGame.getCardInHand(who, indexInHand);
     }
 
     @Override
     public Iterable<? extends Card> getHand(Player who) {
-        return null;
+        return wrappedGame.getHand(who);
     }
 
     @Override
     public int getHandSize(Player who) {
-        return 0;
+        return wrappedGame.getHandSize(who);
     }
 
     @Override
     public Card getCardInField(Player who, int indexInField) {
-        return null;
+        return wrappedGame.getCardInField(who, indexInField);
     }
 
     @Override

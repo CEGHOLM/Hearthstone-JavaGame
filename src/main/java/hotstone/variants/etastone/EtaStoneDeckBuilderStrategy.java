@@ -4,10 +4,10 @@ import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.standard.*;
+import hotstone.variants.DeckBuilderUtil;
 import hotstone.variants.NullEffect;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class EtaStoneDeckBuilderStrategy implements DeckBuilderStrategy {

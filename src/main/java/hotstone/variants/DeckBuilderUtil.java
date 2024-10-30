@@ -1,7 +1,8 @@
-package hotstone.standard;
+package hotstone.variants;
 
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
+import hotstone.standard.StandardCard;
 
 import java.util.*;
 

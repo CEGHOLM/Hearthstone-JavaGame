@@ -6,6 +6,8 @@ import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.GameConstants;
 import hotstone.spies.SpyMutableGame;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.utility.TestHelper;
 import hotstone.variants.StubRandomStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,7 @@ public class TestEtaStone {
 
     @BeforeEach
     public void setUp() {
-        game = new SpyMutableGame();
+        game = new SpyMutableGame(new StandardHotStoneGame(new EtaStoneFactory()));
     }
 
     @Test

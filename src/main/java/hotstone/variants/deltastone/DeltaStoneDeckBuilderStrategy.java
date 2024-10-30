@@ -3,13 +3,12 @@ package hotstone.variants.deltastone;
 import hotstone.framework.strategies.DeckBuilderStrategy;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
-import hotstone.standard.DeckBuilderUtil;
+import hotstone.variants.DeckBuilderUtil;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardCard;
 import hotstone.variants.NullEffect;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DeltaStoneDeckBuilderStrategy implements DeckBuilderStrategy {
