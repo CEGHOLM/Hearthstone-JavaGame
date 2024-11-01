@@ -311,7 +311,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
     Hero hero = game.getHero(playerShown);
 
-    // TODO: Add the text figure for the shown player's power
     String heroPowerText = hero.getEffectDescription();
     int effectLength = heroPowerText.length();
     Point effectPosition = new Point(GfxConstants.MY_HERO_POWER_DESCRIPTION_POSITION.x -
@@ -423,15 +422,13 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onAttackHero(Player playerAttacking, Card attackingCard) {
-    // TODO: Inform player
     addMessage(playerAttacking + " attacks " + Player.computeOpponent(playerAttacking) + "'s hero" +
             " with " + attackingCard.getName() + ".");
   }
 
   @Override
   public void onUsePower(Player who) {
-    // TODO: Inform player
-    addMessage("TODO: tell about power");
+    addMessage(who + " used hero power " + game.getHero(who).getEffectDescription() + ".");
   }
 
   @Override
@@ -453,7 +450,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // Opponent cards may not have an associated actor
     // for instance if they are in the hand.
     if (actor != null) {
-      // TODO: update the stats of the card/minion
       actor.updateStats();
       addMessage("Stats has been updated for " + card.getName());
     }
@@ -463,6 +459,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
   public void onCardRemove(Player who, Card card) {
     // TODO: Remove the minion and refresh field
     removeActorAndUpdateMapping(card);
+    refreshField(who);
     addMessage(who + "'s minion " + card.getName()
             + " is killed.");
   }
