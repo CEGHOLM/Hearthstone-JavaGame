@@ -71,7 +71,7 @@ public class HotSeatStateTool extends NullTool {
         state = new MinionAttackTool(editor, game, game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
         // TODO: Handle clicking heroes -> use power
-        state = theNullTool;
+        state = new UsePowerTool(editor, game, game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.WIN_BUTTON) {
         // Clicking the 'won button' should do nothing!
         state = theNullTool; // User have to close the window to restart.

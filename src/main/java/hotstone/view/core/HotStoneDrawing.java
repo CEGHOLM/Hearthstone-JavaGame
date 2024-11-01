@@ -429,6 +429,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
   @Override
   public void onUsePower(Player who) {
     addMessage(who + " used hero power " + game.getHero(who).getEffectDescription() + ".");
+    refreshHero(who);
   }
 
   @Override
