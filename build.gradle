@@ -27,6 +27,9 @@ repositories {
 }
 
 dependencies {
+    // Depend on the MiniDraw library
+    implementation group: 'com.baerbak.maven',
+            name: 'minidraw', version: '4.0'
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
     // Use JUnit Jupiter Engine for testing.
