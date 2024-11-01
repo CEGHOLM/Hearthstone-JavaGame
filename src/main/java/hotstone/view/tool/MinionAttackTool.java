@@ -7,8 +7,6 @@ import hotstone.framework.Status;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.view.GfxConstants;
 import hotstone.view.figure.CardFigure;
-import hotstone.view.figure.HotStoneFigure;
-import hotstone.view.figure.HotStoneFigureType;
 import minidraw.framework.Drawing;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Figure;
@@ -57,16 +55,16 @@ public class MinionAttackTool extends NullTool {
     @Override
     public void mouseUp(MouseEvent e, int x, int y) {
         Drawing model = editor.drawing();
-        Figure figureAtPosition = model.findFigure(e.getX(), e.getY());
+        Figure figureAtPosition = model.findFigure(x, y);
 
         // Invoke related facade method, if figure is a card or hero
         boolean isDraggingAnActor = draggedActor != null;
-        boolean isHittingHero = y < GfxConstants.OPPONENT_HERO_POSITION.y + 200 && x < GfxConstants.OPPONENT_HERO_POSITION.x + 224;
         boolean isHittingMinion = false;
         Card defendingCard = null;
 
         if (figureAtPosition instanceof CardFigure) {
             defendingCard = ((CardFigure) figureAtPosition).getAssociatedCard();
+            isHittingMinion = true;
         }
 
         // moveCardBack is true because we want to move the card back after the attack or if it failed
@@ -83,9 +81,11 @@ public class MinionAttackTool extends NullTool {
 
             System.out.println(attackingCard.getOwner());
             System.out.println(defendingCard.getOwner());
+            System.out.println(figureAtPosition);
             System.out.println("Attacking minion at position (" + x + ", " + y + ") with status: " + status);
         }
 
+        boolean isHittingHero = y < GfxConstants.OPPONENT_HERO_POSITION.y + 200 && x < GfxConstants.OPPONENT_HERO_POSITION.x + 224;
         // If you are trying to attack a hero
         if (isDraggingAnActor && isHittingHero) {
             Card attackingCard = draggedActor.getAssociatedCard();

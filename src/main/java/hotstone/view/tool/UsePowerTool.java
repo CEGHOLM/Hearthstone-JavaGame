@@ -5,22 +5,16 @@ import hotstone.framework.Hero;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
 import hotstone.view.GfxConstants;
-import hotstone.view.core.HotStoneDrawing;
-import hotstone.view.figure.HeroFigure;
-import hotstone.view.figure.HotStoneFigure;
-import hotstone.view.figure.HotStoneFigureType;
-import minidraw.framework.Drawing;
 import minidraw.framework.DrawingEditor;
-import minidraw.framework.Figure;
 import minidraw.standard.NullTool;
 
-import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class UsePowerTool extends NullTool {
     protected final DrawingEditor editor;
     private Game game;
     private Player whoAmIPlaying;
+    private Hero hero;
 
     public UsePowerTool(DrawingEditor editor, Game game, Player whoAmIPlaying) {
         this.editor = editor;
@@ -42,5 +36,4 @@ public class UsePowerTool extends NullTool {
             editor.showStatus("Using hero power. Result= " + status);
         }
     }
-
 }

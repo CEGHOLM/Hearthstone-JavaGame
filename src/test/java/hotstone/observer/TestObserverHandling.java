@@ -302,7 +302,7 @@ public class TestObserverHandling {
     }
 
     @Test
-    public void shouldNotifyObserverWhenHeroManaIsUpdatedOnTurnChange() {
+    public void shouldNotifyObserverWhenHeroManaIsUpdatedOnGameStart() {
         // Given a game
         // when the turn ends
         game.endTurn();
