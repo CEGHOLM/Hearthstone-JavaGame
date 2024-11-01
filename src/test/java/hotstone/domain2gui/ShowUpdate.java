@@ -37,8 +37,6 @@ import java.awt.event.MouseEvent;
  */
 public class ShowUpdate {
   public static void main(String[] args) {
-    // TODO: Replace the below assignment into a stable and well
-    // tested variant of HotStone
     Game game = new StandardHotStoneGame(new AlphaStoneFactory());
 
     DrawingEditor editor =
@@ -136,6 +134,17 @@ class TriggerGameUpdateTool extends NullTool {
       case 9: {
         editor.showStatus("Findus uses hero power");
         game.usePower(Player.FINDUS);
+        break;
+      }
+      case 10: {
+        editor.showStatus("Findus is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 11: {
+        editor.showStatus("Hack - switching UI state so Peddersens's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
         break;
       }
       default: {

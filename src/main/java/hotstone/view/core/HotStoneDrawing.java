@@ -372,7 +372,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     if (card.getEffectDescription().isEmpty()) {
       addMessage("" + who + " plays " + card.getName() + ".");
     }
-    // TODO: Add another message if the card has an effect
+
     if (!card.getEffectDescription().isEmpty()) {
       addMessage("" + who + " plays " + card.getName() + ", with effect " + card.getEffectDescription() + ".");
     }
@@ -437,9 +437,14 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // refresh the hand; otherwise just update the summary
     // of the opponent player
     if (who == playerShown) {
-      // TODO: add card to hand, refresh the hand Gfx
+      // Add the card to the players hand
+      createActorAndUpdateMapping(drawnCard, HotStoneFigureType.CARD_FIGURE);
+      // Refresh the hand
+      refreshHand(who);
     } else {
-      // TODO: update opponent's summary
+      // Update the summary of the opponent
+      opponentSummary.setText(computeHeroSummary(who));
+
     }
     addMessage(who + " draws a card.");
   }
@@ -457,7 +462,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onCardRemove(Player who, Card card) {
-    // TODO: Remove the minion and refresh field
     removeActorAndUpdateMapping(card);
     refreshField(who);
     addMessage(who + "'s minion " + card.getName()
@@ -466,7 +470,6 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onHeroUpdate(Player who) {
-    // TODO: Refresh the hero's stats
     HeroFigure hero = heroMap.get(who);
     hero.updateStats();
   }
