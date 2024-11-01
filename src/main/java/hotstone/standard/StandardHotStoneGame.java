@@ -181,12 +181,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     Player nextPlayer = getPlayerInTurn();
 
-    // Notify the observer that the turn has changed
-    observerHandler.notifyChangeTurnTo(nextPlayer);
-
     // Start-of-turn processing for next player
     assignManaToPlayer(nextPlayer);
     drawCard(nextPlayer);
+
+    // Notify the observer that the turn has changed
+    observerHandler.notifyChangeTurnTo(nextPlayer);
   }
 
   private void handleEndOfTurnEffects(Player player) {

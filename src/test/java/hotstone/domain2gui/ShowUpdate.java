@@ -127,6 +127,12 @@ class TriggerGameUpdateTool extends NullTool {
         game.attackCard(Player.FINDUS, attackingCard, defendingCard);
         break;
       }
+      case 8: {
+        editor.showStatus("Findus's card # 0 in field attacks Peddersen's hero");
+        MutableCard attackingCard = game.getCardInField(Player.FINDUS, 0);
+        game.attackHero(Player.FINDUS, attackingCard);
+        break;
+      }
       default: {
         editor.showStatus("No more events in the list...");
       }

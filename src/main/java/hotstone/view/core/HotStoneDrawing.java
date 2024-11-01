@@ -424,7 +424,8 @@ public class HotStoneDrawing implements Drawing, GameObserver {
   @Override
   public void onAttackHero(Player playerAttacking, Card attackingCard) {
     // TODO: Inform player
-    addMessage("TODO: tell about attack");
+    addMessage(playerAttacking + " attacks " + Player.computeOpponent(playerAttacking) + "'s hero" +
+            " with " + attackingCard.getName() + ".");
   }
 
   @Override
@@ -469,6 +470,8 @@ public class HotStoneDrawing implements Drawing, GameObserver {
   @Override
   public void onHeroUpdate(Player who) {
     // TODO: Refresh the hero's stats
+    HeroFigure hero = heroMap.get(who);
+    hero.updateStats();
   }
 
   @Override
