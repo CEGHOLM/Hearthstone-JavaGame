@@ -140,7 +140,7 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
-    public Card getCardInField(Player who, int indexInField) {
+    public MutableCard getCardInField(Player who, int indexInField) {
         return wrappedGame.getCardInField(who, indexInField);
     }
 

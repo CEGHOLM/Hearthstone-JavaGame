@@ -12,6 +12,6 @@ public class NullEffect implements Effect {
 
     @Override
     public String getEffectDescription() {
-        return null;
+        return "";
     }
 }

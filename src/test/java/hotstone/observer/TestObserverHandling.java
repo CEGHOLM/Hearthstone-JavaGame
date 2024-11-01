@@ -57,7 +57,7 @@ public class TestObserverHandling {
         // When the turn ends
         game.endTurn();
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onChangeTurnTo"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onChangeTurnTo"));
         assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
     }
 

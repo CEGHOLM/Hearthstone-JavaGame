@@ -312,7 +312,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     Hero hero = game.getHero(playerShown);
 
     // TODO: Add the text figure for the shown player's power
-    String heroPowerText = "(Hero power text)";
+    String heroPowerText = hero.getEffectDescription();
     int effectLength = heroPowerText.length();
     Point effectPosition = new Point(GfxConstants.MY_HERO_POWER_DESCRIPTION_POSITION.x -
             effectLength * GfxConstants.HERO_APPROXIMATE_LETTER_WIDTH_PIXEL,
@@ -326,7 +326,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
     // Opponent power
     hero = game.getHero(Player.computeOpponent(playerShown));
-    TextFigure oppHeroPowerText = new TextFigure("(Other hero power text)",
+    TextFigure oppHeroPowerText = new TextFigure(hero.getEffectDescription(),
             GfxConstants.OPPONENT_HERO_POWER_DESCRIPTION_POSITION,
             Color.YELLOW, GfxConstants.SMALL_FONT_SIZE);
     add(oppHeroPowerText);
@@ -370,8 +370,13 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onPlayCard(Player who, Card card, int atIndex) {
-    addMessage("" + who + " plays " + card.getName() + ".");
+    if (card.getEffectDescription().isEmpty()) {
+      addMessage("" + who + " plays " + card.getName() + ".");
+    }
     // TODO: Add another message if the card has an effect
+    if (!card.getEffectDescription().isEmpty()) {
+      addMessage("" + who + " plays " + card.getName() + ", with effect " + card.getEffectDescription() + ".");
+    }
 
     // As this direct mutator call has known side effects which are
     // not represented by the indirect observer notifications, the
@@ -448,18 +453,16 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // for instance if they are in the hand.
     if (actor != null) {
       // TODO: update the stats of the card/minion
-      addMessage("TODO: update card stats");
+      actor.updateStats();
+      addMessage("Stats has been updated for " + card.getName());
     }
   }
 
   @Override
   public void onCardRemove(Player who, Card card) {
     // TODO: Remove the minion and refresh field
-    // NOTE: be SURE to use the
-    // right internal data structure manipulation method
-    // so both the figure collection AND the actorMap
-    // is updated
-    addMessage("TODO: " + who + "'s minion " + card.getName()
+    removeActorAndUpdateMapping(card);
+    addMessage(who + "'s minion " + card.getName()
             + " is killed.");
   }
 

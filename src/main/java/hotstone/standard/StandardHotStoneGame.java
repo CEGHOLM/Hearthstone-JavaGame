@@ -102,6 +102,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   private void assignManaToPlayer(Player player) {
     int mana = manaProductionStrategy.calculateMana(turnNumber);
     heroes.get(player).setMana(mana);
+    observerHandler.notifyHeroUpdate(player);
   }
 
   @Override
@@ -154,7 +155,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
-  public Card getCardInField(Player who, int indexInField) {
+  public MutableCard getCardInField(Player who, int indexInField) {
     return fields.get(who).get(indexInField);
   }
 

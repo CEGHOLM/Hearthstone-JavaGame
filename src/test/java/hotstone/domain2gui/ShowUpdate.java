@@ -17,7 +17,6 @@
 
 package hotstone.domain2gui;
 
-import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
@@ -83,8 +82,8 @@ class TriggerGameUpdateTool extends NullTool {
         break;
       }
       case 1: {
-        editor.showStatus("Playing Findus Card # 0 in hand to field");
-        MutableCard c = game.getCardInHand(Player.FINDUS, 0);
+        editor.showStatus("Playing Findus Card # 1 in hand to field");
+        MutableCard c = game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, c, 0);
         break;
       }
@@ -105,9 +104,27 @@ class TriggerGameUpdateTool extends NullTool {
         break;
       }
       case 4: {
-        // TODO: keep adding cases to this 'list' until all game mutator calls
-        // have been tested and verified that the UI responds correctly.
-        editor.showStatus("TODO: ADD SOME MORE game.doSomething(x,y,z) and develop GUI behaviour");
+        editor.showStatus("Playing Peddersen card # 0 in hand to field");
+        MutableCard c = game.getCardInHand(Player.PEDDERSEN, 0);
+        game.playCard(Player.PEDDERSEN, c, 0);
+        break;
+      }
+      case 5: {
+        editor.showStatus("Peddersen is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 6: {
+        editor.showStatus("Hack - switching UI state so Findus's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
+        break;
+      }
+      case 7: {
+        editor.showStatus("Findus's card # 0 in field attacks Peddersen's card # 0 in field");
+        MutableCard attackingCard = game.getCardInField(Player.FINDUS, 0);
+        MutableCard defendingCard = game.getCardInField(Player.PEDDERSEN, 0);
+        game.attackCard(Player.FINDUS, attackingCard, defendingCard);
         break;
       }
       default: {

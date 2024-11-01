@@ -124,7 +124,7 @@ public interface Game extends Observable {
    *                    0..fieldsize-1.
    * @return the card on the field at that position.
    */
-  Card getCardInField(Player who, int indexInField);
+  MutableCard getCardInField(Player who, int indexInField);
   
   /** Get an iterable over the cards on the field. Convenience method
    * to allow writing code ala 
