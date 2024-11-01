@@ -21,6 +21,7 @@ import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.Status;
+import hotstone.framework.mutability.MutableCard;
 import hotstone.view.GfxConstants;
 import hotstone.view.figure.CardFigure;
 import minidraw.framework.*;
@@ -82,9 +83,7 @@ public class PlayCardTool extends NullTool {
 
     if (isDraggingAnActor && isHittingField) {
       Card associatedCard = draggedActor.getAssociatedCard();
-      // TODO: Do the actual call instead of this fake code
-      System.out.println("TODO: Do the actual call to the domain code...");
-      Status status = Status.NOT_ENOUGH_MANA;
+      Status status = game.playCard(whoAmIPlaying, (MutableCard) associatedCard, 0);
       if (status == Status.OK) {
         moveCardBack = false;
       }

@@ -37,9 +37,6 @@ import minidraw.standard.MiniDrawApplication;
  */
 public class ShowTools {
   public static void main(String[] args) {
-    // TODO: Replace the below assignment into a stable and well
-    // tested variant of HotStone, you probably want to start with
-    // a simple variant, like AlphaStone
     Game game = new StandardHotStoneGame(new AlphaStoneFactory());
 
     DrawingEditor editor =
