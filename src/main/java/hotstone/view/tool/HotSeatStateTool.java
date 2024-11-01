@@ -68,7 +68,7 @@ public class HotSeatStateTool extends NullTool {
         state = new EndTurnTool(editor, game);
       } else if (hsf.getType() == HotStoneFigureType.MINION_FIGURE) {
         // TODO: Handle moving minions -> attacks
-        state = theNullTool;
+        state = new MinionAttackTool(editor, game, game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
         // TODO: Handle clicking heroes -> use power
         state = theNullTool;

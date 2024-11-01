@@ -32,8 +32,6 @@ import java.awt.event.MouseEvent;
 /** Almost complete implementation of PlayCardTool: a MiniDraw tool
  * to play a card.
  */
-
-// TODO: Finish the implementation of PlayCard tool
 public class PlayCardTool extends NullTool {
   private DrawingEditor editor;
   private Game game;
@@ -83,6 +81,7 @@ public class PlayCardTool extends NullTool {
 
     if (isDraggingAnActor && isHittingField) {
       Card associatedCard = draggedActor.getAssociatedCard();
+      // Try  to play the card
       Status status = game.playCard(whoAmIPlaying, (MutableCard) associatedCard, 0);
       if (status == Status.OK) {
         moveCardBack = false;
