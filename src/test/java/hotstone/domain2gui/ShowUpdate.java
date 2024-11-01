@@ -21,6 +21,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneFactory;
 import hotstone.view.core.HotStoneDrawing;
 import hotstone.view.core.HotStoneDrawingType;
@@ -146,6 +147,65 @@ class TriggerGameUpdateTool extends NullTool {
         HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
         asHotStoneDrawing.endHotSeatState();
         break;
+      }
+      case 12: {
+        editor.showStatus("Peddersen is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 13: {
+        editor.showStatus("Hack - switching UI state so Finuds's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
+        break;
+      }
+      case 14: {
+        editor.showStatus("Findus is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 15: {
+        editor.showStatus("Hack - switching UI state so Peddersens's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
+        break;
+      }
+      case 16: {
+        editor.showStatus("Peddersen is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 17: {
+        editor.showStatus("Hack - switching UI state so Finuds's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
+        break;
+      }
+      case 18: {
+        editor.showStatus("Findus is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 19: {
+        editor.showStatus("Hack - switching UI state so Peddersens's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
+        break;
+      }
+      case 20: {
+        editor.showStatus("Peddersen is ending turn");
+        game.endTurn();
+        break;
+      }
+      case 21: {
+        editor.showStatus("Hack - switching UI state so Finuds's UI becomes active");
+        HotStoneDrawing asHotStoneDrawing = (HotStoneDrawing) editor.drawing();
+        asHotStoneDrawing.endHotSeatState();
+        break;
+      }
+      case 22: {
+        editor.showStatus("Findus won the game");
+        game.getWinner();
       }
       default: {
         editor.showStatus("No more events in the list...");
