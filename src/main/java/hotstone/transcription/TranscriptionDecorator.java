@@ -146,6 +146,12 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
+    public void reduceCardHealth(MutableCard card, int attack) {
+        log(card.getName() + "'s health changed by " + attack);
+        wrappedGame.reduceCardHealth(card, attack);
+    }
+
+    @Override
     public void removeMinionFromField(Player player, MutableCard card) {
         log(card.getName() + " was eliminated");
         wrappedGame.removeMinionFromField(player, card);

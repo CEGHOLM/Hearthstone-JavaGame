@@ -302,7 +302,8 @@ public class StandardHotStoneGame implements Game, MutableGame {
     deactivateCard(attackingCard);
   }
 
-  private void reduceCardHealth(MutableCard card, int attack) {
+  @Override
+  public void reduceCardHealth(MutableCard card, int attack) {
     if (attack > 0) {
       card.takeDamage(attack);
       observerHandler.notifyCardUpdate(card);

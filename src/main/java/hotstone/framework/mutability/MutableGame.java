@@ -21,6 +21,8 @@ public interface MutableGame extends Game {
      */
     void drawCard(Player player);
 
+    void reduceCardHealth(MutableCard card, int attack);
+
     /** Remove minions from the field, when dead or eliminated
      *
      * @param player The players whose field we're removing from.

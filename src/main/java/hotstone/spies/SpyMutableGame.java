@@ -82,6 +82,12 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
+    public void reduceCardHealth(MutableCard card, int attack) {
+        recordMethodCall("reduceCardHealth");
+        wrappedGame.reduceCardHealth(card, attack);
+    }
+
+    @Override
     public void removeMinionFromField(Player player, MutableCard card) {
         recordMethodCall("removeMinionFromField from " + player + " field");
         wrappedGame.removeMinionFromField(player, card);

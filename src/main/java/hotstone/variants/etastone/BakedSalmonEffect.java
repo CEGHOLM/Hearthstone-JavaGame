@@ -28,7 +28,7 @@ public class BakedSalmonEffect implements Effect {
             int randomIndex = randomStrategy.nextInt(minionsOnField.size());
             MutableCard minion = minionsOnField.get(randomIndex);
 
-            // Increase the minions attack by 1
+            // Increase the minions attack by 2
             game.changeMinionAttack(minion, 2);
         }
     }
