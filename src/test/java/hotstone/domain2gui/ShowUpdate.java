@@ -21,7 +21,6 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.standard.StandardHotStoneGame;
-import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneFactory;
 import hotstone.view.core.HotStoneDrawing;
 import hotstone.view.core.HotStoneDrawingType;
@@ -205,7 +204,6 @@ class TriggerGameUpdateTool extends NullTool {
       }
       case 22: {
         editor.showStatus("Findus won the game");
-        game.getWinner();
       }
       default: {
         editor.showStatus("No more events in the list...");

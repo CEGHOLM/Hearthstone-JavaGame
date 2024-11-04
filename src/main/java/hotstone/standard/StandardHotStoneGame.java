@@ -239,10 +239,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     changeHeroMana(heroes.get(who), heroMana - cardManaCost);
 
+    card.applyEffect(this);
+
     // Move card from hand to field
     addCardToField(who, card);
-
-    card.applyEffect(this);
 
     return Status.OK;
   }
