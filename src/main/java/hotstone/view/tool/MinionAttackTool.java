@@ -56,8 +56,9 @@ public class MinionAttackTool extends NullTool {
         Figure figureAtPosition = model.findFigure(x, y);
 
         boolean isDraggingAnActor = draggedActor != null;
-        boolean isHittingEnemyHero = false;
-        Hero hero = null;
+        boolean isHittingHero = false;
+        // Make sure it's the enemy hero you're hitting
+        boolean isHittingEnemyHero = y < GfxConstants.OPPONENT_HERO_POSITION.y + 224 && x < GfxConstants.OPPONENT_HERO_POSITION.x + 200;
         boolean isHittingMinion = false;
         Card defendingCard = null;
 
@@ -82,12 +83,11 @@ public class MinionAttackTool extends NullTool {
 
         // Find out if it is a hero you're trying to attack
         if (figureAtPosition instanceof HeroFigure) {
-            hero = ((HeroFigure) figureAtPosition).getAssociatedHero();
-            isHittingEnemyHero = true;
+            isHittingHero = true;
         }
 
         // If you are trying to attack a hero
-        if (isDraggingAnActor && isHittingEnemyHero) {
+        if (isDraggingAnActor && isHittingHero && isHittingEnemyHero) {
             Card attackingCard = draggedActor.getAssociatedCard();
 
             // Try to attack the hero
