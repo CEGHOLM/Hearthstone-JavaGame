@@ -308,6 +308,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
       card.takeDamage(attack);
       observerHandler.notifyCardUpdate(card);
     }
+    removeIfDefeated(card);
   }
 
   private static void deactivateCard(MutableCard attackingCard) {
