@@ -77,8 +77,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
     heroes.put(Player.PEDDERSEN, heroStrategy.getHero(Player.PEDDERSEN));
 
-    // Set initial mana for the starting player
+    // Set initial mana for the players
     assignManaToPlayer(getPlayerInTurn());
+    assignManaToPlayer(Player.computeOpponent(getPlayerInTurn()));
 
     // Initialize decks
     decks.put(Player.FINDUS, deckBuilderStrategy.buildDeck(Player.FINDUS));
