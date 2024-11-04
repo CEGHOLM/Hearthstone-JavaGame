@@ -21,11 +21,16 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.alphastone.AlphaStoneFactory;
+import hotstone.variants.betastone.BetaStoneFactory;
+import hotstone.variants.deltastone.DeltaStoneFactory;
+import hotstone.variants.epsilonstone.EpsilonStoneFactory;
+import hotstone.variants.gammastone.GammaStoneFactory;
+import hotstone.variants.semistone.SemiStoneFactory;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.HotSeatStateTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
-import minidraw.standard.SelectionTool;
 
 /** A single jvm application which uses a 'hotseat' to allow both players to
  * alternate play.
@@ -33,16 +38,35 @@ import minidraw.standard.SelectionTool;
 public class HotSeatStone {
   public static void main(String[] args) {
 
-    System.out.println("=== Starting HotSeat on game variant: " + args[0] + " ===");
-    // TODO: Do some switching on args[0] to make the right game variant
-    Game game = new StandardHotStoneGame(new AlphaStoneFactory());
+    // Check if args[0] is provided
+    if (args.length == 0) {
+      System.out.println("Please provide a game variant as an argument.");
+      System.out.println("Usage: java HotSeatStone <variant>");
+      System.exit(1);
+    }
+
+    String variant = args[0];
+    System.out.println("=== Starting HotSeat on game variant: " + variant + " ===");
+
+    Game game;
+
+    // Switch on the variant to create the appropriate game instance
+    switch (variant.toLowerCase()) {
+      case "semistone":
+        game = new StandardHotStoneGame(new SemiStoneFactory());
+        break;
+      default:
+        System.out.println("Unknown variant: " + variant);
+        System.out.println("Available variants: AlphaStone, BetaStone, GammaStone, DeltaStone, ThetaStone, EpsilonStone, SemiStone");
+        System.exit(1);
+        return;
+    }
 
     DrawingEditor editor =
-            new MiniDrawApplication( "HotSeat: Variant " + args[0],
+            new MiniDrawApplication( "HotSeat: Variant " + variant,
                     new HotStoneFactory(game, Player.FINDUS,
                             HotStoneDrawingType.HOTSEAT_MODE) );
     editor.open();
-    // TODO: Change to the hotseat state tool
-    editor.setTool(new SelectionTool(editor));
+    editor.setTool(new HotSeatStateTool(editor, game));
   }
 }

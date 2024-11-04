@@ -63,4 +63,11 @@ jacoco {
   toolVersion = "0.8.12"
 }
 
+task hotseatstone(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'hotstone.main.HotSeatStone'
+    args 'semiStone'
+}
+
+
 
