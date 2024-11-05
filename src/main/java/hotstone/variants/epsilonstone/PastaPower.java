@@ -21,7 +21,7 @@ public class PastaPower implements Effect {
         List<? extends Card> friendlyMinions = (List<? extends Card>) game.getField(player);
 
         if (!friendlyMinions.isEmpty()) {
-            // Use randomStrategy to choos a minion
+            // Use randomStrategy to choose a minion
             int targetIndex = randomStrategy.nextInt(friendlyMinions.size());
             MutableCard target = (MutableCard) friendlyMinions.get(targetIndex);
             game.changeMinionAttack(target, 2);  // Increase attack by 2

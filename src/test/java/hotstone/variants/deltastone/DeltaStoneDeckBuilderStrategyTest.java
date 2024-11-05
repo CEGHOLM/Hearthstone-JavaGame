@@ -108,14 +108,14 @@ public class DeltaStoneDeckBuilderStrategyTest {
 
         // Then it should have size 18 and the correct specs
         assertThat(deck.size(), is(GameConstants.DELTA_DECK_SIZE));
-        verifyCardSpecs(deck, GameConstants.BROWN_RICE_CARD, 1, 1, 2, null);
-        verifyCardSpecs(deck, GameConstants.FRENCH_FRIES_CARD, 1, 2, 1, null);
-        verifyCardSpecs(deck, GameConstants.GREEN_SALAD_CARD, 2, 2, 3, null);
-        verifyCardSpecs(deck, GameConstants.TOMATO_SALAD_CARD, 2, 3, 2, null);
-        verifyCardSpecs(deck, GameConstants.POKE_BOWL_CARD, 3, 2, 4, null);
-        verifyCardSpecs(deck, GameConstants.PUMPKIN_SOUP_CARD, 4, 2, 7, null);
-        verifyCardSpecs(deck, GameConstants.NOODLE_SOUP_CARD, 4, 5, 3, null);
-        verifyCardSpecs(deck, GameConstants.SPRING_ROLLS_CARD, 5, 3, 7, null);
-        verifyCardSpecs(deck, GameConstants.BAKED_SALMON_CARD, 5, 8, 2, null);
+        verifyCardSpecs(deck, GameConstants.BROWN_RICE_CARD, 1, 1, 2, "");
+        verifyCardSpecs(deck, GameConstants.FRENCH_FRIES_CARD, 1, 2, 1, "");
+        verifyCardSpecs(deck, GameConstants.GREEN_SALAD_CARD, 2, 2, 3, "");
+        verifyCardSpecs(deck, GameConstants.TOMATO_SALAD_CARD, 2, 3, 2, "");
+        verifyCardSpecs(deck, GameConstants.POKE_BOWL_CARD, 3, 2, 4, "");
+        verifyCardSpecs(deck, GameConstants.PUMPKIN_SOUP_CARD, 4, 2, 7, "");
+        verifyCardSpecs(deck, GameConstants.NOODLE_SOUP_CARD, 4, 5, 3, "");
+        verifyCardSpecs(deck, GameConstants.SPRING_ROLLS_CARD, 5, 3, 7, "");
+        verifyCardSpecs(deck, GameConstants.BAKED_SALMON_CARD, 5, 8, 2, "");
     }
 }

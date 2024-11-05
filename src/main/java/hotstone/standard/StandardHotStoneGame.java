@@ -77,8 +77,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
     heroes.put(Player.FINDUS, heroStrategy.getHero(Player.FINDUS));
     heroes.put(Player.PEDDERSEN, heroStrategy.getHero(Player.PEDDERSEN));
 
-    // Set initial mana for the starting player
+    // Set initial mana for the players
     assignManaToPlayer(getPlayerInTurn());
+    assignManaToPlayer(Player.computeOpponent(getPlayerInTurn()));
 
     // Initialize decks
     decks.put(Player.FINDUS, deckBuilderStrategy.buildDeck(Player.FINDUS));
@@ -102,6 +103,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   private void assignManaToPlayer(Player player) {
     int mana = manaProductionStrategy.calculateMana(turnNumber);
     heroes.get(player).setMana(mana);
+    observerHandler.notifyHeroUpdate(player);
   }
 
   @Override
@@ -154,7 +156,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
-  public Card getCardInField(Player who, int indexInField) {
+  public MutableCard getCardInField(Player who, int indexInField) {
     return fields.get(who).get(indexInField);
   }
 
@@ -180,12 +182,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     Player nextPlayer = getPlayerInTurn();
 
-    // Notify the observer that the turn has changed
-    observerHandler.notifyChangeTurnTo(nextPlayer);
-
     // Start-of-turn processing for next player
     assignManaToPlayer(nextPlayer);
     drawCard(nextPlayer);
+
+    // Notify the observer that the turn has changed
+    observerHandler.notifyChangeTurnTo(nextPlayer);
   }
 
   private void handleEndOfTurnEffects(Player player) {
@@ -237,10 +239,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     changeHeroMana(heroes.get(who), heroMana - cardManaCost);
 
+    card.applyEffect(this);
+
     // Move card from hand to field
     addCardToField(who, card);
-
-    card.applyEffect(this);
 
     return Status.OK;
   }
@@ -300,11 +302,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
     deactivateCard(attackingCard);
   }
 
-  private void reduceCardHealth(MutableCard card, int attack) {
+  @Override
+  public void reduceCardHealth(MutableCard card, int attack) {
     if (attack > 0) {
       card.takeDamage(attack);
       observerHandler.notifyCardUpdate(card);
     }
+    removeIfDefeated(card);
   }
 
   private static void deactivateCard(MutableCard attackingCard) {

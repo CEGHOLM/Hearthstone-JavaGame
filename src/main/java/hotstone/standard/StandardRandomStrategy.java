@@ -13,7 +13,7 @@ public class StandardRandomStrategy implements RandomStrategy {
 
     @Override
     public int nextInt(int bound) {
-        return 0;
+        return random.nextInt(bound);
     }
 }
 

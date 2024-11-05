@@ -57,7 +57,7 @@ public class TestObserverHandling {
         // When the turn ends
         game.endTurn();
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onChangeTurnTo"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onChangeTurnTo"));
         assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
     }
 
@@ -255,7 +255,7 @@ public class TestObserverHandling {
         Card card = game.getCardInHand(Player.FINDUS, 0);
 
         // Then the observer should be correctly notified
-        assertThat(spyObserver.getLastCall(), is("onCardDraw"));
+        assertThat(spyObserver.getCallHistory(), hasItem("onCardDraw"));
         assertThat(spyObserver.getLastPlayer(), is(Player.FINDUS));
         assertThat(spyObserver.getLastAttackingCard(), is(card));
     }
@@ -299,5 +299,14 @@ public class TestObserverHandling {
         assertThat(spyObserver.getCallHistory(), hasItem("onHeroUpdate"));
         assertThat(spyObserver.getLastPlayer(), is(Player.PEDDERSEN));
         assertThat(spyObserver.getLastAttackingCard().getName(), is("Sovs"));
+    }
+
+    @Test
+    public void shouldNotifyObserverWhenHeroManaIsUpdatedOnGameStart() {
+        // Given a game
+        // when the turn ends
+        game.endTurn();
+        // Then the observer should be correctly notified
+        assertThat(spyObserver.getCallHistory(), hasItem("onHeroUpdate"));
     }
 }

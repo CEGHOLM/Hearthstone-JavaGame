@@ -68,7 +68,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Card getCardInField(Player who, int indexInField) {
+    public MutableCard getCardInField(Player who, int indexInField) {
         return wrappedGame.getCardInField(who, indexInField);
     }
 
@@ -95,30 +95,42 @@ public class TranscriptionDecorator implements MutableGame {
 
     @Override
     public Status playCard(Player who, MutableCard card, int atIndex) {
+        Status status = wrappedGame.playCard(who, card, atIndex);
+        if (status != Status.OK){
+            return status;
+        }
         log(who + " played card " + card.getName() + " at index " + atIndex);
-        return wrappedGame.playCard(who, card, atIndex);
+        return status;
     }
 
     @Override
     public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+        Status status = wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
+        if (status != Status.OK){
+            return status;
+        }
         log(playerAttacking + " attacked " + defendingCard.getName() + " with " + attackingCard.getName());
-        return wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
+        return status;
     }
 
     @Override
     public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+        Status status = wrappedGame.attackHero(playerAttacking, attackingCard);
+        if (status != Status.OK){
+            return status;
+        }
         log(playerAttacking + " attacked Hero with " + attackingCard.getName());
-
-        // Call `changeHeroHealth` through `this` makes sure the TranscriptionDecorator logic is used
-        this.changeHeroHealth(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
-
-        return Status.OK;
+        return status;
     }
 
     @Override
     public Status usePower(Player who) {
+        Status status = wrappedGame.usePower(who);
+        if (status != Status.OK){
+            return status;
+        }
         log(who + " used hero power");
-        return wrappedGame.usePower(who);
+        return status;
     }
 
     @Override
@@ -131,6 +143,12 @@ public class TranscriptionDecorator implements MutableGame {
     public void drawCard(Player player) {
         log(player + " drew a card");
         wrappedGame.drawCard(player);
+    }
+
+    @Override
+    public void reduceCardHealth(MutableCard card, int attack) {
+        log(card.getName() + "'s health changed by " + attack);
+        wrappedGame.reduceCardHealth(card, attack);
     }
 
     @Override
