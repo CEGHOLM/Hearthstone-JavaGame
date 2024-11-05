@@ -204,6 +204,7 @@ class TriggerGameUpdateTool extends NullTool {
       }
       case 22: {
         editor.showStatus("Findus won the game");
+        game.getWinner();
       }
       default: {
         editor.showStatus("No more events in the list...");
