@@ -17,7 +17,9 @@ public class HeroClientProxy implements Hero, ClientProxy {
 
     @Override
     public int getMana() {
-        return 0;
+        int mana =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.HERO_GET_MANA, Integer.class);
+        return mana;
     }
 
     @Override

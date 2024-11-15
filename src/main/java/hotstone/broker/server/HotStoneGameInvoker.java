@@ -47,6 +47,10 @@ public class HotStoneGameInvoker implements Invoker {
     return fakeItCard;
   }
 
+  private Hero lookupHero(String objectId) {
+    return fakeItHero;
+  }
+
   @Override
   public String handleRequest(String request) {
     // Do the demarshalling
@@ -176,6 +180,17 @@ public class HotStoneGameInvoker implements Invoker {
 
         // Create reply
         reply = new ReplyObject(200, gson.toJson(effectDescription));
+
+        // Hero methods
+      } else if (operationName.equals(OperationNames.HERO_GET_MANA)) {
+        // Lookup the right hero to invoke the method on
+        Hero servant = lookupHero(objectId);
+
+        // Call the servants getEffectDescription() method
+        int mana = servant.getMana();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(mana));
 
       } else {
         // Unknown operation

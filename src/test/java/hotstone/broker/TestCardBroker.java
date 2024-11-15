@@ -61,7 +61,7 @@ public class TestCardBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's name reply.
+        // return the stub's 17 reply.
         assertThat(manaCost, is(17));
     }
 
@@ -75,7 +75,7 @@ public class TestCardBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's name reply.
+        // return the stub's 15 reply.
         assertThat(attack, is(15));
     }
 
@@ -89,7 +89,7 @@ public class TestCardBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's name reply.
+        // return the stub's 77 reply.
         assertThat(health, is(77));
     }
 
@@ -103,7 +103,7 @@ public class TestCardBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's name reply.
+        // return the stub's true reply.
         assertThat(isActive, is(true));
     }
 
@@ -117,7 +117,7 @@ public class TestCardBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's name reply.
+        // return the stub's Findus reply.
         assertThat(owner, is(Player.FINDUS));
     }
 
@@ -131,7 +131,7 @@ public class TestCardBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's name reply.
+        // return the stub's "" reply.
         assertThat(effectDescription, is(""));
     }
 }

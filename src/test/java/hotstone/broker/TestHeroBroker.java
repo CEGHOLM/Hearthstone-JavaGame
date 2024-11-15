@@ -40,4 +40,16 @@ public class TestHeroBroker {
     }
 
     @Test
+    public void shouldHave88Mana() {
+        // Given a stub hero which is hardcoded to
+        // Return the 88 mana
+
+        // When I ask for the heroes mana
+        int mana = heroClientProxy.getMana();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's mana reply.
+        assertThat(mana, is(88));
+    }
 }
