@@ -66,4 +66,18 @@ public class TestHeroBroker {
         // return the stub's health reply.
         assertThat(health, is(111));
     }
+
+    @Test
+    public void shouldBeActive() {
+        // Given a stub hero which is hardcoded to
+        // Return be able to use it's power
+
+        // When I ask for the power status
+        boolean canUsePower = heroClientProxy.canUsePower();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's true reply.
+        assertThat(canUsePower, is(true));
+    }
 }

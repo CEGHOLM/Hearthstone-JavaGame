@@ -31,7 +31,9 @@ public class HeroClientProxy implements Hero, ClientProxy {
 
     @Override
     public boolean canUsePower() {
-        return false;
+        boolean canUsePower =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.HERO_IS_ACTIVE, Boolean.class);
+        return canUsePower;
     }
 
     @Override
