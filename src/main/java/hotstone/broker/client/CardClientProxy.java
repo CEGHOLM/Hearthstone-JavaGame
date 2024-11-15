@@ -60,7 +60,9 @@ public class CardClientProxy implements Card, ClientProxy {
 
     @Override
     public String getEffectDescription() {
-        return "";
+        String effectDescription =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_EFFECT_DESCRIPTION, String.class);
+        return effectDescription;
     }
 
     @Override

@@ -122,4 +122,18 @@ public class TestCardBroker {
         // return the stub's name reply.
         assertThat(owner, is(Player.FINDUS));
     }
+
+    @Test
+    public void shouldHaveEmptyEffectDescription() {
+        // Given a stub card which is hardcoded to
+        // Return an empty effect description
+
+        // When I ask for the effect description of the card
+        String effectDescription = cardClientProxy.getEffectDescription();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's name reply.
+        assertThat(effectDescription, is(""));
+    }
 }
