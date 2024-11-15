@@ -46,7 +46,9 @@ public class CardClientProxy implements Card, ClientProxy {
 
     @Override
     public boolean isActive() {
-        return false;
+        boolean isActive =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_IS_ACTIVE, Boolean.class);
+        return isActive;
     }
 
     @Override

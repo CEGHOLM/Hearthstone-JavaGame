@@ -53,12 +53,13 @@ public class StubCard implements Card {
     attack = 1;
   }
 
-  public StubCard(String name, int manaCost, int attack, int health, Player owner) {
+  public StubCard(String name, int manaCost, int attack, int health, Boolean isActive, Player owner) {
     this.name = name;
     this.owner = owner;
     this.health = health;
     this.attack = attack;
     this.manaCost = manaCost;
+    this.isActive = isActive;
   }
 
   @Override

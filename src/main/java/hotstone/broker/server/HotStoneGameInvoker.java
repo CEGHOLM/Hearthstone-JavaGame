@@ -34,7 +34,7 @@ public class HotStoneGameInvoker implements Invoker {
 
   private final Game servant;
   private final Gson gson;
-  private Card fakeItCard = new StubCard("Card", 17, 15, 77, Player.FINDUS);
+  private Card fakeItCard = new StubCard("Card", 17, 15, 77, true, Player.FINDUS);
 
   public HotStoneGameInvoker(Game servant) {
     this.servant = servant;
@@ -144,6 +144,16 @@ public class HotStoneGameInvoker implements Invoker {
 
         // Create reply
         reply = new ReplyObject(200, gson.toJson(health));
+
+      } else if (operationName.equals(OperationNames.CARD_IS_ACTIVE)) {
+        // Lookup the right card to invoke the method on
+        Card servant = lookupCard(objectId);
+
+        // Call the servants IsActive() method
+        boolean isActive = servant.isActive();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(isActive));
 
       } else {
         // Unknown operation

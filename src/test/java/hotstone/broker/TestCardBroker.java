@@ -94,4 +94,18 @@ public class TestCardBroker {
         // return the stub's name reply.
         assertThat(health, is(77));
     }
+
+    @Test
+    public void shouldBeActive() {
+        // Given a stub card which is hardcoded to
+        // Return the true as active status
+
+        // When I ask for the cards active status
+        boolean isActive = cardClientProxy.isActive();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's name reply.
+        assertThat(isActive, is(true));
+    }
 }
