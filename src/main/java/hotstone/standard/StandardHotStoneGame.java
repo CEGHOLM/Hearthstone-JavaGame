@@ -188,6 +188,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Notify the observer that the turn has changed
     observerHandler.notifyChangeTurnTo(nextPlayer);
+
+    // Check if there is a winner for alphastone and gammastone
+    getWinner();
   }
 
   private void handleEndOfTurnEffects(Player player) {
@@ -210,6 +213,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
   public void changeHeroHealth(Player who, int amount) {
     getHero(who).takeDamage(amount);
     observerHandler.notifyHeroUpdate(who);
+
+    // Check if there is a winner for betastone
+    getWinner();
   }
 
   @Override
