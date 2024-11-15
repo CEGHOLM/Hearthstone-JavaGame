@@ -186,11 +186,21 @@ public class HotStoneGameInvoker implements Invoker {
         // Lookup the right hero to invoke the method on
         Hero servant = lookupHero(objectId);
 
-        // Call the servants getEffectDescription() method
+        // Call the servants getMana() method
         int mana = servant.getMana();
 
         // Create reply
         reply = new ReplyObject(200, gson.toJson(mana));
+
+      } else if (operationName.equals(OperationNames.HERO_GET_HEALTH)) {
+        // Lookup the right hero to invoke the method on
+        Hero servant = lookupHero(objectId);
+
+        // Call the servants getHealth() method
+        int health = servant.getHealth();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(health));
 
       } else {
         // Unknown operation

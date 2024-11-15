@@ -52,4 +52,18 @@ public class TestHeroBroker {
         // return the stub's mana reply.
         assertThat(mana, is(88));
     }
+
+    @Test
+    public void shouldHave111Health() {
+        // Given a stub hero which is hardcoded to
+        // Return the 111 health
+
+        // When I ask for the heroes health
+        int health = heroClientProxy.getHealth();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's health reply.
+        assertThat(health, is(111));
+    }
 }
