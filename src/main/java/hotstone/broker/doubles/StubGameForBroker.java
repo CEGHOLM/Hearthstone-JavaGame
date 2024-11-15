@@ -19,7 +19,12 @@ package hotstone.broker.doubles;
 
 import frds.broker.Servant;
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.observer.GameObserver;
+
+import java.util.List;
 
 /** A Test Stub for game, to make easily recognizable output
  * to assert on in the Broker test cases. Some methods have
@@ -44,7 +49,7 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public Hero getHero(Player who) {
+  public MutableHero getHero(Player who) {
     return null;
   }
 
@@ -54,7 +59,7 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public Card getCardInHand(Player who, int indexInHand) {
+  public MutableCard getCardInHand(Player who, int indexInHand) {
     return null;
   }
 
@@ -69,7 +74,7 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public Card getCardInField(Player who, int indexInField) {
+  public MutableCard getCardInField(Player who, int indexInField) {
     return null;
   }
 
@@ -84,21 +89,26 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
+  public List<? extends Card> getDeck(Player who) {
+    return List.of();
+  }
+
+  @Override
   public void endTurn() {
   }
 
   @Override
-  public Status playCard(Player who, Card card, int atIndex) {
+  public Status playCard(Player who, MutableCard card, int atIndex) {
     return null;
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
     return null;
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, Card attackingCard) {
+  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
     return null;
   }
 

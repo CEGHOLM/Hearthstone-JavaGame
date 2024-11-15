@@ -17,16 +17,58 @@
 
 package hotstone.broker.server;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import frds.broker.Invoker;
+import frds.broker.ReplyObject;
+import frds.broker.RequestObject;
+import hotstone.broker.common.OperationNames;
 import hotstone.framework.Game;
 
 /** TODO: Template code for solving the Broker exercises */
 public class HotStoneGameInvoker implements Invoker {
+
+  private final Game servant;
+  private final Gson gson;
+
   public HotStoneGameInvoker(Game servant) {
+    this.servant = servant;
+    this.gson = new Gson();
   }
 
   @Override
   public String handleRequest(String request) {
-    return null;
+    // Do the demarshalling
+    RequestObject requestObject =
+            gson.fromJson(request, RequestObject.class);
+    JsonArray array =
+            JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
+
+    ReplyObject reply;
+
+    try {
+      // Dispatching: Check the operation name
+      String operationName = requestObject.getOperationName();
+
+      if (operationName.equals(OperationNames.GAME_GET_TURN_NUMBER)) {
+        // Call the servants getTurnNumber() method
+        int turnNumber = servant.getTurnNumber();
+
+        // Create a reply
+        reply = new ReplyObject(200, gson.toJson(turnNumber));
+
+      } else {
+        // Unknown operation
+        reply = new ReplyObject(501, "Unknown operation: " + operationName);
+      }
+
+    } catch (Exception e) {
+      // Handle errors
+      reply = new ReplyObject(500, "Server error: " + e.getMessage());
+    }
+
+    // Marshalling: Convert reply to Json and return
+    return gson.toJson(reply);
   }
 }

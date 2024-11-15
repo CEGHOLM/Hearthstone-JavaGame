@@ -27,9 +27,22 @@ repositories {
 }
 
 dependencies {
+    // The FRDS.Broker lib
+    implementation group: 'com.baerbak.maven',
+            name: 'broker', version: '4.0'
+    // Avoid a security vulnerability in Jetty, which Broker depends upon
+    implementation group: 'org.eclipse.jetty',
+            name: 'jetty-server', version: '9.4.56.v20240826'
+
+
+    // Bind SLF4J it to the Log4J logging framework
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12',
+            version: '1.7.36'
+
     // Depend on the MiniDraw library
     implementation group: 'com.baerbak.maven',
             name: 'minidraw', version: '4.0'
+
     // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
     // Use JUnit Jupiter Engine for testing.
@@ -63,10 +76,116 @@ jacoco {
   toolVersion = "0.8.12"
 }
 
+// === Execution tasks - for running visual tests for
+//      manual test-driving the MiniDraw framework customization.
+
+
+// Visual test cases for basic HotStone related 'Figure' types,
+// note that the source set is set to the 'test folder' as they
+// are located there.
+
+task text(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate TextFigure'
+
+    mainClass = 'hotstone.figuretestcase.ShowTextFigure'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task button(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate ButtonFigure'
+
+    mainClass = 'hotstone.figuretestcase.ShowButtonFigure'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task message(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate Message System'
+
+    mainClass = 'hotstone.figuretestcase.ShowMessageSystem'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task hero(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate HeroFigure and FigureType use'
+
+    mainClass = 'hotstone.figuretestcase.ShowHeroFigure'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task card(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate CardFigure'
+
+    mainClass = 'hotstone.figuretestcase.ShowCardFigure'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task minion(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate MinionFigure'
+
+    mainClass = 'hotstone.figuretestcase.ShowMinionFigure'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+task minionupdate(type: JavaExec) {
+    group 'HotStone Figure Visual Tests'
+    description 'Demonstrate MinionFigure updating'
+
+    mainClass = 'hotstone.figuretestcase.ShowMinionFigureUpdate'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+
+// Demo and template for solving exercises that
+// extend HotStoneDrawing to reflect all Game changes.
+
+// The (Domain to GUI) flow. ===============================
+
+task update(type: JavaExec) {
+    group 'HotStone Mandatory Exercise Domain2GUI Tests'
+    description 'Test-Drive the *Domain to GUI* Integration'
+
+    mainClass = 'hotstone.domain2gui.ShowUpdate'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+// Demo and template for solving exercises that
+// develop the MiniDraw tools to handle game mutator calls
+
+// The (UI to Domain) flow. ================================
+
+task tools(type: JavaExec) {
+    group 'HotStone Mandatory Exercise GUI2Domain Tests'
+    description 'Test-Drive the *GUI to Domain* Tools Integration'
+
+    mainClass = 'hotstone.gui2domain.ShowTools'
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+// Main - full system
 task hotseatstone(type: JavaExec) {
+    group 'HotStone Mandatory Exercise System Tests'
+    description 'System Testing: HotSeatStone - SemiStone as HotSeat play'
+
+    mainClass = 'hotstone.main.HotSeatStone'
     classpath = sourceSets.main.runtimeClasspath
-    main = 'hotstone.main.HotSeatStone'
     args 'semiStone'
+}
+
+// === Distributed HotStone - executing targets
+
+// The hotstone server
+task hotstoneServer(type: JavaExec) {
+    group 'SWEA Distribution'
+    description 'Run HotStone server'
+
+    mainClass = 'hotstone.broker.main.HotStoneServer'
+    classpath = sourceSets.main.runtimeClasspath
 }
 
 

@@ -19,18 +19,29 @@ package hotstone.broker.client;
 
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
+import hotstone.broker.common.OperationNames;
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.observer.GameObserver;
+
+import java.util.List;
 
 /** TODO: Template/starter code for your ClientProxy of Game.
  */
 public class GameClientProxy implements Game, ClientProxy {
+  private String singletonID = "one-game";
+  private final Requestor requestor;
+
   public GameClientProxy(Requestor requestor) {
+    this.requestor = requestor;
   }
 
   @Override
   public int getTurnNumber() {
-    return 0;
+    int turnNumber =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_TURN_NUMBER, Integer.class);
+    return turnNumber;
   }
 
   @Override
@@ -39,7 +50,7 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public Hero getHero(Player who) {
+  public MutableHero getHero(Player who) {
     return null;
   }
 
@@ -54,7 +65,7 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public Card getCardInHand(Player who, int indexInHand) {
+  public MutableCard getCardInHand(Player who, int indexInHand) {
     return null;
   }
 
@@ -69,7 +80,7 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public Card getCardInField(Player who, int indexInField) {
+  public MutableCard getCardInField(Player who, int indexInField) {
     return null;
   }
 
@@ -84,22 +95,27 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
+  public List<? extends Card> getDeck(Player who) {
+    return List.of();
+  }
+
+  @Override
   public void endTurn() {
 
   }
 
   @Override
-  public Status playCard(Player who, Card card, int atIndex) {
+  public Status playCard(Player who, MutableCard card, int atIndex) {
     return null;
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
     return null;
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, Card attackingCard) {
+  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
     return null;
   }
 
