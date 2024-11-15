@@ -54,14 +54,13 @@ public class StubCard implements Card {
     attack = 1;
   }
 
-  public StubCard(String name, int manaCost, int attack, int health, Boolean isActive, Player owner, String effectDescription, Effect effect) {
+  public StubCard(String name, int manaCost, int attack, int health, Boolean isActive, Player owner, Effect effect) {
     this.name = name;
     this.owner = owner;
     this.health = health;
     this.attack = attack;
     this.manaCost = manaCost;
     this.isActive = isActive;
-    this.effDesc = effectDescription;
     this.effect = effect;
   }
 
@@ -97,7 +96,7 @@ public class StubCard implements Card {
 
   @Override
   public String getEffectDescription() {
-    return effDesc;
+    return effect.getEffectDescription();
   }
 
   @Override
