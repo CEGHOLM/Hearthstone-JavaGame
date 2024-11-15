@@ -56,11 +56,10 @@ public class MinionAttackTool extends NullTool {
         Figure figureAtPosition = model.findFigure(x, y);
 
         boolean isDraggingAnActor = draggedActor != null;
-        boolean isHittingHero = false;
-        // Make sure it's the enemy hero you're hitting
-        boolean isHittingEnemyHero = y < GfxConstants.OPPONENT_HERO_POSITION.y + 224 && x < GfxConstants.OPPONENT_HERO_POSITION.x + 200;
+        boolean isHittingEnemyHero = false;
         boolean isHittingMinion = false;
         Card defendingCard = null;
+        Card attackingCard = draggedActor.getAssociatedCard();
 
         // moveCardBack is always true because we want to move the card back after the attack or if it failed
         boolean moveCardBack = true;
@@ -73,8 +72,6 @@ public class MinionAttackTool extends NullTool {
 
         // If you are trying to attack a minion
         if (isDraggingAnActor && isHittingMinion) {
-            Card attackingCard = draggedActor.getAssociatedCard();
-
             // Try to attack the minion
             Status status = game.attackCard(whoAmIPlaying, (MutableCard) attackingCard, (MutableCard) defendingCard);
 
@@ -82,14 +79,12 @@ public class MinionAttackTool extends NullTool {
         }
 
         // Find out if it is a hero you're trying to attack
-        if (figureAtPosition instanceof HeroFigure) {
-            isHittingHero = true;
+        if (!((HeroFigure) figureAtPosition).getAssociatedHero().getOwner().equals(whoAmIPlaying)) {
+            isHittingEnemyHero = true;
         }
 
         // If you are trying to attack a hero
-        if (isDraggingAnActor && isHittingHero && isHittingEnemyHero) {
-            Card attackingCard = draggedActor.getAssociatedCard();
-
+        if (isDraggingAnActor && isHittingEnemyHero) {
             // Try to attack the hero
             Status status = game.attackHero(whoAmIPlaying, (MutableCard) attackingCard);
 
