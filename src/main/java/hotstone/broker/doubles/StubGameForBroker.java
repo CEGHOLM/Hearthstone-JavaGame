@@ -35,9 +35,10 @@ import java.util.List;
  * and GameInvoker code.
  */
 public class StubGameForBroker implements Game, Servant {
+  private int turnNumber = 312;
   @Override
   public int getTurnNumber() {
-    return 312;
+    return turnNumber;
   }
   @Override
   public Player getPlayerInTurn() {
@@ -95,6 +96,7 @@ public class StubGameForBroker implements Game, Servant {
 
   @Override
   public void endTurn() {
+    turnNumber++;
   }
 
   @Override

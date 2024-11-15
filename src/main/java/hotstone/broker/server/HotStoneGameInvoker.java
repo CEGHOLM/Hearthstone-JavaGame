@@ -79,9 +79,14 @@ public class HotStoneGameInvoker implements Invoker {
         // Create reply
         reply = new ReplyObject(200, gson.toJson(handSize));
 
-      }
+      } else if (operationName.equals(OperationNames.GAME_END_OF_TURN)) {
+        // Call the servants endTurn() method
+        servant.endTurn();
 
-      else {
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson("OK"));
+
+      } else {
         // Unknown operation
         reply = new ReplyObject(501, "Unknown operation: " + operationName);
       }

@@ -78,7 +78,7 @@ public class TestGameBroker {
   @Test
   public void shouldHaveTurnNumber312() {
     // Given a stub game which is hard coded to
-    // return 312 as turn number
+    // return 312 as turn number, at the start of the game
 
     // When I ask for that turn number on the client side
     int turnNumber = gameClientProxy.getTurnNumber();
@@ -99,7 +99,7 @@ public class TestGameBroker {
 
     // Then the broker chain (clientProxy -> requestor ->
     // client request handler -> invoker -> servant) will
-    // return the stub's Findus reply.
+    // return the stub's 37 reply.
     assertThat(deckSize, is(37));
   }
 
@@ -113,7 +113,23 @@ public class TestGameBroker {
 
     // Then the broker chain (clientProxy -> requestor ->
     // client request handler -> invoker -> servant) will
-    // return the stub's Findus reply.
+    // return the stub's 17 reply.
     assertThat(handSize, is(17));
+  }
+
+  @Test
+  public void shouldIncreaseTurnNumberByOneAfterEndingTurn() {
+    // Given a stub game which increases the turn number by one
+    // Every time a turn is ended
+
+    gameClientProxy.endTurn();
+
+    // When I ask for the turn number
+    int turnNumber = gameClientProxy.getTurnNumber();
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's 313 reply.
+    assertThat(turnNumber, is(313));
   }
 }

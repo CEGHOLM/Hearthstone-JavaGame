@@ -105,7 +105,7 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public void endTurn() {
-
+    requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_END_OF_TURN, String.class);
   }
 
   @Override
