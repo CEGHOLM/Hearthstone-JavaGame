@@ -26,13 +26,15 @@ public class CardClientProxy implements Card, ClientProxy {
     @Override
     public int getManaCost() {
         int manaCost =
-                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_MANA_COST, int.class);
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_MANA_COST, Integer.class);
         return manaCost;
     }
 
     @Override
     public int getAttack() {
-        return 0;
+        int attack =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_ATTACK, Integer.class);
+        return attack;
     }
 
     @Override

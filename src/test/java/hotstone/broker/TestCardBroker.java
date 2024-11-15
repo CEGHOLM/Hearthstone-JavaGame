@@ -44,7 +44,7 @@ public class TestCardBroker {
         // Given a stub card which is hardcoded to
         // Return the name "name"
 
-        // When I ask for the cards  name
+        // When I ask for the cards name
         String name = cardClientProxy.getName();
 
         // Then the broker chain (clientProxy -> requestor ->
@@ -58,12 +58,40 @@ public class TestCardBroker {
         // Given a stub card which is hardcoded to
         // Return the 17 as mana cost
 
-        // When I ask for the cards  name
+        // When I ask for the cards mana cost
         int manaCost = cardClientProxy.getManaCost();
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
         // return the stub's name reply.
         assertThat(manaCost, is(17));
+    }
+
+    @Test
+    public void shouldHave15Attack() {
+        // Given a stub card which is hardcoded to
+        // Return the 15 as attack
+
+        // When I ask for the cards attack
+        int attack = cardClientProxy.getAttack();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's name reply.
+        assertThat(attack, is(15));
+    }
+
+    @Test
+    public void shouldHave77Health() {
+        // Given a stub card which is hardcoded to
+        // Return the 77 as health
+
+        // When I ask for the cards health
+        int health = cardClientProxy.getHealth();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's name reply.
+        assertThat(health, is(77));
     }
 }

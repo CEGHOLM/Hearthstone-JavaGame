@@ -119,11 +119,21 @@ public class HotStoneGameInvoker implements Invoker {
         // Lookup the right card to invoke the method on
         Card servant = lookupCard(objectId);
 
-        // Call the servants getName() method
+        // Call the servants getManaCost() method
         int manaCost = servant.getManaCost();
 
         // Create reply
         reply = new ReplyObject(200, gson.toJson(manaCost));
+
+      } else if (operationName.equals(OperationNames.CARD_GET_ATTACK)) {
+        // Lookup the right card to invoke the method on
+        Card servant = lookupCard(objectId);
+
+        // Call the servants getAttack() method
+        int attack = servant.getAttack();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(attack));
 
       } else {
         // Unknown operation
