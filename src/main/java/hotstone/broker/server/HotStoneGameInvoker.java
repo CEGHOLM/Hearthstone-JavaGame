@@ -135,6 +135,16 @@ public class HotStoneGameInvoker implements Invoker {
         // Create reply
         reply = new ReplyObject(200, gson.toJson(attack));
 
+      } else if (operationName.equals(OperationNames.CARD_GET_HEALTH)) {
+        // Lookup the right card to invoke the method on
+        Card servant = lookupCard(objectId);
+
+        // Call the servants getHealth() method
+        int health = servant.getHealth();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(health));
+
       } else {
         // Unknown operation
         reply = new ReplyObject(501, "Unknown operation: " + operationName);

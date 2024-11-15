@@ -39,7 +39,9 @@ public class CardClientProxy implements Card, ClientProxy {
 
     @Override
     public int getHealth() {
-        return 0;
+        int health =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_HEALTH, Integer.class);
+        return health;
     }
 
     @Override
