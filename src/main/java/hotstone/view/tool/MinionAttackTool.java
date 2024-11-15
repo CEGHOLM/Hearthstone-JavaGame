@@ -79,8 +79,8 @@ public class MinionAttackTool extends NullTool {
         }
 
         // Find out if it is a hero you're trying to attack
-        if (!((HeroFigure) figureAtPosition).getAssociatedHero().getOwner().equals(whoAmIPlaying)) {
-            isHittingEnemyHero = true;
+        if (figureAtPosition instanceof  HeroFigure) {
+            isHittingEnemyHero = !((HeroFigure) figureAtPosition).getAssociatedHero().getOwner().equals(whoAmIPlaying);
         }
 
         // If you are trying to attack a hero
