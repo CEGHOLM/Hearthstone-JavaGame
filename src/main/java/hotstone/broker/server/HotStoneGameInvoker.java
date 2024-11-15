@@ -86,6 +86,16 @@ public class HotStoneGameInvoker implements Invoker {
         // Create reply
         reply = new ReplyObject(200, gson.toJson("OK"));
 
+      } else if (operationName.equals(OperationNames.GAME_GET_FIELD_SIZE)) {
+        // Get the player from the JSON array
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the servants getFieldSize() method
+        int fieldSize = servant.getFieldSize(who);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(fieldSize));
+
       } else {
         // Unknown operation
         reply = new ReplyObject(501, "Unknown operation: " + operationName);

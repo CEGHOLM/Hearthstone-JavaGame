@@ -95,7 +95,9 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public int getFieldSize(Player who) {
-    return 0;
+    int fieldSize =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_FIELD_SIZE, Integer.class, who);
+    return fieldSize;
   }
 
   @Override

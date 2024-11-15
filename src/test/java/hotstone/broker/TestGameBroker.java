@@ -132,4 +132,18 @@ public class TestGameBroker {
     // return the stub's 313 reply.
     assertThat(turnNumber, is(313));
   }
+
+  @Test
+  public void shouldHaveFieldSizeAs11() {
+    // Given a stub game which is hard code to
+    // return 11 as field size no matter the player
+
+    // When I ask for the hand size of player Findus
+    int fieldSize = gameClientProxy.getFieldSize(Player.FINDUS);
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's 1q reply.
+    assertThat(fieldSize, is(11));
+  }
 }

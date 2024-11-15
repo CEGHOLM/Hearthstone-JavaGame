@@ -86,7 +86,7 @@ public class StubGameForBroker implements Game, Servant {
 
   @Override
   public int getFieldSize(Player who) {
-    return 0;
+    return 11;
   }
 
   @Override
