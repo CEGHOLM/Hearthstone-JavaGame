@@ -25,10 +25,8 @@ import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
 import hotstone.doubles.StubCard;
-import hotstone.framework.Card;
-import hotstone.framework.Effect;
-import hotstone.framework.Game;
-import hotstone.framework.Player;
+import hotstone.doubles.StubHero;
+import hotstone.framework.*;
 import hotstone.variants.NullEffect;
 
 /** TODO: Template code for solving the Broker exercises */
@@ -38,6 +36,7 @@ public class HotStoneGameInvoker implements Invoker {
   private final Gson gson;
   private Card fakeItCard = new StubCard("Card", 17, 15, 77,
           true, Player.FINDUS, new NullEffect());
+  private Hero fakeItHero = new StubHero();
 
   public HotStoneGameInvoker(Game servant) {
     this.servant = servant;

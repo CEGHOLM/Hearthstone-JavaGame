@@ -27,8 +27,7 @@ import hotstone.observer.GameObserver;
 
 import java.util.List;
 
-/** TODO: Template/starter code for your ClientProxy of Game.
- */
+
 public class GameClientProxy implements Game, ClientProxy {
   private String singletonID = "one-game";
   private final Requestor requestor;

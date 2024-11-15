@@ -8,12 +8,9 @@ import hotstone.broker.client.CardClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
-import hotstone.doubles.StubCard;
 import hotstone.framework.Card;
-import hotstone.framework.Effect;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.variants.NullEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +20,6 @@ import static org.hamcrest.Matchers.is;
 public class TestCardBroker {
     // The client side's card client proxy
     private Card cardClientProxy;
-    private StubCard stubCard;
 
     @BeforeEach
     public void setup() {
