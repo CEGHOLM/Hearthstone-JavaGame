@@ -14,6 +14,7 @@ import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
+import hotstone.standard.GameConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -79,5 +80,19 @@ public class TestHeroBroker {
         // client request handler -> invoker -> servant) will
         // return the stub's true reply.
         assertThat(canUsePower, is(true));
+    }
+
+    @Test
+    public void shouldBeTypeBaby() {
+        // Given a stub hero which is hardcoded to
+        // Return Baby as hero type
+
+        // When I ask for the hero type
+        String type = heroClientProxy.getType();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's true reply.
+        assertThat(type, is(GameConstants.BABY_HERO_TYPE));
     }
 }

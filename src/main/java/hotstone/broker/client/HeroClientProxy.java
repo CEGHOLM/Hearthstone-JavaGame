@@ -38,7 +38,9 @@ public class HeroClientProxy implements Hero, ClientProxy {
 
     @Override
     public String getType() {
-        return "";
+        String type =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.HERO_GET_TYPE, String.class);
+        return type;
     }
 
     @Override
