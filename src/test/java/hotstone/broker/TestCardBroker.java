@@ -42,7 +42,7 @@ public class TestCardBroker {
     @Test
     public void shouldHaveCardAsName() {
         // Given a stub card which is hardcoded to
-        // Return the name "name"
+        // Return the name "name" as name
 
         // When I ask for the cards name
         String name = cardClientProxy.getName();
@@ -56,7 +56,7 @@ public class TestCardBroker {
     @Test
     public void shouldCost17Mana() {
         // Given a stub card which is hardcoded to
-        // Return the 17 as mana cost
+        // Return 17 as mana cost
 
         // When I ask for the cards mana cost
         int manaCost = cardClientProxy.getManaCost();
@@ -70,7 +70,7 @@ public class TestCardBroker {
     @Test
     public void shouldHave15Attack() {
         // Given a stub card which is hardcoded to
-        // Return the 15 as attack
+        // Return 15 as attack
 
         // When I ask for the cards attack
         int attack = cardClientProxy.getAttack();
@@ -84,7 +84,7 @@ public class TestCardBroker {
     @Test
     public void shouldHave77Health() {
         // Given a stub card which is hardcoded to
-        // Return the 77 as health
+        // Return 77 as health
 
         // When I ask for the cards health
         int health = cardClientProxy.getHealth();
@@ -98,7 +98,7 @@ public class TestCardBroker {
     @Test
     public void shouldBeActive() {
         // Given a stub card which is hardcoded to
-        // Return the true as active status
+        // Return true as active status
 
         // When I ask for the cards active status
         boolean isActive = cardClientProxy.isActive();
@@ -107,5 +107,19 @@ public class TestCardBroker {
         // client request handler -> invoker -> servant) will
         // return the stub's name reply.
         assertThat(isActive, is(true));
+    }
+
+    @Test
+    public void shouldHaveFindusAsOwner() {
+        // Given a stub card which is hardcoded to
+        // Return Findus as owner
+
+        // When I ask for the cards owner
+        Player owner = cardClientProxy.getOwner();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's name reply.
+        assertThat(owner, is(Player.FINDUS));
     }
 }

@@ -53,7 +53,9 @@ public class CardClientProxy implements Card, ClientProxy {
 
     @Override
     public Player getOwner() {
-        return null;
+        Player owner =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_OWNER, Player.class);
+        return owner;
     }
 
     @Override
