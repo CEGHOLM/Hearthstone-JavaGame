@@ -2,21 +2,25 @@ package hotstone.broker.client;
 
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
+import hotstone.broker.common.OperationNames;
 import hotstone.framework.Card;
 import hotstone.framework.Effect;
 import hotstone.framework.Player;
 
 public class CardClientProxy implements Card, ClientProxy {
-    private String singletonID = "one-card";
+    private String id;
     private final Requestor requestor;
 
     public CardClientProxy(Requestor requestor) {
         this.requestor = requestor;
+        id = "pending";
     }
 
     @Override
     public String getName() {
-        return "";
+        String name =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.CARD_GET_NAME, String.class);
+        return name;
     }
 
     @Override

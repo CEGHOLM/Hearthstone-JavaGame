@@ -24,6 +24,8 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
+import hotstone.doubles.StubCard;
+import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
 
@@ -32,10 +34,15 @@ public class HotStoneGameInvoker implements Invoker {
 
   private final Game servant;
   private final Gson gson;
+  private Card fakeItCard = new StubCard("Card", 17, 15, 77, Player.FINDUS);
 
   public HotStoneGameInvoker(Game servant) {
     this.servant = servant;
     this.gson = new Gson();
+  }
+
+  private Card lookupCard(String objectId) {
+    return fakeItCard;
   }
 
   @Override
@@ -43,6 +50,7 @@ public class HotStoneGameInvoker implements Invoker {
     // Do the demarshalling
     RequestObject requestObject =
             gson.fromJson(request, RequestObject.class);
+    String objectId = requestObject.getObjectId();
     JsonArray array =
             JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
@@ -95,6 +103,17 @@ public class HotStoneGameInvoker implements Invoker {
 
         // Create reply
         reply = new ReplyObject(200, gson.toJson(fieldSize));
+
+        // Card methods
+      } else if (operationName.equals(OperationNames.CARD_GET_NAME)) {
+        // Lookup the right card to invoke the method on
+        Card servant = lookupCard(objectId);
+
+        // Call the servants getName() method
+        String name = servant.getName();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(name));
 
       } else {
         // Unknown operation

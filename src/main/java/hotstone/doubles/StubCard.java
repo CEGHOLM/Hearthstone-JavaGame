@@ -29,11 +29,12 @@ import hotstone.framework.Player;
  */
 public class StubCard implements Card {
   private final String name;
-  private final String effDesc;
+  private String effDesc;
   private boolean isActive;
   private int health;
   private Player owner;
   private int attack;
+  private int manaCost;
 
   public StubCard(String name, Player owner) {
     this(name, owner, 1);
@@ -52,6 +53,14 @@ public class StubCard implements Card {
     attack = 1;
   }
 
+  public StubCard(String name, int manaCost, int attack, int health, Player owner) {
+    this.name = name;
+    this.owner = owner;
+    this.health = health;
+    this.attack = attack;
+    this.manaCost = manaCost;
+  }
+
   @Override
   public String getName() {
     return name;
@@ -59,7 +68,7 @@ public class StubCard implements Card {
 
   @Override
   public int getManaCost() {
-    return 1;
+    return manaCost;
   }
 
   @Override
