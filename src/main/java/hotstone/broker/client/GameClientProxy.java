@@ -78,7 +78,9 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public int getHandSize(Player who) {
-    return 0;
+    int handSize =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_HAND_SIZE, Integer.class, who);
+    return handSize;
   }
 
   @Override

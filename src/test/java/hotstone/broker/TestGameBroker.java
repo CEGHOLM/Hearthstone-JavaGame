@@ -102,4 +102,18 @@ public class TestGameBroker {
     // return the stub's Findus reply.
     assertThat(deckSize, is(37));
   }
+
+  @Test
+  public void shouldHaveHandSizeAs17() {
+    // Given a stub game which is hard code to
+    // return 17 as hand size no matter the player
+
+    // When I ask for the hand size of player Findus
+    int handSize = gameClientProxy.getHandSize(Player.FINDUS);
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's Findus reply.
+    assertThat(handSize, is(17));
+  }
 }

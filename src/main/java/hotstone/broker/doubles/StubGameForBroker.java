@@ -70,7 +70,7 @@ public class StubGameForBroker implements Game, Servant {
 
   @Override
   public int getHandSize(Player who) {
-    return 0;
+    return 17;
   }
 
   @Override
