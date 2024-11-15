@@ -410,12 +410,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
     // Call the heroes power and execute it
     hero.usePower(this);
 
-    // Notify observer about hero power usage
-    observerHandler.notifyUsePower(who);
-
     // Deduct mana and mark power as used
     changeHeroMana(hero, hero.getMana()-GameConstants.HERO_POWER_COST);
     hero.setPowerStatus(false);
+
+    // Notify observer about hero power usage
+    observerHandler.notifyUsePower(who);
 
     return Status.OK;
   }
