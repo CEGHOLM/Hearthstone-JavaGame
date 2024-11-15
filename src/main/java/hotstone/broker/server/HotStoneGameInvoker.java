@@ -232,6 +232,16 @@ public class HotStoneGameInvoker implements Invoker {
         // Create reply
         reply = new ReplyObject(200, gson.toJson(owner));
 
+      } else if (operationName.equals(OperationNames.HERO_GET_EFFECT_DESCRIPTION)) {
+        // Lookup the right hero to invoke the method on
+        Hero servant = lookupHero(objectId);
+
+        // Call the servants getEffectDescription() method
+        String effectDescription = servant.getEffectDescription();
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(effectDescription));
+
       } else {
         // Unknown operation
         reply = new ReplyObject(501, "Unknown operation: " + operationName);

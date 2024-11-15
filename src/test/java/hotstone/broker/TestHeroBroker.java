@@ -4,13 +4,10 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotstone.broker.client.CardClientProxy;
 import hotstone.broker.client.HeroClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
-import hotstone.doubles.StubCard;
-import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
@@ -108,5 +105,19 @@ public class TestHeroBroker {
         // client request handler -> invoker -> servant) will
         // return the stub's Findus reply.
         assertThat(owner, is(Player.FINDUS));
+    }
+
+    @Test
+    public void shouldHavePowerAsEffectDescription() {
+        // Given a stub hero which is hardcoded to
+        // Return power as effect description
+
+        // When I ask for the effect description
+        String effectDescription = heroClientProxy.getEffectDescription();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's Power reply.
+        assertThat(effectDescription, is("Power"));
     }
 }
