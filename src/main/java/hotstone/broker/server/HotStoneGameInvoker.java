@@ -25,6 +25,7 @@ import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
 import hotstone.framework.Game;
+import hotstone.framework.Player;
 
 /** TODO: Template code for solving the Broker exercises */
 public class HotStoneGameInvoker implements Invoker {
@@ -58,7 +59,18 @@ public class HotStoneGameInvoker implements Invoker {
         // Create a reply
         reply = new ReplyObject(200, gson.toJson(turnNumber));
 
-      } else {
+      } else if (operationName.equals(OperationNames.GAME_GET_DECK_SIZE)) {
+        // Get the player from the JSON array
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call  the servants getDeckSize() method
+        int deckSize = servant.getDeckSize(who);
+
+        // Create a reply
+        reply = new ReplyObject(200, gson.toJson(deckSize));
+      }
+
+      else {
         // Unknown operation
         reply = new ReplyObject(501, "Unknown operation: " + operationName);
       }

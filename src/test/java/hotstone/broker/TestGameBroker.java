@@ -88,4 +88,18 @@ public class TestGameBroker {
     // return the stub's 312 reply.
    assertThat(turnNumber, is(312));
   }
+
+  @Test
+  public void shouldHaveDeckSizeAs37() {
+    // Given a stub game which is hard code to
+    // return 37 as deck size no matter the player
+
+    // When I ask for the deck size of player Findus
+    int deckSize = gameClientProxy.getDeckSize(Player.FINDUS);
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's Findus reply.
+    assertThat(deckSize, is(37));
+  }
 }
