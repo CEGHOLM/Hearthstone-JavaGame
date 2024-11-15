@@ -45,7 +45,9 @@ public class HeroClientProxy implements Hero, ClientProxy {
 
     @Override
     public Player getOwner() {
-        return null;
+        Player owner =
+                requestor.sendRequestAndAwaitReply(id, OperationNames.HERO_GET_OWNER, Player.class);
+        return owner;
     }
 
     @Override

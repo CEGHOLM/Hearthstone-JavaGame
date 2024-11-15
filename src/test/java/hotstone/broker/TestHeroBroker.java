@@ -92,7 +92,21 @@ public class TestHeroBroker {
 
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
-        // return the stub's true reply.
+        // return the stub's Baby reply.
         assertThat(type, is(GameConstants.BABY_HERO_TYPE));
+    }
+
+    @Test
+    public void shouldHaveFindusAsOwner() {
+        // Given a stub hero which is hardcoded to
+        // Return Findus as owner
+
+        // When I ask for the owner
+        Player owner = heroClientProxy.getOwner();
+
+        // Then the broker chain (clientProxy -> requestor ->
+        // client request handler -> invoker -> servant) will
+        // return the stub's Findus reply.
+        assertThat(owner, is(Player.FINDUS));
     }
 }
