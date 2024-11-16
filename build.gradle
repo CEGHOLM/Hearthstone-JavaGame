@@ -188,5 +188,24 @@ task hotstoneServer(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+// The hotstone story test, manual integrationtest in Broker I delivery
+task hotstoneStorytest(type: JavaExec) {
+    group 'SWEA Distribution'
+    description 'Run a HotStone Story as a MANUAL TEST client '
 
+    mainClass = 'hotstone.broker.main.HotStoneStoryTest'
+    classpath = sourceSets.main.runtimeClasspath
+    def host = project.hasProperty('host') ? project.host : 'localhost'
+    args host
+}
+
+// The hotstone client, in Broker II delivery
+//task hotstoneClient(type: JavaExec) {
+    //group 'SWEA Distribution'
+    //description 'Run HotStone client'
+
+    //mainClass = 'hotstone.broker.main.HotStoneClient'
+    //classpath = sourceSets.main.runtimeClasspath
+    //args host, who
+//}
 
