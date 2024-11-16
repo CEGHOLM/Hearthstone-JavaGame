@@ -48,7 +48,7 @@ public class StandardCard implements Card, MutableCard {
 
     @Override
     public boolean isActive() {
-        return turnsOnField >= 1; // Active if it's been on the field for at least 1 turn;
+        return turnsOnField >= 1 && !this.hasAttacked; // Active if it's been on the field for at least 1 turn;
     }
 
     public void incrementTurnsOnField() {

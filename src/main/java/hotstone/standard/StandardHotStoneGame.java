@@ -188,6 +188,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Notify the observer that the turn has changed
     observerHandler.notifyChangeTurnTo(nextPlayer);
+
+    // Check if there is a winner for alphastone and gammastone
+    getWinner();
   }
 
   private void handleEndOfTurnEffects(Player player) {
@@ -210,6 +213,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
   public void changeHeroHealth(Player who, int amount) {
     getHero(who).takeDamage(amount);
     observerHandler.notifyHeroUpdate(who);
+
+    // Check if there is a winner for betastone
+    getWinner();
   }
 
   @Override
@@ -230,9 +236,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
     Status status = isPlayPossible(who, card);
     if (status != Status.OK) return status;
 
-    // Notify the observer that a card has been played
-    observerHandler.notifyPlayCard(who, card, atIndex);
-
     // Change the mana of the hero based in mana cost
     int heroMana = getHero(who).getMana();
     int cardManaCost = card.getManaCost();
@@ -243,6 +246,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     // Move card from hand to field
     addCardToField(who, card);
+
+    // Notify the observer that a card has been played
+    observerHandler.notifyPlayCard(who, card, atIndex);
 
     return Status.OK;
   }
@@ -274,11 +280,11 @@ public class StandardHotStoneGame implements Game, MutableGame {
     Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
     if (status != Status.OK) return status;
 
-    // Notify the observer of the attack on a card
-    observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
-
     // Execute attack
     executeAttack(attackingCard, defendingCard);
+
+    // Notify the observer of the attack on a card
+    observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
 
     // Return status OK if attack is ok
     return Status.OK;
@@ -311,8 +317,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
     removeIfDefeated(card);
   }
 
-  private static void deactivateCard(MutableCard attackingCard) {
+  private void deactivateCard(MutableCard attackingCard) {
     attackingCard.attack();
+    observerHandler.notifyCardUpdate(attackingCard);
   }
 
   private void removeIfDefeated(MutableCard card) {
@@ -365,14 +372,14 @@ public class StandardHotStoneGame implements Game, MutableGame {
       return status;
     }
 
-    // Notify the observer of the attack on a hero
-    observerHandler.notifyAttackHero(playerAttacking, attackingCard);
-
     // Apply damage to the opponent's hero
     changeHeroHealth(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
 
     // Mark the card as having attacked
     deactivateCard(attackingCard);
+
+    // Notify the observer of the attack on a hero and the card change
+    observerHandler.notifyAttackHero(playerAttacking, attackingCard);
 
     return Status.OK;
   }
@@ -410,12 +417,12 @@ public class StandardHotStoneGame implements Game, MutableGame {
     // Call the heroes power and execute it
     hero.usePower(this);
 
-    // Notify observer about hero power usage
-    observerHandler.notifyUsePower(who);
-
     // Deduct mana and mark power as used
     changeHeroMana(hero, hero.getMana()-GameConstants.HERO_POWER_COST);
     hero.setPowerStatus(false);
+
+    // Notify observer about hero power usage
+    observerHandler.notifyUsePower(who);
 
     return Status.OK;
   }

@@ -173,7 +173,7 @@ public interface Game extends Observable {
    *                and second minion, etc.
    * @return Status of operation
    */
-  public Status playCard(Player who, MutableCard card, int atIndex);
+  Status playCard(Player who, MutableCard card, int atIndex);
 
   /** Attack one card with another on the fields.
    *

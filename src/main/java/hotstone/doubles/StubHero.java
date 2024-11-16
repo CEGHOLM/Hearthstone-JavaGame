@@ -33,17 +33,17 @@ public class StubHero implements Hero {
 
   @Override
   public int getMana() {
-    return mana;
+    return 88;
   }
 
   @Override
   public int getHealth() {
-    return 7;
+    return 111;
   }
 
   @Override
   public boolean canUsePower() {
-    return active;
+    return true;
   }
 
   @Override
