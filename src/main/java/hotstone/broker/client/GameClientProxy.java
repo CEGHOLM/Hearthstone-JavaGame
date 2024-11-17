@@ -57,7 +57,9 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Player getWinner() {
-    return null;
+    Player winner =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_WINNER, Player.class);
+    return winner;
   }
 
   @Override

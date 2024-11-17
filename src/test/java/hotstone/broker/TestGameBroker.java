@@ -160,4 +160,18 @@ public class TestGameBroker {
     // return the stub's Findus reply.
     assertThat(player, is(Player.FINDUS));
   }
+
+  @Test
+  public void shouldHavePeddersenAsWinner() {
+    // Given a stub game which is hard code to
+    // return Peddersen as the winner
+
+    // When I ask for the winner
+    Player player = gameClientProxy.getWinner();
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's Findus reply.
+    assertThat(player, is(Player.PEDDERSEN));
+  }
 }
