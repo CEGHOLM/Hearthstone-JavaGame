@@ -143,7 +143,35 @@ public class TestGameBroker {
 
     // Then the broker chain (clientProxy -> requestor ->
     // client request handler -> invoker -> servant) will
-    // return the stub's 1q reply.
+    // return the stub's 11 reply.
     assertThat(fieldSize, is(11));
+  }
+
+  @Test
+  public void shouldReturnFindusAsPlayerInTurn() {
+    // Given a stub game which is hard code to
+    // return Findus as the player in turn
+
+    // When I ask for the player in turn
+    Player player = gameClientProxy.getPlayerInTurn();
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's Findus reply.
+    assertThat(player, is(Player.FINDUS));
+  }
+
+  @Test
+  public void shouldHavePeddersenAsWinner() {
+    // Given a stub game which is hard code to
+    // return Peddersen as the winner
+
+    // When I ask for the winner
+    Player player = gameClientProxy.getWinner();
+
+    // Then the broker chain (clientProxy -> requestor ->
+    // client request handler -> invoker -> servant) will
+    // return the stub's Findus reply.
+    assertThat(player, is(Player.PEDDERSEN));
   }
 }
