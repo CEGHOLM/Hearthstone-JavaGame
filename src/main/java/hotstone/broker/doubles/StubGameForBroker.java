@@ -40,10 +40,12 @@ public class StubGameForBroker implements Game, Servant {
   public int getTurnNumber() {
     return turnNumber;
   }
+
   @Override
   public Player getPlayerInTurn() {
     return Player.FINDUS;
   }
+
   @Override
   public Player getWinner() {
     return Player.PEDDERSEN;
