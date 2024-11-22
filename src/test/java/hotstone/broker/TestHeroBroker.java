@@ -8,8 +8,11 @@ import hotstone.broker.client.HeroClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
+import hotstone.broker.service.StandardNameService;
+import hotstone.doubles.StubHero;
 import hotstone.framework.Game;
 import hotstone.framework.Hero;
+import hotstone.framework.NameService;
 import hotstone.framework.Player;
 import hotstone.standard.GameConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +26,10 @@ public class TestHeroBroker {
 
     @BeforeEach
     public void setup() {
+        // Create and populate the name service with our stub hero
+        NameService nameService = new StandardNameService();
+        String id = "id";
+        nameService.addHero(id, new StubHero());
         // === Server side setup ===
         // Create a stub servant with canned output
         Game servant = new StubGameForBroker();
@@ -34,7 +41,7 @@ public class TestHeroBroker {
         Requestor requestor = new StandardJSONRequestor(crh);
 
         // Create the CardClientProxy to be tested
-        heroClientProxy = new HeroClientProxy("" ,requestor);
+        heroClientProxy = new HeroClientProxy(id ,requestor);
     }
 
     @Test

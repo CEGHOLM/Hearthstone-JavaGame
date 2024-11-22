@@ -35,6 +35,8 @@ public class HotStoneGameInvoker implements Invoker {
   private final Game servant;
   private final Gson gson;
   private final NameService nameService;
+  private Card fakeItCard = new StubCard("Card", 17, 15, 77,
+          true, Player.FINDUS, new NullEffect());
   private Hero fakeItHero = new StubHero();
 
   public HotStoneGameInvoker(Game servant) {
