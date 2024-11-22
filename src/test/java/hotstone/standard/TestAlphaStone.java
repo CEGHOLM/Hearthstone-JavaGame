@@ -33,6 +33,7 @@ package hotstone.standard;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.*;
 import org.junit.jupiter.api.*;
@@ -227,7 +228,8 @@ public class TestAlphaStone {
  public void shouldNotBeAbleToUseHeroPowerIfLessThanTwoMana() {
    // Given a game
    // When I try to use my hero power with less than two mana
-   game.getHero(Player.FINDUS).setMana(1);
+     MutableHero hero = (MutableHero) game.getHero(Player.FINDUS);
+     hero.setMana(1);
    Status ableToUsePower = game.usePower(Player.FINDUS);
    // Should not be able to, and return error message "Not enough mana"
    assertThat(ableToUsePower, is(Status.NOT_ENOUGH_MANA));
@@ -418,7 +420,8 @@ public class TestAlphaStone {
   public void shouldNotBeAbleToPlayCardIfNotEnoughMana () {
     // Given a game
     // When I try to play a card but I don't have enough mana i should not be able to play the card
-    game.getHero(Player.FINDUS).setMana(1);
+    MutableHero hero = (MutableHero) game.getHero(Player.FINDUS);
+    hero.setMana(1);
     MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     Status playCardStatus = game.playCard(Player.FINDUS, cardToPlay, 0);
     // Then the game should tell me "Not enough mana"

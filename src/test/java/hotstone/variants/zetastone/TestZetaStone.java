@@ -3,6 +3,7 @@ package hotstone.variants.zetastone;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,7 +75,8 @@ public class TestZetaStone {
 
         // Advance the game so the Beta state can be tested
         TestHelper.advanceGameNRounds(game, 6);
-        game.getHero(Player.FINDUS).setHealth(0);
+        MutableHero hero = (MutableHero) game.getHero(Player.FINDUS);
+        hero.setHealth(0);
         Player winner = game.getWinner();
 
         // Then the winner should be Peddersen
@@ -98,7 +100,8 @@ public class TestZetaStone {
         // Advance the game so the Beta state can be tested
         TestHelper.advanceGameNRounds(game, 6);
 
-        game.getHero(Player.PEDDERSEN).setHealth(0);
+        MutableHero hero = (MutableHero) game.getHero(Player.PEDDERSEN);
+        hero.setHealth(0);
         Player winner = game.getWinner();
         // Then the winner should be Findus
         assertThat(winner, is(Player.FINDUS));

@@ -2,6 +2,7 @@ package hotstone.broker;
 import hotstone.framework.*;
 
 import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.alphastone.AlphaStoneFactory;
@@ -67,5 +68,18 @@ public class TestGameBrokerII {
 
         // Then it should be Tres
         assertThat(cardInHand.getName(), is(GameConstants.TRES_CARD));
+        assertThat(cardInHand.getAttack(), is(3));
+        assertThat(cardInHand.getManaCost(), is(3));
+        assertThat(cardInHand.getHealth(), is(3));
+    }
+
+    @Test
+    public void shouldHaveBabyAsHero() {
+        // Given a game
+        // When I ask for the hero of Findus
+        MutableHero hero = (MutableHero) gameClientProxy.getHero(Player.FINDUS);
+
+        // Then it should be baby
+        assertThat(hero.getType(), is(GameConstants.BABY_HERO_TYPE));
     }
 }

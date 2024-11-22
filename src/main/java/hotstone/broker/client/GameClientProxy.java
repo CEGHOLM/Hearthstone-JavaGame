@@ -55,7 +55,10 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public MutableHero getHero(Player who) {
-    return null;
+    String heroID =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_HERO, MutableHero.class, who);
+    Hero proxy = new HeroClientProxy(heroID, requestor);
+      return null;
   }
 
   @Override

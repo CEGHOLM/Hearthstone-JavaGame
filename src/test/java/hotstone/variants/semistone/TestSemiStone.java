@@ -3,6 +3,7 @@ package hotstone.variants.semistone;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.framework.strategies.HeroStrategy;
 import hotstone.framework.strategies.RandomStrategy;
 import hotstone.standard.StandardHotStoneGame;
@@ -40,7 +41,8 @@ public class TestSemiStone {
     public void shouldDetermineWinnerCorrectlyBasedOnBetaStone() {
         // Given a game
         // When Peddersen's health reaches 0
-        game.getHero(Player.PEDDERSEN).setHealth(0);
+        MutableHero hero = (MutableHero) game.getHero(Player.PEDDERSEN);
+        hero.setHealth(0);
         Player winner = game.getWinner();
 
         // Then the winner should be Findus as per BetaStone rules

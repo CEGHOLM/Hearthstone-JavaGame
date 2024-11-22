@@ -34,7 +34,7 @@ public class TranscriptionDecorator implements MutableGame {
 
     @Override
     public MutableHero getHero(Player who) {
-        return wrappedGame.getHero(who);
+        return (MutableHero) wrappedGame.getHero(who);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class TranscriptionDecorator implements MutableGame {
 
     @Override
     public MutableCard getCardInField(Player who, int indexInField) {
-        return wrappedGame.getCardInField(who, indexInField);
+        return (MutableCard) wrappedGame.getCardInField(who, indexInField);
     }
 
     @Override

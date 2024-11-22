@@ -120,14 +120,14 @@ class TriggerGameUpdateTool extends NullTool {
       }
       case 7: {
         editor.showStatus("Findus's card # 0 in field attacks Peddersen's card # 0 in field");
-        MutableCard attackingCard = game.getCardInField(Player.FINDUS, 0);
-        MutableCard defendingCard = game.getCardInField(Player.PEDDERSEN, 0);
+        MutableCard attackingCard = (MutableCard) game.getCardInField(Player.FINDUS, 0);
+        MutableCard defendingCard = (MutableCard) game.getCardInField(Player.PEDDERSEN, 0);
         game.attackCard(Player.FINDUS, attackingCard, defendingCard);
         break;
       }
       case 8: {
         editor.showStatus("Findus's card # 0 in field attacks Peddersen's hero");
-        MutableCard attackingCard = game.getCardInField(Player.FINDUS, 0);
+        MutableCard attackingCard = (MutableCard) game.getCardInField(Player.FINDUS, 0);
         game.attackHero(Player.FINDUS, attackingCard);
         break;
       }

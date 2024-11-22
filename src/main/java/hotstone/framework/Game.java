@@ -43,7 +43,7 @@ public interface Game extends Observable {
    * @param who the owning player
    * @return the hero
    */
-  MutableHero getHero(Player who);
+  Hero getHero(Player who);
 
   /** Get who has won the game.
    *
@@ -73,8 +73,8 @@ public interface Game extends Observable {
   /** Get the card at a given index in the hand.  Index goes from 0 up
    * till 'getHandSize()-1'.  If a card is added to the hand, it is
    * put into position 0, all other cards are pushed one position 'to
-   * the right'.  
-   * 
+   * the right'.
+   *
    * PRECONDITION: 'who' is never null.
    * PRECONDITION: indexInHand MUST be in interval 0..handsize-1.
    *
@@ -124,7 +124,7 @@ public interface Game extends Observable {
    *                    0..fieldsize-1.
    * @return the card on the field at that position.
    */
-  MutableCard getCardInField(Player who, int indexInField);
+  Card getCardInField(Player who, int indexInField);
   
   /** Get an iterable over the cards on the field. Convenience method
    * to allow writing code ala 
