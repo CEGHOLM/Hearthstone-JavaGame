@@ -185,4 +185,13 @@ public class TestGameBrokerII {
         // The status should be OK
         assertThat(status, is(Status.OK));
     }
+
+    @Test
+    public void shouldBeStatusOKWhenUsingPowerCorrectly() {
+        // Given a game
+        // When Findus uses his hero power
+        Status status = gameClientProxy.usePower(Player.FINDUS);
+        // Then status should be OK
+        assertThat(status, is(Status.OK));
+    }
 }

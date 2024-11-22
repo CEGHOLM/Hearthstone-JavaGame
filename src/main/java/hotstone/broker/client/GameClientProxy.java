@@ -181,7 +181,9 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Status usePower(Player who) {
-    return null;
+    Status status =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_USE_POWER, Status.class, who);
+    return status;
   }
 
   @Override
