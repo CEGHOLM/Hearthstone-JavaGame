@@ -141,7 +141,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
-  public MutableCard getCardInHand(Player who, int indexInHand) {
+  public Card getCardInHand(Player who, int indexInHand) {
     return hands.get(who).get(indexInHand);
   }
 

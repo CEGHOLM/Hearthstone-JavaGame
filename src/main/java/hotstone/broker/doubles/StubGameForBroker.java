@@ -62,7 +62,7 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public MutableCard getCardInHand(Player who, int indexInHand) {
+  public Card getCardInHand(Player who, int indexInHand) {
     return null;
   }
 

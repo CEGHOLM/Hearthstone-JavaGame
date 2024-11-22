@@ -6,6 +6,7 @@ import hotstone.broker.common.OperationNames;
 import hotstone.framework.Card;
 import hotstone.framework.Effect;
 import hotstone.framework.Player;
+import hotstone.framework.mutability.MutableCard;
 
 public class CardClientProxy implements Card, ClientProxy {
     private String id;

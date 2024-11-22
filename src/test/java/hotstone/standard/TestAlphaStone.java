@@ -349,7 +349,7 @@ public class TestAlphaStone {
   @Test
   public void shouldRemoveCardFromHandWhenPlayCard() {
     // Given a game where Findus wants to play card "Tres"
-    MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     // When Findus plays the card
     game.playCard(Player.FINDUS, cardToPlay, 0);
     int handSize = game.getHandSize(Player.FINDUS);
@@ -361,7 +361,7 @@ public class TestAlphaStone {
   public void shouldRemoveCardFromPeddersensHandWhenPlayCard() {
     // Given a game where Peddersen wants to plays card "Tres"
     game.endTurn();
-    MutableCard cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
     // When Pedderen plays the card
     game.playCard(Player.PEDDERSEN, cardToPlay, 0);
     int handSize = game.getHandSize(Player.PEDDERSEN);
@@ -384,7 +384,7 @@ public class TestAlphaStone {
   public void shouldAddCardToFieldWhenPLayed() {
     // Given a game
     // When Findus plays a card
-    MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     game.playCard(Player.FINDUS, cardToPlay, 0);
     int fieldSize = game.getFieldSize(Player.FINDUS);
     // Then fieldsize should be 1
@@ -395,7 +395,7 @@ public class TestAlphaStone {
   public void shouldNotAddCardToPeddersensFieldWhenFindusPlaysCard() {
     // Given a game
     // When I ask for Peddersens fieldsize in the first turn after Findus has played a card
-    MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     game.playCard(Player.FINDUS, cardToPlay, 0);
     int fieldSize = game.getFieldSize(Player.PEDDERSEN);
     // Then it should be 0
@@ -407,7 +407,7 @@ public class TestAlphaStone {
     // Given a game
     // When i ask for Peddersens fieldsize after he has played a card
     game.endTurn();
-    MutableCard cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
     game.playCard(Player.PEDDERSEN, cardToPlay, 0);
     int fieldSize = game.getFieldSize(Player.PEDDERSEN);
     // Then it should be 1
@@ -419,7 +419,7 @@ public class TestAlphaStone {
     // Given a game
     // When I try to play a card but I don't have enough mana i should not be able to play the card
     game.getHero(Player.FINDUS).setMana(1);
-    MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     Status playCardStatus = game.playCard(Player.FINDUS, cardToPlay, 0);
     // Then the game should tell me "Not enough mana"
     assertThat(playCardStatus, is(Status.NOT_ENOUGH_MANA));
@@ -429,7 +429,7 @@ public class TestAlphaStone {
   public void shouldNotBeAbleToPlayCardWhenNotYourTurn() {
     // Given a game
     // When I try to play a card as Peddersen but it is Findus turn
-    MutableCard cardToPlay = game.getCardInHand(Player.PEDDERSEN, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
     Status playCardStatus = game.playCard(Player.PEDDERSEN, cardToPlay, 0);
     // Then the game should tell me it's not my turn
     assertThat(playCardStatus, is(Status.NOT_PLAYER_IN_TURN));
@@ -439,14 +439,14 @@ public class TestAlphaStone {
   public void shouldBeAbleToPlayCardWithEnoughManaAndItIsPlayersTurn() {
     // Given a game
     // When it's Findus turn and he tries to play card "Tres"
-    MutableCard tres = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard tres = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     Status playCardStatusFindus = game.playCard(Player.FINDUS, tres, 0);
     // Then the game should tell him "OK"
     assertThat(playCardStatusFindus, is(Status.OK));
 
     // When findus has ended his turn and Peddersen tries to play a card
     game.endTurn();
-    MutableCard dos = game.getCardInHand(Player.PEDDERSEN, 1);
+    MutableCard dos = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1);
     Status playCardStatusPeddersen = game.playCard(Player.PEDDERSEN, dos, 1);
     // Then the game should tell him "OK"
     assertThat(playCardStatusPeddersen, is(Status.OK));
@@ -456,7 +456,7 @@ public class TestAlphaStone {
   public void shouldHaveDosAtIndexZeroWhenDresIsPlayed() {
     // Given a game
     // When Findus has played card Tres and I ask for the card at index 0
-    MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+    MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
     game.playCard(Player.FINDUS, cardToPlay, 0);
     Card cardAtIndexZero = game.getCardInHand(Player.FINDUS, 0);
     // Then it should be card Dos
@@ -539,7 +539,7 @@ public class TestAlphaStone {
     public void shouldHavePlayedCardsInField() {
       // Given a game
       // When Findus have played card tres
-      MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 0);
+      MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
       game.playCard(Player.FINDUS, cardToPlay, 0);
       Card cardInField = game.getCardInField(Player.FINDUS, 0);
       // Then it should appear in the field
@@ -551,7 +551,7 @@ public class TestAlphaStone {
       // Given a game
       // When Peddersen have played card Dos
       game.endTurn();
-      MutableCard cardToPlay = game.getCardInHand(Player.PEDDERSEN, 1);
+      MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1);
       game.playCard(Player.PEDDERSEN, cardToPlay, 0);
       Card cardInField = game.getCardInField(Player.PEDDERSEN, 0);
       // Then it should appear in the field
@@ -563,12 +563,12 @@ public class TestAlphaStone {
       // Given a game
       // When a card attack another card
       // Findus plays a card
-      MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 2);
+      MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 2);
       game.playCard(Player.FINDUS, attackingCard, 0);
       game.endTurn();
 
       // Peddersen plays a card
-      MutableCard defendingCard = game.getCardInHand(Player.PEDDERSEN, 0);
+      MutableCard defendingCard = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
       game.playCard(Player.PEDDERSEN, defendingCard, 0);
       game.endTurn();
 
@@ -585,12 +585,12 @@ public class TestAlphaStone {
         // Given a game
         // When a card attacks another card
         // Findus plays a card
-        MutableCard defendingCard = game.getCardInHand(Player.FINDUS, 2);
+        MutableCard defendingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 2);
         game.playCard(Player.FINDUS, defendingCard, 0);
         game.endTurn();
 
         // Peddersen plays a card
-        MutableCard attackingCard = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, attackingCard, 0);
         // Peddersen attacks Findus card
         Status canAttack = game.attackCard(Player.PEDDERSEN, attackingCard, defendingCard);
@@ -602,13 +602,13 @@ public class TestAlphaStone {
     public void shouldBeInactiveAfterAttacking() {
         // Given a game
         // When Findus tries to attack with the same card twice
-        MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, attackingCard, 0);
         game.endTurn();
 
         // Peddersen plays two cards
-        MutableCard defendingCardOne = game.getCardInHand(Player.PEDDERSEN, 1);
-        MutableCard defendingCardTwo = game.getCardInHand(Player.PEDDERSEN, 2);
+        MutableCard defendingCardOne = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1);
+        MutableCard defendingCardTwo = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 2);
         game.playCard(Player.PEDDERSEN, defendingCardOne, 0);
         game.playCard(Player.PEDDERSEN, defendingCardTwo, 1);
         game.endTurn();
@@ -625,8 +625,8 @@ public class TestAlphaStone {
     public void shouldNotBeAbleToAttackOwnCard() {
         // Given a game
         // When Findus tries to attack his own card
-        MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 1);
-        MutableCard defendingCard = game.getCardInHand(Player.FINDUS, 2);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
+        MutableCard defendingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 2);
         game.playCard(Player.FINDUS, attackingCard, 0);
         game.playCard(Player.FINDUS, defendingCard, 1);
         TestHelper.advanceGameNRounds(game, 1);
@@ -641,12 +641,12 @@ public class TestAlphaStone {
         // Given a game
         // When a card attack another card
         // Findus plays a card
-        MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, attackingCard, 0);
         game.endTurn();
 
         // Peddersen plays a card
-        MutableCard defendingCard = game.getCardInHand(Player.PEDDERSEN, 2);
+        MutableCard defendingCard = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 2);
         game.playCard(Player.PEDDERSEN, defendingCard, 0);
         game.endTurn();
 
@@ -663,7 +663,7 @@ public class TestAlphaStone {
     public void shouldLoseTwoManaWhenPlayingCardDos() {
       // Given a game
       // When Findus plays card dos
-      MutableCard cardToPlay = game.getCardInHand(Player.FINDUS, 1);
+      MutableCard cardToPlay = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
       game.playCard(Player.FINDUS, cardToPlay, 0);
       int mana = game.getHero(Player.FINDUS).getMana();
       // Then mana should be 1
@@ -687,7 +687,7 @@ public class TestAlphaStone {
     public void shouldNotBeAbleToPlayOtherPlayersCards() {
       // Given a game
       // When Findus try to play one of Peddersens cards
-      MutableCard peddersenCard = game.getCardInHand(Player.PEDDERSEN, 0);
+      MutableCard peddersenCard = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
       Status canPlayCard = game.playCard(Player.FINDUS, peddersenCard, 0);
       // Then the game should tell Findus, that he is not allowed
       assertThat(canPlayCard, is(Status.NOT_OWNER));
@@ -697,7 +697,7 @@ public class TestAlphaStone {
     public void shouldHaveHeroHealthEighteenAfterAttackedByCardTres() {
       // Given a game
       // When Findus attacks Peddersens hero with card "Tres"
-      MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 0);
+      MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
       game.playCard(Player.FINDUS, attackingCard, 0);
       TestHelper.advanceGameNRounds(game, 1);
 
@@ -711,7 +711,7 @@ public class TestAlphaStone {
     public void shouldHaveHeroHealthNineteenAfterAttackedByCardDos() {
         // Given a game
         // When Findus attacks Peddersens hero with card "Dos"
-        MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 1);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, attackingCard, 0);
         TestHelper.advanceGameNRounds(game, 1);
 
@@ -726,12 +726,12 @@ public class TestAlphaStone {
         // Given a game
         // When Findus and Peddersen attack eacothers heroes
         // Findus plays hos card
-        MutableCard attackingCardFindus = game.getCardInHand(Player.FINDUS, 1);
+        MutableCard attackingCardFindus = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, attackingCardFindus, 0);
         game.endTurn();
 
         // Peddersen plays his card
-        MutableCard attackingCardPeddersen = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard attackingCardPeddersen = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, attackingCardPeddersen, 0);
         game.endTurn();
 
@@ -751,15 +751,15 @@ public class TestAlphaStone {
       // Given a game
       // When both players have active cards in the field and they try to attack with eachothers cards
       // Findus plays his cards
-      MutableCard findusCardOne = game.getCardInHand(Player.FINDUS, 2);
-      MutableCard findusCardTwo = game.getCardInHand(Player.FINDUS, 1);
+      MutableCard findusCardOne = (MutableCard) game.getCardInHand(Player.FINDUS, 2);
+      MutableCard findusCardTwo = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
       game.playCard(Player.FINDUS, findusCardOne, 0);
       game.playCard(Player.FINDUS, findusCardTwo, 1);
       game.endTurn();
 
       // Peddersen plays his cards
-      MutableCard peddersensCardOne = game.getCardInHand(Player.PEDDERSEN, 2);
-      MutableCard peddersensCardTwo = game.getCardInHand(Player.PEDDERSEN, 1);
+      MutableCard peddersensCardOne = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 2);
+      MutableCard peddersensCardTwo = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1);
       game.playCard(Player.PEDDERSEN, peddersensCardOne, 0);
       game.playCard(Player.PEDDERSEN, peddersensCardTwo, 1);
       game.endTurn();
@@ -778,11 +778,11 @@ public class TestAlphaStone {
     public void shouldNotBeAbleToAttackWithCardWhenNotPlayersTurn() {
       // Given a game
       // When Findus tries to attack Peddersen when it's not his turn
-      MutableCard findusCard = game.getCardInHand(Player.FINDUS, 0);
+      MutableCard findusCard = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
       game.playCard(Player.FINDUS, findusCard, 0);
       game.endTurn();
 
-      MutableCard peddersensCard = game.getCardInHand(Player.PEDDERSEN, 0);
+      MutableCard peddersensCard = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
       game.playCard(Player.PEDDERSEN, peddersensCard, 0);
       // Findus tries to attack Peddersen
       Status cantAttack = game.attackCard(Player.FINDUS, findusCard, peddersensCard);
@@ -794,7 +794,7 @@ public class TestAlphaStone {
     public void shouldOnlyBeAbleToAttackHeroWhenActive() {
       // Given a game
       // When Findus tries to attack Peddersens hero, with an inactive card
-      MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+      MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
       Status cantAttack = game.attackHero(Player.FINDUS, card);
       // Then it should not be allowed
       assertThat(cantAttack, is(Status.ATTACK_NOT_ALLOWED_FOR_NON_ACTIVE_MINION));
@@ -806,7 +806,7 @@ public class TestAlphaStone {
       // When Findus tries to attack Peddersens hero with Peddersens card
       // Sets it to Peddersens turn
       game.endTurn();
-      MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
+      MutableCard card = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
       game.playCard(Player.PEDDERSEN, card, 0);
       // Sets it to Findus turn
       game.endTurn();
@@ -819,7 +819,7 @@ public class TestAlphaStone {
     public void shouldOnlyBeAbleToAttackHeroWhenItIsPlayersTurn() {
       // Given a game
       // When Findus tries to attack Peddersens hero when it's not his turn
-      MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+      MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
       game.playCard(Player.FINDUS, card, 0);
       game.endTurn();
       Status cantAttack = game.attackHero(Player.FINDUS, card);

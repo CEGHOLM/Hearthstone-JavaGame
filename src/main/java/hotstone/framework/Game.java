@@ -83,7 +83,7 @@ public interface Game extends Observable {
    *                    0..handsize-1.
    * @return the card in the hand at that position.
    */
-  MutableCard getCardInHand(Player who, int indexInHand);
+  Card getCardInHand(Player who, int indexInHand);
 
   /** Get an iterable over the cards in the hand. Convenience method
    * to allow writing code ala 

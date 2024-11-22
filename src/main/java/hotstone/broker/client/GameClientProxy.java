@@ -20,6 +20,7 @@ package hotstone.broker.client;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.broker.common.OperationNames;
+import hotstone.broker.service.StandardNameService;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableHero;
@@ -31,9 +32,11 @@ import java.util.List;
 public class GameClientProxy implements Game, ClientProxy {
   private String singletonID = "one-game";
   private final Requestor requestor;
+  private NameService nameService;
 
   public GameClientProxy(Requestor requestor) {
     this.requestor = requestor;
+    nameService = new StandardNameService();
   }
 
   @Override
@@ -70,10 +73,11 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public MutableCard getCardInHand(Player who, int indexInHand) {
+  public Card getCardInHand(Player who, int indexInHand) {
     String cardId =
             requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_CARD_IN_HAND, String.class, who, indexInHand);
-    return (MutableCard) new CardClientProxy(cardId, requestor);
+    Card proxy =  new CardClientProxy(cardId, requestor);
+    return proxy;
   }
 
   @Override

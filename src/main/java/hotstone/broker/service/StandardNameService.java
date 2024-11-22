@@ -3,6 +3,7 @@ package hotstone.broker.service;
 import hotstone.framework.Card;
 import hotstone.framework.Hero;
 import hotstone.framework.NameService;
+import hotstone.framework.mutability.MutableCard;
 
 import java.util.HashMap;
 import java.util.Map;

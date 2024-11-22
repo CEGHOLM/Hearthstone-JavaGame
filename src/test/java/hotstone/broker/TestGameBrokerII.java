@@ -63,9 +63,9 @@ public class TestGameBrokerII {
     public void shouldHaveFirstCardAsTres() {
         // Given a game
         // When I ask for the first card in player Findus hand
-        MutableCard cardInHand = gameClientProxy.getCardInHand(Player.FINDUS, 0);
+        Card cardInHand = gameClientProxy.getCardInHand(Player.FINDUS, 0);
 
         // Then it should be Tres
-        assertThat(cardInHand, is(GameConstants.TRES_CARD));
+        assertThat(cardInHand.getName(), is(GameConstants.TRES_CARD));
     }
 }

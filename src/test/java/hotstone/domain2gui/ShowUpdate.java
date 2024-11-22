@@ -71,7 +71,7 @@ class TriggerGameUpdateTool extends NullTool {
     switch (count) {
       case 0: {
         editor.showStatus("Playing Findus Card # 2 in hand to field");
-        MutableCard c = game.getCardInHand(Player.FINDUS, 2);
+        MutableCard c = (MutableCard) game.getCardInHand(Player.FINDUS, 2);
         game.playCard(Player.FINDUS, c, 0);
         // Note that this visual test correctly shows the minion
         // (as the handed out code already implements this), BUT
@@ -81,7 +81,7 @@ class TriggerGameUpdateTool extends NullTool {
       }
       case 1: {
         editor.showStatus("Playing Findus Card # 1 in hand to field");
-        MutableCard c = game.getCardInHand(Player.FINDUS, 1);
+        MutableCard c = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, c, 0);
         break;
       }
@@ -103,7 +103,7 @@ class TriggerGameUpdateTool extends NullTool {
       }
       case 4: {
         editor.showStatus("Playing Peddersen card # 0 in hand to field");
-        MutableCard c = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard c = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, c, 0);
         break;
       }

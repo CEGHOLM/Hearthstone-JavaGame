@@ -53,7 +53,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public MutableCard getCardInHand(Player who, int indexInHand) {
+    public Card getCardInHand(Player who, int indexInHand) {
         return wrappedGame.getCardInHand(who, indexInHand);
     }
 

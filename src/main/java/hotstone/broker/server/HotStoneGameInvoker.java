@@ -28,6 +28,7 @@ import hotstone.broker.service.StandardNameService;
 import hotstone.doubles.StubCard;
 import hotstone.doubles.StubHero;
 import hotstone.framework.*;
+import hotstone.framework.mutability.MutableCard;
 import hotstone.variants.NullEffect;
 
 public class HotStoneGameInvoker implements Invoker {
@@ -35,8 +36,6 @@ public class HotStoneGameInvoker implements Invoker {
   private final Game servant;
   private final Gson gson;
   private final NameService nameService;
-  private Card fakeItCard = new StubCard("Card", 17, 15, 77,
-          true, Player.FINDUS, new NullEffect());
   private Hero fakeItHero = new StubHero();
 
   public HotStoneGameInvoker(Game servant) {
@@ -46,7 +45,7 @@ public class HotStoneGameInvoker implements Invoker {
   }
 
   private Card lookupCard(String objectId) {
-    return fakeItCard;
+    return nameService.getCard(objectId);
   }
 
   private Hero lookupHero(String objectId) {
@@ -62,7 +61,7 @@ public class HotStoneGameInvoker implements Invoker {
     JsonArray array =
             JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
-    ReplyObject reply;
+    ReplyObject reply = null;
 
     try {
       // Dispatching: Check the operation name
@@ -115,6 +114,23 @@ public class HotStoneGameInvoker implements Invoker {
 
         // Create a reply
         reply = new ReplyObject(200, gson.toJson(winner));
+
+      } else if (operationName.equals(OperationNames.GAME_GET_CARD_IN_HAND)) {
+        // Get the player and index from JSON array
+        Player who = gson.fromJson(array.get(0), Player.class);
+        int index = gson.fromJson(array.get(1), Integer.class);
+
+        // Call the getCardInHand() method
+        Card card = servant.getCardInHand(who, index);
+
+        // Generate the ID for the card
+        String cardId = card.getID();
+
+        // Registre the card in the name service
+        nameService.addCard(cardId, card);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(cardId));
 
       } else if (operationName.equals(OperationNames.GAME_GET_FIELD_SIZE)) {
         // Get the player from the JSON array

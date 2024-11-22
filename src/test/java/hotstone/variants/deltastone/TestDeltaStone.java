@@ -31,7 +31,7 @@ public class TestDeltaStone {
     public void shouldHaveFiveManaIfFindusHaveUsedSomeMana() {
         // Given a game
         // When I ask for Peddersens mana after Findus has played a card
-        MutableCard card = game.getCardInHand(Player.FINDUS, 1);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 1);
         game.playCard(Player.FINDUS, card, 0);
 
         game.endTurn();
