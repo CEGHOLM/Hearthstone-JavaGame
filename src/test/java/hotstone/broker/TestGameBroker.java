@@ -73,7 +73,6 @@ public class TestGameBroker {
     gameClientProxy = new GameClientProxy(requestor);
   }
 
-  // TODO: TDD the 'clientproxy' and 'invoker' implementation
   // to support remote method call of getTurnNumber()
   @Test
   public void shouldHaveTurnNumber312() {
