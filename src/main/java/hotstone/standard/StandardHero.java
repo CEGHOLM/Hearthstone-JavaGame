@@ -4,6 +4,8 @@ import hotstone.framework.*;
 import hotstone.framework.mutability.MutableGame;
 import hotstone.framework.mutability.MutableHero;
 
+import java.util.UUID;
+
 public class StandardHero implements Hero, MutableHero {
     private int mana;
     private int health;
@@ -11,6 +13,7 @@ public class StandardHero implements Hero, MutableHero {
     private boolean powerStatus = true;
     private Player owner;
     private Effect heroPower;
+    private final String id;
 
     public StandardHero(int mana, int health, String heroType, Player owner, Effect heroPower) {
         this.mana = mana;
@@ -18,6 +21,7 @@ public class StandardHero implements Hero, MutableHero {
         this.heroType = heroType;
         this.owner = owner;
         this.heroPower = heroPower;
+        this.id = UUID.randomUUID().toString();
     }
 
     @Override
@@ -73,6 +77,11 @@ public class StandardHero implements Hero, MutableHero {
     @Override
     public void usePower(MutableGame game) {
         heroPower.applyEffect(game, owner);  // Use the common Effect interface to apply power
+    }
+
+    @Override
+    public String getID() {
+        return id;
     }
 }
 

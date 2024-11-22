@@ -29,7 +29,6 @@ import hotstone.doubles.StubHero;
 import hotstone.framework.*;
 import hotstone.variants.NullEffect;
 
-/** TODO: Template code for solving the Broker exercises */
 public class HotStoneGameInvoker implements Invoker {
 
   private final Game servant;
