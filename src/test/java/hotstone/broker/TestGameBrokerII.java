@@ -144,4 +144,25 @@ public class TestGameBrokerII {
         assertThat(fieldList.get(1).getName(), is(GameConstants.DOS_CARD));
         assertThat(fieldList.get(0).getName(), is(GameConstants.UNO_CARD));
     }
+
+    @Test
+    public void shouldBeStatusOKWhenAttackingCardCorrectly() {
+        // Given a game
+        // When Findus tries to attack Peddersens minion
+        // Play Findus card
+        Card findusCard = gameClientProxy.getCardInHand(Player.FINDUS, 0);
+        gameClientProxy.playCard(Player.FINDUS, findusCard, 0);
+
+        // End turn and play Peddersens card
+        gameClientProxy.endTurn();
+        Card peddersenCard = gameClientProxy.getCardInHand(Player.PEDDERSEN, 0);
+        gameClientProxy.playCard(Player.PEDDERSEN, peddersenCard, 0);
+
+        // End turn and attack Peddersens minion with Findus'
+        gameClientProxy.endTurn();
+        Status status = gameClientProxy.attackCard(Player.FINDUS, findusCard, peddersenCard);
+
+        // Then status should be OK
+        assertThat(status, is(Status.OK));
+    }
 }

@@ -147,6 +147,18 @@ public class HotStoneGameInvoker implements Invoker {
         // Create reply
         reply = new ReplyObject(200, gson.toJson(status));
 
+      } else if (operationName.equals(OperationNames.GAME_ATTACK_CARD)) {
+        // Get the player and cards
+        Player attacktingPlayer = gson.fromJson(array.get(0), Player.class);
+        Card attackingCard = lookupCard(gson.fromJson(array.get(1), String.class));
+        Card defendingCard = lookupCard(gson.fromJson(array.get(2), String.class));
+
+        // Call the attackCard() method
+        Status status = servant.attackCard(attacktingPlayer, attackingCard, defendingCard);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(status));
+
       } else if (operationName.equals(OperationNames.GAME_GET_CARD_IN_FIELD)) {
         // Get the player and the index
         Player who = gson.fromJson(array.get(0), Player.class);
