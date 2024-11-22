@@ -7,8 +7,9 @@ import hotstone.framework.Card;
 import hotstone.framework.Effect;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableCard;
+import hotstone.framework.mutability.MutableGame;
 
-public class CardClientProxy implements Card, ClientProxy {
+public class CardClientProxy implements MutableCard, ClientProxy {
     private String id;
     private final Requestor requestor;
 
@@ -74,5 +75,30 @@ public class CardClientProxy implements Card, ClientProxy {
     @Override
     public String getID() {
         return id;
+    }
+
+    @Override
+    public boolean canAttack() {
+        return false;
+    }
+
+    @Override
+    public int takeDamage(int i) {
+        return 0;
+    }
+
+    @Override
+    public void attack() {
+
+    }
+
+    @Override
+    public void changeAttack(int i) {
+
+    }
+
+    @Override
+    public void applyEffect(MutableGame game) {
+
     }
 }

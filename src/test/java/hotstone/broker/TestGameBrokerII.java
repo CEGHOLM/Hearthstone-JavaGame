@@ -1,6 +1,7 @@
 package hotstone.broker;
 import hotstone.framework.*;
 
+import hotstone.framework.mutability.MutableCard;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.alphastone.AlphaStoneFactory;
@@ -97,5 +98,16 @@ public class TestGameBrokerII {
         assertThat(handList.get(0).getName(), is(GameConstants.TRES_CARD));
         assertThat(handList.get(1).getName(), is(GameConstants.DOS_CARD));
         assertThat(handList.get(2).getName(), is(GameConstants.UNO_CARD));
+    }
+
+    @Test
+    public void shouldBeStatusOKWhenPlayingACard() {
+        // Given a game
+        // When Findus tries to play a card
+        MutableCard card = (MutableCard) gameClientProxy.getCardInHand(Player.FINDUS, 0);
+        Status status = gameClientProxy.playCard(Player.FINDUS, card, 0);
+
+        // Then status should be OK
+        assertThat(status, is(Status.OK));
     }
 }
