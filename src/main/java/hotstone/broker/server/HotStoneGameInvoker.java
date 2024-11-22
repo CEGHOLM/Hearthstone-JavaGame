@@ -24,6 +24,7 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
+import hotstone.broker.service.StandardNameService;
 import hotstone.doubles.StubCard;
 import hotstone.doubles.StubHero;
 import hotstone.framework.*;
@@ -33,13 +34,13 @@ public class HotStoneGameInvoker implements Invoker {
 
   private final Game servant;
   private final Gson gson;
-  private Card fakeItCard = new StubCard("Card", 17, 15, 77,
-          true, Player.FINDUS, new NullEffect());
+  private final NameService nameService;
   private Hero fakeItHero = new StubHero();
 
   public HotStoneGameInvoker(Game servant) {
     this.servant = servant;
     this.gson = new Gson();
+    this.nameService = new StandardNameService();
   }
 
   private Card lookupCard(String objectId) {

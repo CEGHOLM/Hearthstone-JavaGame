@@ -34,7 +34,7 @@ public class TestHeroBroker {
         Requestor requestor = new StandardJSONRequestor(crh);
 
         // Create the CardClientProxy to be tested
-        heroClientProxy = new HeroClientProxy(requestor);
+        heroClientProxy = new HeroClientProxy("" ,requestor);
     }
 
     @Test

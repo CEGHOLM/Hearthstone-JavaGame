@@ -11,9 +11,9 @@ public class CardClientProxy implements Card, ClientProxy {
     private String id;
     private final Requestor requestor;
 
-    public CardClientProxy(Requestor requestor) {
+    public CardClientProxy(String id, Requestor requestor) {
         this.requestor = requestor;
-        id = "pending";
+        this.id = id;
     }
 
     @Override
@@ -68,5 +68,10 @@ public class CardClientProxy implements Card, ClientProxy {
     @Override
     public Effect getEffect() {
         return null;
+    }
+
+    @Override
+    public String getID() {
+        return id;
     }
 }

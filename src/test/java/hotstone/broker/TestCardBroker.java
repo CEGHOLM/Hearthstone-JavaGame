@@ -8,9 +8,13 @@ import hotstone.broker.client.CardClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
+import hotstone.broker.service.StandardNameService;
+import hotstone.doubles.StubCard;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
+import hotstone.framework.NameService;
 import hotstone.framework.Player;
+import hotstone.variants.NullEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +27,11 @@ public class TestCardBroker {
 
     @BeforeEach
     public void setup() {
+        // Create and populate the name service with our stub card
+        NameService nameService = new StandardNameService();
+        String id = "id";
+        nameService.addCard(id, new StubCard("Card", 17, 15, 77,
+                true, Player.FINDUS, new NullEffect()));
         // === Server side setup ===
         // Create a stub servant with canned output
         Game servant = new StubGameForBroker();
@@ -34,7 +43,7 @@ public class TestCardBroker {
         Requestor requestor = new StandardJSONRequestor(crh);
 
         // Create the CardClientProxy to be tested
-        cardClientProxy = new CardClientProxy(requestor);
+        cardClientProxy = new CardClientProxy(id ,requestor);
     }
 
     @Test

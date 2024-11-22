@@ -71,7 +71,9 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public MutableCard getCardInHand(Player who, int indexInHand) {
-    return null;
+    String cardId =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_CARD_IN_HAND, String.class, who, indexInHand);
+    return (MutableCard) new CardClientProxy(cardId, requestor);
   }
 
   @Override
