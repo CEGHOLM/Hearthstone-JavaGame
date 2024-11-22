@@ -19,6 +19,9 @@ import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.server.HotStoneGameInvoker;
 
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 /** Test class for broker II, using test-driven
  *  development process to develop the Broker implementation
  *  of client proxies and invokers, for all methods
@@ -78,5 +81,21 @@ public class TestGameBrokerII {
 
         // Then it should be baby
         assertThat(hero.getType(), is(GameConstants.BABY_HERO_TYPE));
+    }
+
+    @Test
+    public void shouldReturnHandContainingUnoDosTres() {
+        // Given a game
+        // When I ask for the hand of Findus
+        Iterable<? extends Card> hand = gameClientProxy.getHand(Player.FINDUS);
+
+        // Then it should contain 3 cards, uno, dos and tres
+        // Convert to a list for simplicity
+        List<? extends Card> handList = StreamSupport.stream(hand.spliterator(), false).toList();
+
+        assertThat(handList.size(), is(3));
+        assertThat(handList.get(0).getName(), is(GameConstants.TRES_CARD));
+        assertThat(handList.get(1).getName(), is(GameConstants.DOS_CARD));
+        assertThat(handList.get(2).getName(), is(GameConstants.UNO_CARD));
     }
 }

@@ -31,6 +31,9 @@ import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.variants.NullEffect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HotStoneGameInvoker implements Invoker {
 
   private final Game servant;
@@ -113,6 +116,24 @@ public class HotStoneGameInvoker implements Invoker {
 
         // Create a reply
         reply = new ReplyObject(200, gson.toJson(winner));
+
+      } else if (operationName.equals(OperationNames.GAME_GET_HAND)) {
+        // Get the player
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the getHand() method to get the cards
+        Iterable<? extends Card> hand = servant.getHand(who);
+
+        // Create a list of ID's for the cards
+        List<String> idList = new ArrayList<>();
+        for (Card card : hand) {
+          String cardId = card.getID();
+          nameService.addCard(cardId, card);
+          idList.add(cardId);
+        }
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(idList));
 
       } else if (operationName.equals(OperationNames.GAME_GET_HERO)) {
         // Get the player and index from JSON array

@@ -17,6 +17,7 @@
 
 package hotstone.broker.client;
 
+import com.google.gson.reflect.TypeToken;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.broker.common.OperationNames;
@@ -26,6 +27,8 @@ import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.mutability.MutableHero;
 import hotstone.observer.GameObserver;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -85,7 +88,24 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Iterable<? extends Card> getHand(Player who) {
-    return null;
+    // Define the type of a list og String
+    Type collectionType =
+            new TypeToken<List<String>>() {}.getType();
+    // Do the remote call to retrieve the list of IDs for
+    // all cards in the hand
+    List<String> theIDList =
+            requestor.sendRequestAndAwaitReply(singletonID,
+                    OperationNames.GAME_GET_HAND,
+                    collectionType, who);
+
+    // Convert the ID list into lost of CardClientProxies
+    List<Card> proxies = new ArrayList<>();
+    for (String id : theIDList) {
+      proxies.add(new CardClientProxy(id, requestor));
+    }
+
+    // Rerun the list of proxies
+    return proxies;
   }
 
   @Override
