@@ -110,4 +110,17 @@ public class TestGameBrokerII {
         // Then status should be OK
         assertThat(status, is(Status.OK));
     }
+
+    @Test
+    public void shouldHaveCardTresInField() {
+        // Given a game
+        // When I ask for the card in Findus field
+        // After card tres has been played
+        Card card = gameClientProxy.getCardInHand(Player.FINDUS, 0);
+        gameClientProxy.playCard(Player.FINDUS, card, 0);
+        Card cardInField = gameClientProxy.getCardInField(Player.FINDUS, 0);
+
+        // Then it should be card tres
+        assertThat(cardInField.getName(), is(GameConstants.TRES_CARD));
+    }
 }
