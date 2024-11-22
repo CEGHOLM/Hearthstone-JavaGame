@@ -88,7 +88,7 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Iterable<? extends Card> getHand(Player who) {
-    // Define the type of a list og String
+    // Define the type of a list of String
     Type collectionType =
             new TypeToken<List<String>>() {}.getType();
     // Do the remote call to retrieve the list of IDs for
@@ -125,7 +125,24 @@ public class GameClientProxy implements Game, ClientProxy {
 
   @Override
   public Iterable<? extends Card> getField(Player who) {
-    return null;
+    // Define the type of a list of String
+    Type collectionType =
+            new TypeToken<List<String>>() {}.getType();
+    // Do the remote call to retrieve the list of IDs for
+    // all cards in the field
+    List<String> theIDList =
+            requestor.sendRequestAndAwaitReply(singletonID,
+                    OperationNames.GAME_GET_FIELD,
+                    collectionType, who);
+
+    // Convert the ID list into lost of CardClientProxies
+    List<Card> proxies = new ArrayList<>();
+    for (String id : theIDList) {
+      proxies.add(new CardClientProxy(id, requestor));
+    }
+
+    // Rerun the list of proxies
+    return proxies;
   }
 
   @Override

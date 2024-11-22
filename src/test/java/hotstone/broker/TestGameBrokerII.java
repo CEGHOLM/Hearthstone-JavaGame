@@ -123,4 +123,25 @@ public class TestGameBrokerII {
         // Then it should be card tres
         assertThat(cardInField.getName(), is(GameConstants.TRES_CARD));
     }
+
+    @Test
+    public void shouldReturnFieldContainingUnoAndDos() {
+        // Given a game
+        // When I ask for the field after Findus has played card uno and dos
+        Card uno = gameClientProxy.getCardInHand(Player.FINDUS, 2);
+        Card dos = gameClientProxy.getCardInHand(Player.FINDUS, 1);
+
+        gameClientProxy.playCard(Player.FINDUS, uno, 0);
+        gameClientProxy.playCard(Player.FINDUS, dos, 1);
+
+        Iterable<? extends Card> field = gameClientProxy.getField(Player.FINDUS);
+
+        // Then the field should contain those two card
+        // Convert to a list for simplicity
+        List<? extends Card> fieldList = StreamSupport.stream(field.spliterator(), false).toList();
+
+        assertThat(fieldList.size(), is(2));
+        assertThat(fieldList.get(1).getName(), is(GameConstants.DOS_CARD));
+        assertThat(fieldList.get(0).getName(), is(GameConstants.UNO_CARD));
+    }
 }
