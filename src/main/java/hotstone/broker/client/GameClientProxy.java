@@ -116,7 +116,7 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public MutableCard getCardInField(Player who, int indexInField) {
+  public Card getCardInField(Player who, int indexInField) {
     return null;
   }
 
