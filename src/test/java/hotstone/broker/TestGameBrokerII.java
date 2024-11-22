@@ -4,6 +4,7 @@ import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
 import hotstone.standard.GameConstants;
 import hotstone.standard.StandardHotStoneGame;
+import hotstone.utility.TestHelper;
 import hotstone.variants.alphastone.AlphaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -163,6 +164,25 @@ public class TestGameBrokerII {
         Status status = gameClientProxy.attackCard(Player.FINDUS, findusCard, peddersenCard);
 
         // Then status should be OK
+        assertThat(status, is(Status.OK));
+    }
+
+    @Test
+    public void shouldBeStatusOKWhenAttackingHeroCorrectly() {
+        // Given a game
+        // When Findus tries to attack Peddersens hero
+        // Play the card
+        Card card = gameClientProxy.getCardInHand(Player.FINDUS, 0);
+        gameClientProxy.playCard(Player.FINDUS, card, 0);
+
+        // Advance one round
+        gameClientProxy.endTurn();
+        gameClientProxy.endTurn();
+
+        // Attack Peddersens hero
+        Status status = gameClientProxy.attackHero(Player.FINDUS, card);
+
+        // The status should be OK
         assertThat(status, is(Status.OK));
     }
 }
