@@ -91,10 +91,7 @@ public class StubGameForBroker implements Game, Servant {
     return 11;
   }
 
-  @Override
-  public List<? extends Card> getDeck(Player who) {
-    return List.of();
-  }
+
 
   @Override
   public void endTurn() {

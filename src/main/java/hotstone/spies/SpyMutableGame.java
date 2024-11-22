@@ -160,10 +160,7 @@ public class SpyMutableGame implements MutableGame {
         return fields.get(who).size();
     }
 
-    @Override
-    public List<? extends Card> getDeck(Player who) {
-        return List.of();
-    }
+
 
     @Override
     public void addObserver(GameObserver observer) {

@@ -149,8 +149,6 @@ public interface Game extends Observable {
    */
   int getFieldSize(Player who);
 
-  List<? extends Card> getDeck(Player who);
-
   /**
    * Perform end of turn for current player, to prepare for the
    * opponent's turn.  PRECONDITION: The client MUST ensure that

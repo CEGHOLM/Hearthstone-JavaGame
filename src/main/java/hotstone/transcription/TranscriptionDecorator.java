@@ -82,10 +82,7 @@ public class TranscriptionDecorator implements MutableGame {
         return wrappedGame.getFieldSize(who);
     }
 
-    @Override
-    public List<? extends Card> getDeck(Player who) {
-        return wrappedGame.getDeck(who);
-    }
+
 
     @Override
     public void endTurn() {

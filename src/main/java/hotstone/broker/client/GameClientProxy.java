@@ -133,11 +133,6 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public List<? extends Card> getDeck(Player who) {
-    return List.of();
-  }
-
-  @Override
   public void endTurn() {
     requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_END_OF_TURN, String.class);
   }
