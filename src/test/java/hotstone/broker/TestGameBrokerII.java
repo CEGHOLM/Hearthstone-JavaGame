@@ -77,7 +77,7 @@ public class TestGameBrokerII {
     public void shouldHaveBabyAsHero() {
         // Given a game
         // When I ask for the hero of Findus
-        MutableHero hero = (MutableHero) gameClientProxy.getHero(Player.FINDUS);
+        Hero hero = gameClientProxy.getHero(Player.FINDUS);
 
         // Then it should be baby
         assertThat(hero.getType(), is(GameConstants.BABY_HERO_TYPE));

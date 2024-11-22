@@ -115,6 +115,22 @@ public class HotStoneGameInvoker implements Invoker {
         // Create a reply
         reply = new ReplyObject(200, gson.toJson(winner));
 
+      } else if (operationName.equals(OperationNames.GAME_GET_HERO)) {
+        // Get the player and index from JSON array
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the getHero() method
+        Hero hero = servant.getHero(who);
+
+        // Generate the id for the hero
+        String heroId = hero.getID();
+
+        // Register teh hero in the name service
+        nameService.addHero(heroId, hero);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(heroId));
+
       } else if (operationName.equals(OperationNames.GAME_GET_CARD_IN_HAND)) {
         // Get the player and index from JSON array
         Player who = gson.fromJson(array.get(0), Player.class);
@@ -126,7 +142,7 @@ public class HotStoneGameInvoker implements Invoker {
         // Generate the ID for the card
         String cardId = card.getID();
 
-        // Registre the card in the name service
+        // Register the card in the name service
         nameService.addCard(cardId, card);
 
         // Create reply
