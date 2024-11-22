@@ -32,10 +32,6 @@ public class TestCardBroker {
 
     @BeforeEach
     public void setup() {
-        // Create and populate the name service with our stub card
-        NameService nameService = new StandardNameService();
-        String id = "id";
-        nameService.addCard(id, new StubCard("Card", 17, 15, 77, true, Player.FINDUS, new NullEffect()));
         // === Server side setup ===
         // Create a stub servant with canned output
         Game servant = new StandardHotStoneGame(new AlphaStoneFactory());

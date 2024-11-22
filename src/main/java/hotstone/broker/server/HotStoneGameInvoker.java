@@ -36,7 +36,6 @@ public class HotStoneGameInvoker implements Invoker {
   private final Game servant;
   private final Gson gson;
   private final NameService nameService;
-  private Hero fakeItHero = new StubHero();
 
   public HotStoneGameInvoker(Game servant) {
     this.servant = servant;
@@ -49,7 +48,7 @@ public class HotStoneGameInvoker implements Invoker {
   }
 
   private Hero lookupHero(String objectId) {
-    return fakeItHero;
+    return nameService.getHero(objectId);
   }
 
   @Override
