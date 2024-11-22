@@ -99,17 +99,17 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public Status playCard(Player who, MutableCard card, int atIndex) {
+  public Status playCard(Player who, Card card, int atIndex) {
     return null;
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
     return null;
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+  public Status attackHero(Player playerAttacking, Card attackingCard) {
     return null;
   }
 

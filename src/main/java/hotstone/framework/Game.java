@@ -171,7 +171,7 @@ public interface Game extends Observable {
    *                and second minion, etc.
    * @return Status of operation
    */
-  Status playCard(Player who, MutableCard card, int atIndex);
+  Status playCard(Player who, Card card, int atIndex);
 
   /** Attack one card with another on the fields.
    *
@@ -186,7 +186,7 @@ public interface Game extends Observable {
    *    either OK or some value explaining why the action was invalid.
    */
   Status attackCard(Player playerAttacking,
-                    MutableCard attackingCard, MutableCard defendingCard);
+                    Card attackingCard, Card defendingCard);
 
   /** Attack a hero with a card in the field.
    *
@@ -199,7 +199,7 @@ public interface Game extends Observable {
    * @return a status identifying the outcome of the attack, which is
    *    either OK or some value explaining why the action was invalid.
    */
-  Status attackHero(Player playerAttacking, MutableCard attackingCard);
+  Status attackHero(Player playerAttacking, Card attackingCard);
 
   /** Use a hero's special power/effect.
    *

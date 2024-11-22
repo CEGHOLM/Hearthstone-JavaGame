@@ -46,19 +46,19 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
-    public Status playCard(Player who, MutableCard card, int atIndex) {
+    public Status playCard(Player who, Card card, int atIndex) {
         recordMethodCall("playCard");
         return wrappedGame.playCard(who, card, atIndex);
     }
 
     @Override
-    public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+    public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
         recordMethodCall("attackCard");
         return wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
     }
 
     @Override
-    public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+    public Status attackHero(Player playerAttacking, Card attackingCard) {
         recordMethodCall("attackHero");
         return wrappedGame.attackHero(playerAttacking, attackingCard);
     }

@@ -91,7 +91,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Status playCard(Player who, MutableCard card, int atIndex) {
+    public Status playCard(Player who, Card card, int atIndex) {
         Status status = wrappedGame.playCard(who, card, atIndex);
         if (status != Status.OK){
             return status;
@@ -101,7 +101,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+    public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
         Status status = wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
         if (status != Status.OK){
             return status;
@@ -111,7 +111,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+    public Status attackHero(Player playerAttacking, Card attackingCard) {
         Status status = wrappedGame.attackHero(playerAttacking, attackingCard);
         if (status != Status.OK){
             return status;

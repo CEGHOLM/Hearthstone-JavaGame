@@ -104,7 +104,7 @@ public class TestGameBrokerII {
     public void shouldBeStatusOKWhenPlayingACard() {
         // Given a game
         // When Findus tries to play a card
-        MutableCard card = (MutableCard) gameClientProxy.getCardInHand(Player.FINDUS, 0);
+        Card card = gameClientProxy.getCardInHand(Player.FINDUS, 0);
         Status status = gameClientProxy.playCard(Player.FINDUS, card, 0);
 
         // Then status should be OK

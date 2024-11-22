@@ -228,9 +228,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
-  public Status playCard(Player who, MutableCard card, int atIndex) {
+  public Status playCard(Player who, Card card, int atIndex) {
     // Check that the attack is possible
-    Status status = isPlayPossible(who, card);
+    Status status = isPlayPossible(who, (MutableCard) card);
     if (status != Status.OK) return status;
 
     // Change the mana of the hero based in mana cost
@@ -239,10 +239,10 @@ public class StandardHotStoneGame implements Game, MutableGame {
 
     changeHeroMana(heroes.get(who), heroMana - cardManaCost);
 
-    card.applyEffect(this);
+    ((MutableCard) card).applyEffect(this);
 
     // Move card from hand to field
-    addCardToField(who, card);
+    addCardToField(who, (MutableCard) card);
 
     // Notify the observer that a card has been played
     observerHandler.notifyPlayCard(who, card, atIndex);
@@ -272,13 +272,13 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
     // Check if the attack is allowed
-    Status status = isAttackPossible(playerAttacking, attackingCard, defendingCard);
+    Status status = isAttackPossible(playerAttacking, (MutableCard) attackingCard, (MutableCard) defendingCard);
     if (status != Status.OK) return status;
 
     // Execute attack
-    executeAttack(attackingCard, defendingCard);
+    executeAttack((MutableCard) attackingCard, (MutableCard) defendingCard);
 
     // Notify the observer of the attack on a card
     observerHandler.notifyAttackCard(playerAttacking, attackingCard, defendingCard);
@@ -362,9 +362,9 @@ public class StandardHotStoneGame implements Game, MutableGame {
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+  public Status attackHero(Player playerAttacking, Card attackingCard) {
     // Check if the attack is allowed
-    Status status = isHeroAttackPossible(playerAttacking, attackingCard);
+    Status status = isHeroAttackPossible(playerAttacking, (MutableCard) attackingCard);
     if (status != Status.OK) {
       return status;
     }
@@ -373,7 +373,7 @@ public class StandardHotStoneGame implements Game, MutableGame {
     changeHeroHealth(Player.computeOpponent(playerAttacking), -attackingCard.getAttack());
 
     // Mark the card as having attacked
-    deactivateCard(attackingCard);
+    deactivateCard((MutableCard) attackingCard);
 
     // Notify the observer of the attack on a hero and the card change
     observerHandler.notifyAttackHero(playerAttacking, attackingCard);

@@ -138,19 +138,19 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public Status playCard(Player who, MutableCard card, int atIndex) {
+  public Status playCard(Player who, Card card, int atIndex) {
     Status status =
             requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_PLAY_CARD, Status.class, who, card.getID(), atIndex);
     return status;
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
     return null;
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+  public Status attackHero(Player playerAttacking, Card attackingCard) {
     return null;
   }
 
