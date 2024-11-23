@@ -96,7 +96,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
   // (for instance in LibGDX), so it is called actorMap here.
   // DO NOT manipulate mappings directly, use the private mutator
   // methods instead!
-  private Map<Card, CardFigure> actorMap;
+  private Map<String, CardFigure> actorMap;
   private Map<Player, HeroFigure> heroMap;
 
   // Define which player is currently shown on the UI,
@@ -452,7 +452,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
   @Override
   public void onCardUpdate(Card card) {
-    CardFigure actor = actorMap.get(card);
+    CardFigure actor = actorMap.get(card.getID());
     // Opponent cards may not have an associated actor
     // for instance if they are in the hand.
     if (actor != null) {
@@ -501,7 +501,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
 
     // Then iterate all fielded cards
     for (Card card: game.getField(who)) {
-      CardFigure actor = actorMap.get(card);
+      CardFigure actor = actorMap.get(card.getID());
       // When replaying multiple 'onCardPlay()' events
       // from the opponent a special situation may occur:
       // no actor/figure is yet associated with the card!
@@ -530,7 +530,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
       int count = 0;
       for (Card card : game.getHand(who)) {
         assert card.getOwner() == who;
-        CardFigure actor = actorMap.get(card);
+        CardFigure actor = actorMap.get(card.getID());
         actor.moveTo(offsetX + distance * count++, yPos);
         zOrder(actor, ZOrder.TO_TOP);
       }
@@ -587,7 +587,7 @@ public class HotStoneDrawing implements Drawing, GameObserver {
     // Add the figure to the drawing's collection (for rendering)
     add(actor);
     // And the mapping so we can find it again!
-    actorMap.put(card, actor);
+    actorMap.put(card.getID(), actor);
 
     // Last drawn card is at the top, so push this below the previous one
     // to simulate the way a player's hand looks like
@@ -599,8 +599,8 @@ public class HotStoneDrawing implements Drawing, GameObserver {
    * @param card the card whose actor must be removed
    */
   private void removeActorAndUpdateMapping(Card card) {
-    remove(actorMap.get(card));
-    actorMap.remove(card);
+    remove(actorMap.get(card.getID()));
+    actorMap.remove(card.getID());
   }
 
   /**

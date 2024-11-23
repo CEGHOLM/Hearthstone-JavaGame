@@ -61,7 +61,7 @@ public class GameClientProxy implements Game, ClientProxy {
     String heroID =
             requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_HERO, String.class, who);
     Hero proxy = new HeroClientProxy(heroID, requestor);
-      return proxy;
+    return proxy;
   }
 
   @Override

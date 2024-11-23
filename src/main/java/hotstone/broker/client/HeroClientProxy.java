@@ -7,7 +7,7 @@ import hotstone.framework.*;
 import hotstone.framework.Player;
 
 public class HeroClientProxy implements Hero, ClientProxy {
-    private String id;
+    private final String id;
     private final Requestor requestor;
 
     public HeroClientProxy(String id, Requestor requestor) {
