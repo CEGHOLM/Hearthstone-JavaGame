@@ -40,14 +40,14 @@ public class DualUserInterfaceTool extends NullTool {
         if (figureAtPosition instanceof HotStoneFigure) {
             HotStoneFigure hsf = (HotStoneFigure) figureAtPosition;
             if (hsf.getType() == HotStoneFigureType.CARD_FIGURE) {
-                state = new PlayCardTool(editor, game, game.getPlayerInTurn());
+                state = new PlayCardTool(editor, game, whoToPlay);
             } else if (hsf.getType() == HotStoneFigureType.TURN_BUTTON ||
                     hsf.getType() == HotStoneFigureType.SWAP_BUTTON) {
                 state = new EndTurnTool(editor, game);
             } else if (hsf.getType() == HotStoneFigureType.MINION_FIGURE) {
-                state = new MinionAttackTool(editor, game, game.getPlayerInTurn());
+                state = new MinionAttackTool(editor, game, whoToPlay);
             } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
-                state = new UsePowerTool(editor, game, game.getPlayerInTurn());
+                state = new UsePowerTool(editor, game, whoToPlay);
             } else if (hsf.getType() == HotStoneFigureType.WIN_BUTTON) {
                 // Clicking the 'won button' should do nothing!
                 state = theNullTool; // User have to close the window to restart.
