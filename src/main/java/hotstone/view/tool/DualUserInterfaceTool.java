@@ -3,7 +3,6 @@ package hotstone.view.tool;
 import frds.broker.IPCException;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
-import hotstone.view.core.HotStoneDrawing;
 import hotstone.view.figure.HotStoneFigure;
 import hotstone.view.figure.HotStoneFigureType;
 import minidraw.framework.Drawing;
@@ -48,6 +47,8 @@ public class DualUserInterfaceTool extends NullTool {
                 state = new MinionAttackTool(editor, game, whoToPlay);
             } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
                 state = new UsePowerTool(editor, game, whoToPlay);
+            } else if (hsf.getType() == HotStoneFigureType.OPPONENT_ACTION_BUTTON) {
+                state = new OpponentButtonTool(editor, game);
             } else if (hsf.getType() == HotStoneFigureType.WIN_BUTTON) {
                 // Clicking the 'won button' should do nothing!
                 state = theNullTool; // User have to close the window to restart.

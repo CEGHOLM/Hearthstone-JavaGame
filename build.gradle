@@ -210,3 +210,9 @@ task hotstoneClient(type: JavaExec) {
     args project.findProperty('host') ?: 'localhost',
             project.findProperty('who') ?: 'findus'
 }
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '20'
+    targetCompatibility = '20'
+}
+

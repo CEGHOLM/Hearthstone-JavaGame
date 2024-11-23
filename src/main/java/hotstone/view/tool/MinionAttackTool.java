@@ -34,6 +34,11 @@ public class MinionAttackTool extends NullTool {
         Drawing model = editor.drawing();
         // The HotSeatStateTool should ensure that this tool is only active if there is a card figure below (x,y)
         Figure figureAtPosition = model.findFigure(e.getX(), e.getY());
+        if (figureAtPosition != null) {
+            System.out.println("[MinionAttackTool] mouseDown on figure: " + figureAtPosition);
+        } else {
+            System.out.println("[MinionAttackTool] mouseDown on empty space.");
+        }
         draggedActor = (CardFigure) figureAtPosition;
         // Move the card to the visual top
         model.zOrder(draggedActor, ZOrder.TO_BOTTOM);
