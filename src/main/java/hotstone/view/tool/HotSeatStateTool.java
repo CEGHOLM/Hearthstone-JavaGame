@@ -60,14 +60,12 @@ public class HotSeatStateTool extends NullTool {
     // implementing this role interface).
     if (figureAtPosition instanceof HotStoneFigure) {
       HotStoneFigure hsf = (HotStoneFigure) figureAtPosition;
-      // TODO: Complete this state selection
       if (hsf.getType() == HotStoneFigureType.CARD_FIGURE) {
         state = new PlayCardTool(editor, game, game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.TURN_BUTTON ||
               hsf.getType() == HotStoneFigureType.SWAP_BUTTON) {
         state = new EndTurnTool(editor, game);
       } else if (hsf.getType() == HotStoneFigureType.MINION_FIGURE) {
-        // TODO: Handle moving minions -> attacks
         state = new MinionAttackTool(editor, game, game.getPlayerInTurn());
       } else if (hsf.getType() == HotStoneFigureType.HERO_FIGURE) {
         state = new UsePowerTool(editor, game, game.getPlayerInTurn());

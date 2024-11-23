@@ -26,6 +26,7 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 import hotstone.view.core.HotStoneDrawingType;
 import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.DualUserInterfaceTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Factory;
 import minidraw.standard.MiniDrawApplication;
@@ -66,7 +67,7 @@ public class HotStoneClient {
                     new HotStoneFactory(game, who,
                             HotStoneDrawingType.OPPONENT_MODE) );
     editor.open();
-    editor.setTool(new NullTool());
+    editor.setTool(new DualUserInterfaceTool(editor, game, who));
 
   }
 }
