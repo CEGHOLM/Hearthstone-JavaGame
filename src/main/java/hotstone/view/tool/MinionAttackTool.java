@@ -34,11 +34,6 @@ public class MinionAttackTool extends NullTool {
         Drawing model = editor.drawing();
         // The HotSeatStateTool should ensure that this tool is only active if there is a card figure below (x,y)
         Figure figureAtPosition = model.findFigure(e.getX(), e.getY());
-        if (figureAtPosition != null) {
-            System.out.println("[MinionAttackTool] mouseDown on figure: " + figureAtPosition);
-        } else {
-            System.out.println("[MinionAttackTool] mouseDown on empty space.");
-        }
         draggedActor = (CardFigure) figureAtPosition;
         // Move the card to the visual top
         model.zOrder(draggedActor, ZOrder.TO_BOTTOM);
@@ -72,13 +67,15 @@ public class MinionAttackTool extends NullTool {
         // Find out if it is a card you're trying to attack
         if (figureAtPosition instanceof CardFigure) {
             defendingCard = ((CardFigure) figureAtPosition).getAssociatedCard();
-            isHittingMinion = true;
+            if (!defendingCard.getOwner().equals(whoAmIPlaying)) {
+                isHittingMinion = true;
+            }
         }
 
         // If you are trying to attack a minion
         if (isDraggingAnActor && isHittingMinion) {
             // Try to attack the minion
-            Status status = game.attackCard(whoAmIPlaying, (MutableCard) attackingCard, (MutableCard) defendingCard);
+            Status status = game.attackCard(whoAmIPlaying, attackingCard, defendingCard);
 
             editor.showStatus("Attack minion. Result =" + status);
         }
@@ -91,7 +88,7 @@ public class MinionAttackTool extends NullTool {
         // If you are trying to attack a hero
         if (isDraggingAnActor && isHittingEnemyHero) {
             // Try to attack the hero
-            Status status = game.attackHero(whoAmIPlaying, (MutableCard) attackingCard);
+            Status status = game.attackHero(whoAmIPlaying, attackingCard);
 
             editor.showStatus("Attack hero. Result =" + status);
         }
