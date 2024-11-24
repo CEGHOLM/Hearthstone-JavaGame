@@ -21,10 +21,9 @@ import com.google.gson.reflect.TypeToken;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.broker.common.OperationNames;
+import hotstone.broker.service.NameService;
 import hotstone.broker.service.StandardNameService;
 import hotstone.framework.*;
-import hotstone.framework.mutability.MutableCard;
-import hotstone.framework.mutability.MutableHero;
 import hotstone.observer.GameObserver;
 
 import java.lang.reflect.Type;

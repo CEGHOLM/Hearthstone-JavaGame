@@ -24,12 +24,10 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
+import hotstone.broker.service.NameService;
 import hotstone.broker.service.StandardNameService;
-import hotstone.doubles.StubCard;
-import hotstone.doubles.StubHero;
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableCard;
-import hotstone.variants.NullEffect;
 
 import java.util.ArrayList;
 import java.util.List;
