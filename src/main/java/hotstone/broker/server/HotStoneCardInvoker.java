@@ -13,12 +13,10 @@ import hotstone.framework.Game;
 import hotstone.framework.Player;
 
 public class HotStoneCardInvoker implements Invoker {
-    private final Game servant;
     private final Gson gson;
     private final NameService nameService;
 
-    public HotStoneCardInvoker(Game servant, Gson gson, NameService nameService) {
-        this.servant = servant;
+    public HotStoneCardInvoker(Gson gson, NameService nameService) {
         this.gson = gson;
         this.nameService = nameService;
     }
@@ -33,8 +31,6 @@ public class HotStoneCardInvoker implements Invoker {
         RequestObject requestObject =
                 gson.fromJson(request, RequestObject.class);
         String objectId = requestObject.getObjectId();
-        JsonArray array =
-                JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
         ReplyObject reply = null;
 

@@ -27,9 +27,9 @@ public class HotStoneRootInvoker implements Invoker {
         // operationName prefixes
         Invoker gameInvoker = new HotStoneGameInvoker(servant);
         invokerMap.put(OperationNames.GAME_PREFIX, gameInvoker);
-        Invoker cardInvoker = new HotStoneCardInvoker(servant, gson, nameService);
+        Invoker cardInvoker = new HotStoneCardInvoker(gson, nameService);
         invokerMap.put(OperationNames.CARD_PREFIX, cardInvoker);
-        Invoker heroInvoker = new HotStoneHeroInvoker(servant, gson, nameService);
+        Invoker heroInvoker = new HotStoneHeroInvoker(gson, nameService);
         invokerMap.put(OperationNames.HERO_PREFIX, heroInvoker);
     }
 
