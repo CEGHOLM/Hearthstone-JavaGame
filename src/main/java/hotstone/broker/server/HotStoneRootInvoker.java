@@ -50,7 +50,7 @@ public class HotStoneRootInvoker implements Invoker {
 
         } catch (Exception e) {
             // Handle errors
-            reply = new ReplyObject(500, "Server error: " + e.getMessage());
+            reply = gson.toJson(new ReplyObject(500, "Server error: " + e.getMessage()));
         }
         return reply;
     }
