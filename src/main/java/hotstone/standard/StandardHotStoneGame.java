@@ -130,8 +130,6 @@ public class StandardHotStoneGame implements Game, MutableGame {
     return turnNumber;
   }
 
-
-
   @Override
   public int getDeckSize(Player who) {
     return decks.get(who).size();

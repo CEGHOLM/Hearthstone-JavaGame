@@ -26,6 +26,7 @@ import hotstone.broker.server.HotStoneRootInvoker;
 import hotstone.framework.Game;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.variants.alphastone.AlphaStoneFactory;
+import hotstone.variants.semistone.SemiStoneFactory;
 
 /** The main program running the HotStone Server,
  * using the FRDS.Broker library's ServerRequestHandler
@@ -39,7 +40,7 @@ public class HotStoneServer {
   public HotStoneServer() {
     int port = BrokerConstants.HOTSTONE_PORT;
     // Define the server side root servant
-    Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
+    Game servant = new StandardHotStoneGame(new SemiStoneFactory());
 
     // Create server side implementation of Broker roles
     Invoker invoker = new HotStoneRootInvoker(servant);
