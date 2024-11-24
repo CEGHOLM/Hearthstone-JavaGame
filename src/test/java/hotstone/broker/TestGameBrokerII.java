@@ -1,4 +1,5 @@
 package hotstone.broker;
+import hotstone.broker.server.HotStoneRootInvoker;
 import hotstone.framework.*;
 
 import hotstone.standard.GameConstants;
@@ -40,7 +41,7 @@ public class TestGameBrokerII {
         Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
         // Which is injected into the dedicated Invoker which you must
         // develop
-        Invoker invoker = new HotStoneGameInvoker(servant);
+        Invoker invoker = new HotStoneRootInvoker(servant);
 
         // === Next define the client side of the pattern:
         // the client request handler, the requestor, and the client proxy

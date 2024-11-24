@@ -7,6 +7,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
 import hotstone.broker.server.HotStoneGameInvoker;
+import hotstone.broker.server.HotStoneRootInvoker;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
@@ -28,7 +29,7 @@ public class TestCardBroker {
         // === Server side setup ===
         // Create a stub servant with canned output
         Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
-        Invoker invoker = new HotStoneGameInvoker(servant);
+        Invoker invoker = new HotStoneRootInvoker(servant);
 
         // === Client side setup ===
         // Create a local method client request handler

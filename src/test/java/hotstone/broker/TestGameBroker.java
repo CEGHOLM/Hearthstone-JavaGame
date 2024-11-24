@@ -16,6 +16,7 @@
  */
 package hotstone.broker;
 
+import hotstone.broker.server.HotStoneRootInvoker;
 import hotstone.framework.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +54,7 @@ public class TestGameBroker {
     Game servant = new StubGameForBroker();
     // Which is injected into the dedicated Invoker which you must
     // develop
-    Invoker invoker = new HotStoneGameInvoker(servant);
+    Invoker invoker = new HotStoneRootInvoker(servant);
 
     // === Next define the client side of the pattern:
     // the client request handler, the requestor, and the client proxy

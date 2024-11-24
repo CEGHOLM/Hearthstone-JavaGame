@@ -1,19 +1,15 @@
 package hotstone.broker.server;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
 import hotstone.broker.service.NameService;
-import hotstone.framework.Game;
 import hotstone.framework.Hero;
 import hotstone.framework.Player;
 
 public class HotStoneHeroInvoker implements Invoker {
-    private final Game servant;
     private final Gson gson;
     private final NameService nameService;
 
