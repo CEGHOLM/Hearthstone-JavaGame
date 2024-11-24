@@ -53,7 +53,6 @@ public class HotStoneGameInvoker implements Invoker {
     // Do the demarshalling
     RequestObject requestObject =
             gson.fromJson(request, RequestObject.class);
-    String objectId = requestObject.getObjectId();
     JsonArray array =
             JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
