@@ -6,6 +6,8 @@ import hotstone.framework.mutability.MutableCard;
 import hotstone.framework.Player;
 import hotstone.framework.mutability.MutableGame;
 
+import java.util.UUID;
+
 public class StandardCard implements Card, MutableCard {
     private String name;
     private int manaCost;
@@ -15,6 +17,7 @@ public class StandardCard implements Card, MutableCard {
     private int turnsOnField; // Flag to track if the card has attacked in the current turn
     private boolean hasAttacked;
     private Effect effect;
+    private final String id;
 
     public StandardCard(String name, int manaCost, int attack, int health, Player owner, Effect effect) {
         this.name = name;
@@ -25,6 +28,7 @@ public class StandardCard implements Card, MutableCard {
         this.hasAttacked = false;
         this.owner = owner;
         this.effect = effect;
+        this.id = UUID.randomUUID().toString();
     }
     @Override
     public String getName() {
@@ -93,5 +97,10 @@ public class StandardCard implements Card, MutableCard {
     @Override
     public void applyEffect(MutableGame game) {
         effect.applyEffect(game, owner);
+    }
+
+    @Override
+    public String getID() {
+        return id;
     }
 }

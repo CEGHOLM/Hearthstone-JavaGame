@@ -17,23 +17,28 @@
 
 package hotstone.broker.client;
 
+import com.google.gson.reflect.TypeToken;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotstone.broker.common.OperationNames;
+import hotstone.broker.service.NameService;
+import hotstone.broker.service.StandardNameService;
 import hotstone.framework.*;
-import hotstone.framework.mutability.MutableCard;
-import hotstone.framework.mutability.MutableHero;
 import hotstone.observer.GameObserver;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class GameClientProxy implements Game, ClientProxy {
   private String singletonID = "one-game";
   private final Requestor requestor;
+  private NameService nameService;
 
   public GameClientProxy(Requestor requestor) {
     this.requestor = requestor;
+    nameService = new StandardNameService();
   }
 
   @Override
@@ -51,8 +56,11 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public MutableHero getHero(Player who) {
-    return null;
+  public Hero getHero(Player who) {
+    String heroID =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_HERO, String.class, who);
+    Hero proxy = new HeroClientProxy(heroID, requestor);
+    return proxy;
   }
 
   @Override
@@ -70,13 +78,33 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public MutableCard getCardInHand(Player who, int indexInHand) {
-    return null;
+  public Card getCardInHand(Player who, int indexInHand) {
+    String cardId =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_CARD_IN_HAND, String.class, who, indexInHand);
+    Card proxy =  new CardClientProxy(cardId, requestor);
+    return proxy;
   }
 
   @Override
   public Iterable<? extends Card> getHand(Player who) {
-    return null;
+    // Define the type of a list of String
+    Type collectionType =
+            new TypeToken<List<String>>() {}.getType();
+    // Do the remote call to retrieve the list of IDs for
+    // all cards in the hand
+    List<String> theIDList =
+            requestor.sendRequestAndAwaitReply(singletonID,
+                    OperationNames.GAME_GET_HAND,
+                    collectionType, who);
+
+    // Convert the ID list into lost of CardClientProxies
+    List<Card> proxies = new ArrayList<>();
+    for (String id : theIDList) {
+      proxies.add(new CardClientProxy(id, requestor));
+    }
+
+    // Rerun the list of proxies
+    return proxies;
   }
 
   @Override
@@ -87,13 +115,33 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public MutableCard getCardInField(Player who, int indexInField) {
-    return null;
+  public Card getCardInField(Player who, int indexInField) {
+    String cardId =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_GET_CARD_IN_FIELD, String.class, who, indexInField);
+    Card proxy =  new CardClientProxy(cardId, requestor);
+    return proxy;
   }
 
   @Override
   public Iterable<? extends Card> getField(Player who) {
-    return null;
+    // Define the type of a list of String
+    Type collectionType =
+            new TypeToken<List<String>>() {}.getType();
+    // Do the remote call to retrieve the list of IDs for
+    // all cards in the field
+    List<String> theIDList =
+            requestor.sendRequestAndAwaitReply(singletonID,
+                    OperationNames.GAME_GET_FIELD,
+                    collectionType, who);
+
+    // Convert the ID list into lost of CardClientProxies
+    List<Card> proxies = new ArrayList<>();
+    for (String id : theIDList) {
+      proxies.add(new CardClientProxy(id, requestor));
+    }
+
+    // Rerun the list of proxies
+    return proxies;
   }
 
   @Override
@@ -104,33 +152,37 @@ public class GameClientProxy implements Game, ClientProxy {
   }
 
   @Override
-  public List<? extends Card> getDeck(Player who) {
-    return List.of();
-  }
-
-  @Override
   public void endTurn() {
     requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_END_OF_TURN, String.class);
   }
 
   @Override
-  public Status playCard(Player who, MutableCard card, int atIndex) {
-    return null;
+  public Status playCard(Player who, Card card, int atIndex) {
+    Status status =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_PLAY_CARD, Status.class, who, card.getID(), atIndex);
+    return status;
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
-    return null;
+  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
+    Status status =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_ATTACK_CARD, Status.class,
+                    playerAttacking, attackingCard.getID(), defendingCard.getID());
+    return status;
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
-    return null;
+  public Status attackHero(Player playerAttacking, Card attackingCard) {
+    Status status =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_ATTACK_HERO, Status.class, playerAttacking, attackingCard.getID());
+    return status;
   }
 
   @Override
   public Status usePower(Player who) {
-    return null;
+    Status status =
+            requestor.sendRequestAndAwaitReply(singletonID, OperationNames.GAME_USE_POWER, Status.class, who);
+    return status;
   }
 
   @Override

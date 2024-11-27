@@ -34,7 +34,7 @@ public class TranscriptionDecorator implements MutableGame {
 
     @Override
     public MutableHero getHero(Player who) {
-        return wrappedGame.getHero(who);
+        return (MutableHero) wrappedGame.getHero(who);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public MutableCard getCardInHand(Player who, int indexInHand) {
+    public Card getCardInHand(Player who, int indexInHand) {
         return wrappedGame.getCardInHand(who, indexInHand);
     }
 
@@ -69,7 +69,7 @@ public class TranscriptionDecorator implements MutableGame {
 
     @Override
     public MutableCard getCardInField(Player who, int indexInField) {
-        return wrappedGame.getCardInField(who, indexInField);
+        return (MutableCard) wrappedGame.getCardInField(who, indexInField);
     }
 
     @Override
@@ -82,10 +82,7 @@ public class TranscriptionDecorator implements MutableGame {
         return wrappedGame.getFieldSize(who);
     }
 
-    @Override
-    public List<? extends Card> getDeck(Player who) {
-        return wrappedGame.getDeck(who);
-    }
+
 
     @Override
     public void endTurn() {
@@ -94,7 +91,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Status playCard(Player who, MutableCard card, int atIndex) {
+    public Status playCard(Player who, Card card, int atIndex) {
         Status status = wrappedGame.playCard(who, card, atIndex);
         if (status != Status.OK){
             return status;
@@ -104,7 +101,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+    public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
         Status status = wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
         if (status != Status.OK){
             return status;
@@ -114,7 +111,7 @@ public class TranscriptionDecorator implements MutableGame {
     }
 
     @Override
-    public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+    public Status attackHero(Player playerAttacking, Card attackingCard) {
         Status status = wrappedGame.attackHero(playerAttacking, attackingCard);
         if (status != Status.OK){
             return status;

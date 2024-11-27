@@ -82,7 +82,7 @@ public class PlayCardTool extends NullTool {
     if (isDraggingAnActor && isHittingField) {
       Card associatedCard = draggedActor.getAssociatedCard();
       // Try  to play the card
-      Status status = game.playCard(whoAmIPlaying, (MutableCard) associatedCard, 0);
+      Status status = game.playCard(whoAmIPlaying, associatedCard, 0);
       if (status == Status.OK) {
         moveCardBack = false;
       }

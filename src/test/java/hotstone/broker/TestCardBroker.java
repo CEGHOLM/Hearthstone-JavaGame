@@ -4,13 +4,16 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotstone.broker.client.CardClientProxy;
+import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.doubles.LocalMethodClientRequestHandler;
-import hotstone.broker.doubles.StubGameForBroker;
 import hotstone.broker.server.HotStoneGameInvoker;
+import hotstone.broker.server.HotStoneRootInvoker;
 import hotstone.framework.Card;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.standard.GameConstants;
+import hotstone.standard.StandardHotStoneGame;
+import hotstone.variants.alphastone.AlphaStoneFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +28,8 @@ public class TestCardBroker {
     public void setup() {
         // === Server side setup ===
         // Create a stub servant with canned output
-        Game servant = new StubGameForBroker();
-        Invoker invoker = new HotStoneGameInvoker(servant);
+        Game servant = new StandardHotStoneGame(new AlphaStoneFactory());
+        Invoker invoker = new HotStoneRootInvoker(servant);
 
         // === Client side setup ===
         // Create a local method client request handler
@@ -34,7 +37,8 @@ public class TestCardBroker {
         Requestor requestor = new StandardJSONRequestor(crh);
 
         // Create the CardClientProxy to be tested
-        cardClientProxy = new CardClientProxy(requestor);
+        Game proxy = new GameClientProxy(requestor);
+        cardClientProxy = proxy.getCardInHand(Player.FINDUS, 0);
     }
 
     @Test
@@ -48,7 +52,7 @@ public class TestCardBroker {
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
         // return the stub's name reply.
-        assertThat(name, is("Card"));
+        assertThat(name, is(GameConstants.TRES_CARD));
     }
 
     @Test
@@ -62,7 +66,7 @@ public class TestCardBroker {
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
         // return the stub's 17 reply.
-        assertThat(manaCost, is(17));
+        assertThat(manaCost, is(3));
     }
 
     @Test
@@ -76,7 +80,7 @@ public class TestCardBroker {
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
         // return the stub's 15 reply.
-        assertThat(attack, is(15));
+        assertThat(attack, is(3));
     }
 
     @Test
@@ -90,11 +94,11 @@ public class TestCardBroker {
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
         // return the stub's 77 reply.
-        assertThat(health, is(77));
+        assertThat(health, is(3));
     }
 
     @Test
-    public void shouldBeActive() {
+    public void shouldNotBeActive() {
         // Given a stub card which is hardcoded to
         // Return true as active status
 
@@ -104,7 +108,7 @@ public class TestCardBroker {
         // Then the broker chain (clientProxy -> requestor ->
         // client request handler -> invoker -> servant) will
         // return the stub's true reply.
-        assertThat(isActive, is(true));
+        assertThat(isActive, is(false));
     }
 
     @Test

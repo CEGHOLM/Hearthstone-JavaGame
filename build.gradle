@@ -200,12 +200,19 @@ task hotstoneStorytest(type: JavaExec) {
 }
 
 // The hotstone client, in Broker II delivery
-//task hotstoneClient(type: JavaExec) {
-    //group 'SWEA Distribution'
-    //description 'Run HotStone client'
+task hotstoneClient(type: JavaExec) {
+    group 'SWEA Distribution'
+    description 'Run HotStone client'
 
-    //mainClass = 'hotstone.broker.main.HotStoneClient'
-    //classpath = sourceSets.main.runtimeClasspath
-    //args host, who
-//}
+    mainClass = 'hotstone.broker.main.HotStoneClient'
+    classpath = sourceSets.main.runtimeClasspath
+
+    args project.findProperty('host') ?: 'localhost',
+            project.findProperty('who') ?: 'findus'
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '20'
+    targetCompatibility = '20'
+}
 

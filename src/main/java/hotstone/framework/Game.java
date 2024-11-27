@@ -43,7 +43,7 @@ public interface Game extends Observable {
    * @param who the owning player
    * @return the hero
    */
-  MutableHero getHero(Player who);
+  Hero getHero(Player who);
 
   /** Get who has won the game.
    *
@@ -73,8 +73,8 @@ public interface Game extends Observable {
   /** Get the card at a given index in the hand.  Index goes from 0 up
    * till 'getHandSize()-1'.  If a card is added to the hand, it is
    * put into position 0, all other cards are pushed one position 'to
-   * the right'.  
-   * 
+   * the right'.
+   *
    * PRECONDITION: 'who' is never null.
    * PRECONDITION: indexInHand MUST be in interval 0..handsize-1.
    *
@@ -83,7 +83,7 @@ public interface Game extends Observable {
    *                    0..handsize-1.
    * @return the card in the hand at that position.
    */
-  MutableCard getCardInHand(Player who, int indexInHand);
+  Card getCardInHand(Player who, int indexInHand);
 
   /** Get an iterable over the cards in the hand. Convenience method
    * to allow writing code ala 
@@ -124,7 +124,7 @@ public interface Game extends Observable {
    *                    0..fieldsize-1.
    * @return the card on the field at that position.
    */
-  MutableCard getCardInField(Player who, int indexInField);
+  Card getCardInField(Player who, int indexInField);
   
   /** Get an iterable over the cards on the field. Convenience method
    * to allow writing code ala 
@@ -149,8 +149,6 @@ public interface Game extends Observable {
    */
   int getFieldSize(Player who);
 
-  List<? extends Card> getDeck(Player who);
-
   /**
    * Perform end of turn for current player, to prepare for the
    * opponent's turn.  PRECONDITION: The client MUST ensure that
@@ -173,7 +171,7 @@ public interface Game extends Observable {
    *                and second minion, etc.
    * @return Status of operation
    */
-  Status playCard(Player who, MutableCard card, int atIndex);
+  Status playCard(Player who, Card card, int atIndex);
 
   /** Attack one card with another on the fields.
    *
@@ -188,7 +186,7 @@ public interface Game extends Observable {
    *    either OK or some value explaining why the action was invalid.
    */
   Status attackCard(Player playerAttacking,
-                    MutableCard attackingCard, MutableCard defendingCard);
+                    Card attackingCard, Card defendingCard);
 
   /** Attack a hero with a card in the field.
    *
@@ -201,7 +199,7 @@ public interface Game extends Observable {
    * @return a status identifying the outcome of the attack, which is
    *    either OK or some value explaining why the action was invalid.
    */
-  Status attackHero(Player playerAttacking, MutableCard attackingCard);
+  Status attackHero(Player playerAttacking, Card attackingCard);
 
   /** Use a hero's special power/effect.
    *

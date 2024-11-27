@@ -51,7 +51,7 @@ public class TestEpsilonStone {
 
         // When Peddersen plays a minion and Findus uses RedwinePower
         game.endTurn();  // End Findus' turn
-        MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card, 0);
         game.endTurn();  // End Peddersen's turn
         game.usePower(Player.FINDUS);
@@ -79,7 +79,7 @@ public class TestEpsilonStone {
 
         // When Peddersen plays a minion and uses PastaPower
         game.endTurn();  // End Findus' turn
-        MutableCard card = game.getCardInHand(Player.PEDDERSEN, 0);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0);
         game.playCard(Player.PEDDERSEN, card, 0);
         TestHelper.advanceGameNRounds(game, 1);  // End Peddersen's turn, advance one round
         italianChef.usePower(game);
@@ -139,10 +139,10 @@ public class TestEpsilonStone {
 
         // When Peddersen plays 3 minions, and Findus uses RedwinePower
         game.endTurn();  // End Findus' turn
-        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+        game.playCard(Player.PEDDERSEN, (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0), 0);
         TestHelper.advanceGameNRounds(game, 1);  // Play the remaining cards
-        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 1);
-        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 2);
+        game.playCard(Player.PEDDERSEN, (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1), 1);
+        game.playCard(Player.PEDDERSEN, (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1), 2);
         game.endTurn();  // End Peddersen's turn
         frenchChef.usePower(game);
 
@@ -160,10 +160,10 @@ public class TestEpsilonStone {
 
         // When Peddersen plays 3 minions and uses PastaPower
         game.endTurn();  // End Findus' turn
-        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 0), 0);
+        game.playCard(Player.PEDDERSEN, (MutableCard) game.getCardInHand(Player.PEDDERSEN, 0), 0);
         TestHelper.advanceGameNRounds(game, 1);  // Play the remaining cards
-        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 1);
-        game.playCard(Player.PEDDERSEN, game.getCardInHand(Player.PEDDERSEN, 1), 2);
+        game.playCard(Player.PEDDERSEN, (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1), 1);
+        game.playCard(Player.PEDDERSEN, (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1), 2);
         italianChef.usePower(game);
 
         // Then the second minion's attack should have increased by 2

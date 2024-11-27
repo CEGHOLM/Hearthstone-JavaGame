@@ -24,9 +24,13 @@ import hotstone.broker.client.GameClientProxy;
 import hotstone.broker.common.BrokerConstants;
 import hotstone.framework.Game;
 import hotstone.framework.Player;
+import hotstone.view.core.HotStoneDrawingType;
+import hotstone.view.core.HotStoneFactory;
+import hotstone.view.tool.DualUserInterfaceTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Factory;
 import minidraw.standard.MiniDrawApplication;
+import minidraw.standard.NullTool;
 
 public class HotStoneClient {
   public static void main(String[] args) {
@@ -57,14 +61,13 @@ public class HotStoneClient {
      * 'Next Opp Act' / refresh button to do 'brute force redrawing'
      */
 
-   /* Code is something ala
+
     DrawingEditor editor =
             new MiniDrawApplication( "HotStone Client on host: " + host,
                     new HotStoneFactory(game, who,
                             HotStoneDrawingType.OPPONENT_MODE) );
     editor.open();
+    editor.setTool(new DualUserInterfaceTool(editor, game, who));
 
-    editor.setTool(new RemotePlayStateTool(...));
-  */
   }
 }

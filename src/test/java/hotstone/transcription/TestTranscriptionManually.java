@@ -37,15 +37,15 @@ public class TestTranscriptionManually {
 
     private static void testPlayCard(MutableGame game) {
         System.out.println("Test: Play card");
-        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, card, 0);
     }
 
     private static void testAttackCard(MutableGame game) {
         System.out.println("Test: Attack card");
         // Get cards
-        MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 0);
-        MutableCard defendingCard = game.getCardInHand(Player.PEDDERSEN, 1);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
+        MutableCard defendingCard = (MutableCard) game.getCardInHand(Player.PEDDERSEN, 1);
 
         // Play the cards
         game.playCard(Player.FINDUS, attackingCard, 0);
@@ -60,7 +60,7 @@ public class TestTranscriptionManually {
     private static void testAttackHero(MutableGame game) {
         System.out.println("Test: Attack hero");
         // Get card
-        MutableCard attackingCard = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard attackingCard = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
 
         // Play the card
         game.playCard(Player.FINDUS, attackingCard, 0);
@@ -89,7 +89,7 @@ public class TestTranscriptionManually {
         System.out.println("Test: Remove minion from field");
 
         // Play card
-        MutableCard card = game.getCardInHand(Player.FINDUS, 2);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 2);
         game.playCard(Player.FINDUS, card, 0);
 
         // Remove card
@@ -100,7 +100,7 @@ public class TestTranscriptionManually {
         System.out.println("Test: Change minion attack");
 
         // Play card
-        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, card, 0);
 
         // Change minion attack
@@ -115,7 +115,7 @@ public class TestTranscriptionManually {
 
         // Call methods that normally would be logged
         game.endTurn();
-        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, card, 0);
         game.usePower(Player.FINDUS);
     }
@@ -125,7 +125,7 @@ public class TestTranscriptionManually {
 
         // Call methods that normally would be logged
         game.endTurn();
-        MutableCard card = game.getCardInHand(Player.FINDUS, 0);
+        MutableCard card = (MutableCard) game.getCardInHand(Player.FINDUS, 0);
         game.playCard(Player.FINDUS, card, 0);
 
         // Turn off transcription

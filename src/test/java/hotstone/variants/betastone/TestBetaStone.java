@@ -2,6 +2,7 @@ package hotstone.variants.betastone;
 
 import hotstone.framework.*;
 import hotstone.framework.mutability.MutableGame;
+import hotstone.framework.mutability.MutableHero;
 import hotstone.standard.StandardHotStoneGame;
 import hotstone.utility.TestHelper;
 import org.junit.jupiter.api.*;
@@ -41,7 +42,8 @@ public class TestBetaStone {
         // Given a game
         // when I ask for the winner when Findus health is 0
         game.endTurn();
-        game.getHero(Player.FINDUS).setHealth(0);
+        MutableHero hero = (MutableHero) game.getHero(Player.FINDUS);
+        hero.setHealth(0);
         Player winner = game.getWinner();
         // Then the winner should be Peddersen
         assertThat(winner, is(Player.PEDDERSEN));
@@ -52,7 +54,8 @@ public class TestBetaStone {
         // Given a game
         // when I ask for the winner when Peddersens health is 0
         TestHelper.advanceGameNRounds(game, 1);
-        game.getHero(Player.PEDDERSEN).setHealth(0);
+        MutableHero hero = (MutableHero) game.getHero(Player.PEDDERSEN);
+        hero.setHealth(0);
         Player winner = game.getWinner();
         // Then the winner should be Findus
         assertThat(winner, is(Player.FINDUS));

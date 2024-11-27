@@ -62,7 +62,7 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public MutableCard getCardInHand(Player who, int indexInHand) {
+  public Card getCardInHand(Player who, int indexInHand) {
     return null;
   }
 
@@ -91,10 +91,7 @@ public class StubGameForBroker implements Game, Servant {
     return 11;
   }
 
-  @Override
-  public List<? extends Card> getDeck(Player who) {
-    return List.of();
-  }
+
 
   @Override
   public void endTurn() {
@@ -102,17 +99,17 @@ public class StubGameForBroker implements Game, Servant {
   }
 
   @Override
-  public Status playCard(Player who, MutableCard card, int atIndex) {
+  public Status playCard(Player who, Card card, int atIndex) {
     return null;
   }
 
   @Override
-  public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+  public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
     return null;
   }
 
   @Override
-  public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+  public Status attackHero(Player playerAttacking, Card attackingCard) {
     return null;
   }
 

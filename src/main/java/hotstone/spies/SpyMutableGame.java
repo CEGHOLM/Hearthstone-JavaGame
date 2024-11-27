@@ -46,19 +46,19 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
-    public Status playCard(Player who, MutableCard card, int atIndex) {
+    public Status playCard(Player who, Card card, int atIndex) {
         recordMethodCall("playCard");
         return wrappedGame.playCard(who, card, atIndex);
     }
 
     @Override
-    public Status attackCard(Player playerAttacking, MutableCard attackingCard, MutableCard defendingCard) {
+    public Status attackCard(Player playerAttacking, Card attackingCard, Card defendingCard) {
         recordMethodCall("attackCard");
         return wrappedGame.attackCard(playerAttacking, attackingCard, defendingCard);
     }
 
     @Override
-    public Status attackHero(Player playerAttacking, MutableCard attackingCard) {
+    public Status attackHero(Player playerAttacking, Card attackingCard) {
         recordMethodCall("attackHero");
         return wrappedGame.attackHero(playerAttacking, attackingCard);
     }
@@ -112,7 +112,7 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public MutableHero getHero(Player who) {
-        return wrappedGame.getHero(who);
+        return (MutableHero) wrappedGame.getHero(who);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class SpyMutableGame implements MutableGame {
     }
 
     @Override
-    public MutableCard getCardInHand(Player who, int indexInHand) {
+    public Card getCardInHand(Player who, int indexInHand) {
         return wrappedGame.getCardInHand(who, indexInHand);
     }
 
@@ -147,7 +147,7 @@ public class SpyMutableGame implements MutableGame {
 
     @Override
     public MutableCard getCardInField(Player who, int indexInField) {
-        return wrappedGame.getCardInField(who, indexInField);
+        return (MutableCard) wrappedGame.getCardInField(who, indexInField);
     }
 
     @Override
@@ -160,10 +160,7 @@ public class SpyMutableGame implements MutableGame {
         return fields.get(who).size();
     }
 
-    @Override
-    public List<? extends Card> getDeck(Player who) {
-        return List.of();
-    }
+
 
     @Override
     public void addObserver(GameObserver observer) {

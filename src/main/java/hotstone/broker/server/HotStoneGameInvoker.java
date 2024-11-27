@@ -24,31 +24,28 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotstone.broker.common.OperationNames;
-import hotstone.doubles.StubCard;
-import hotstone.doubles.StubHero;
+import hotstone.broker.service.NameService;
+import hotstone.broker.service.StandardNameService;
 import hotstone.framework.*;
-import hotstone.variants.NullEffect;
+import hotstone.framework.mutability.MutableCard;
 
-/** TODO: Template code for solving the Broker exercises */
+import java.util.ArrayList;
+import java.util.List;
+
 public class HotStoneGameInvoker implements Invoker {
 
   private final Game servant;
   private final Gson gson;
-  private Card fakeItCard = new StubCard("Card", 17, 15, 77,
-          true, Player.FINDUS, new NullEffect());
-  private Hero fakeItHero = new StubHero();
+  private final NameService nameService;
 
-  public HotStoneGameInvoker(Game servant) {
+  public HotStoneGameInvoker(Game servant, Gson gson, NameService nameService) {
     this.servant = servant;
-    this.gson = new Gson();
+    this.gson = gson;
+    this.nameService = nameService;
   }
 
   private Card lookupCard(String objectId) {
-    return fakeItCard;
-  }
-
-  private Hero lookupHero(String objectId) {
-    return fakeItHero;
+    return nameService.getCard(objectId);
   }
 
   @Override
@@ -56,11 +53,10 @@ public class HotStoneGameInvoker implements Invoker {
     // Do the demarshalling
     RequestObject requestObject =
             gson.fromJson(request, RequestObject.class);
-    String objectId = requestObject.getObjectId();
     JsonArray array =
             JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
-    ReplyObject reply;
+    ReplyObject reply = null;
 
     try {
       // Dispatching: Check the operation name
@@ -114,6 +110,137 @@ public class HotStoneGameInvoker implements Invoker {
         // Create a reply
         reply = new ReplyObject(200, gson.toJson(winner));
 
+      } else if (operationName.equals(OperationNames.GAME_GET_HAND)) {
+        // Get the player
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the getHand() method to get the cards
+        Iterable<? extends Card> hand = servant.getHand(who);
+
+        // Create a list of ID's for the cards
+        List<String> idList = new ArrayList<>();
+        for (Card card : hand) {
+          String cardId = card.getID();
+          nameService.addCard(cardId, card);
+          idList.add(cardId);
+        }
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(idList));
+
+      } else if (operationName.equals(OperationNames.GAME_PLAY_CARD)) {
+        // Get the player, card and index
+        Player who = gson.fromJson(array.get(0), Player.class);
+        MutableCard card = (MutableCard) lookupCard(gson.fromJson(array.get(1), String.class));
+        int index = gson.fromJson(array.get(2), Integer.class);
+
+        // Call the playCard() method
+        Status status = servant.playCard(who, card, index);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(status));
+
+      } else if (operationName.equals(OperationNames.GAME_ATTACK_CARD)) {
+        // Get the player and cards
+        Player attacktingPlayer = gson.fromJson(array.get(0), Player.class);
+        Card attackingCard = lookupCard(gson.fromJson(array.get(1), String.class));
+        Card defendingCard = lookupCard(gson.fromJson(array.get(2), String.class));
+
+        // Call the attackCard() method
+        Status status = servant.attackCard(attacktingPlayer, attackingCard, defendingCard);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(status));
+
+      } else if (operationName.equals(OperationNames.GAME_ATTACK_HERO)) {
+        // Get the attacking player and card
+        Player attackingPlayer = gson.fromJson(array.get(0), Player.class);
+        Card attackingCard = lookupCard(gson.fromJson(array.get(1), String.class));
+
+        // Call the attackHero() method
+        Status status = servant.attackHero(attackingPlayer, attackingCard);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(status));
+
+      } else if (operationName.equals(OperationNames.GAME_USE_POWER)) {
+        // Get the player
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the usePower() method
+        Status status = servant.usePower(who);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(status));
+
+      } else if (operationName.equals(OperationNames.GAME_GET_CARD_IN_FIELD)) {
+        // Get the player and the index
+        Player who = gson.fromJson(array.get(0), Player.class);
+        int index = gson.fromJson(array.get(1), Integer.class);
+
+        // Call the getCardInField() method
+        Card card = servant.getCardInField(who, index);
+
+        // Generate the ID for the card
+        String cardId = card.getID();
+
+        // Register the card in the name service
+        nameService.addCard(cardId, card);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(cardId));
+
+      } else if (operationName.equals(OperationNames.GAME_GET_FIELD)) {
+        // Get the player
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the getField() method to get the cards/minions
+        Iterable<? extends Card> field = servant.getField(who);
+
+        // Create a list of ID's for the cards/minions
+        List<String> idList = new ArrayList<>();
+        for (Card minion : field) {
+          String cardId = minion.getID();
+          nameService.addCard(cardId, minion);
+          idList.add(cardId);
+        }
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(idList));
+
+      } else if (operationName.equals(OperationNames.GAME_GET_HERO)) {
+        // Get the player and index from JSON array
+        Player who = gson.fromJson(array.get(0), Player.class);
+
+        // Call the getHero() method
+        Hero hero = servant.getHero(who);
+
+        // Generate the id for the hero
+        String heroId = hero.getID();
+
+        // Register teh hero in the name service
+        nameService.addHero(heroId, hero);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(heroId));
+
+      } else if (operationName.equals(OperationNames.GAME_GET_CARD_IN_HAND)) {
+        // Get the player and index from JSON array
+        Player who = gson.fromJson(array.get(0), Player.class);
+        int index = gson.fromJson(array.get(1), Integer.class);
+
+        // Call the getCardInHand() method
+        Card card = servant.getCardInHand(who, index);
+
+        // Generate the ID for the card
+        String cardId = card.getID();
+
+        // Register the card in the name service
+        nameService.addCard(cardId, card);
+
+        // Create reply
+        reply = new ReplyObject(200, gson.toJson(cardId));
+
       } else if (operationName.equals(OperationNames.GAME_GET_FIELD_SIZE)) {
         // Get the player from the JSON array
         Player who = gson.fromJson(array.get(0), Player.class);
@@ -125,137 +252,6 @@ public class HotStoneGameInvoker implements Invoker {
         reply = new ReplyObject(200, gson.toJson(fieldSize));
 
         // Card methods
-      } else if (operationName.equals(OperationNames.CARD_GET_NAME)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants getName() method
-        String name = servant.getName();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(name));
-
-      } else if (operationName.equals(OperationNames.CARD_GET_MANA_COST)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants getManaCost() method
-        int manaCost = servant.getManaCost();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(manaCost));
-
-      } else if (operationName.equals(OperationNames.CARD_GET_ATTACK)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants getAttack() method
-        int attack = servant.getAttack();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(attack));
-
-      } else if (operationName.equals(OperationNames.CARD_GET_HEALTH)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants getHealth() method
-        int health = servant.getHealth();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(health));
-
-      } else if (operationName.equals(OperationNames.CARD_IS_ACTIVE)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants IsActive() method
-        boolean isActive = servant.isActive();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(isActive));
-
-      } else if (operationName.equals(OperationNames.CARD_GET_OWNER)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants getOwner() method
-        Player owner = servant.getOwner();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(owner));
-
-      } else if (operationName.equals(OperationNames.CARD_GET_EFFECT_DESCRIPTION)) {
-        // Lookup the right card to invoke the method on
-        Card servant = lookupCard(objectId);
-
-        // Call the servants getEffectDescription() method
-        String effectDescription = servant.getEffectDescription();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(effectDescription));
-
-        // Hero methods
-      } else if (operationName.equals(OperationNames.HERO_GET_MANA)) {
-        // Lookup the right hero to invoke the method on
-        Hero servant = lookupHero(objectId);
-
-        // Call the servants getMana() method
-        int mana = servant.getMana();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(mana));
-
-      } else if (operationName.equals(OperationNames.HERO_GET_HEALTH)) {
-        // Lookup the right hero to invoke the method on
-        Hero servant = lookupHero(objectId);
-
-        // Call the servants getHealth() method
-        int health = servant.getHealth();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(health));
-
-      } else if (operationName.equals(OperationNames.HERO_IS_ACTIVE)) {
-        // Lookup the right hero to invoke the method on
-        Hero servant = lookupHero(objectId);
-
-        // Call the servants canUsePower() method
-        boolean canUsePower = servant.canUsePower();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(canUsePower));
-
-      } else if (operationName.equals(OperationNames.HERO_GET_TYPE)) {
-        // Lookup the right hero to invoke the method on
-        Hero servant = lookupHero(objectId);
-
-        // Call the servants getType() method
-        String type = servant.getType();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(type));
-
-      } else if (operationName.equals(OperationNames.HERO_GET_OWNER)) {
-        // Lookup the right hero to invoke the method on
-        Hero servant = lookupHero(objectId);
-
-        // Call the servants getOwner() method
-        Player owner = servant.getOwner();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(owner));
-
-      } else if (operationName.equals(OperationNames.HERO_GET_EFFECT_DESCRIPTION)) {
-        // Lookup the right hero to invoke the method on
-        Hero servant = lookupHero(objectId);
-
-        // Call the servants getEffectDescription() method
-        String effectDescription = servant.getEffectDescription();
-
-        // Create reply
-        reply = new ReplyObject(200, gson.toJson(effectDescription));
-
       } else {
         // Unknown operation
         reply = new ReplyObject(501, "Unknown operation: " + operationName);
