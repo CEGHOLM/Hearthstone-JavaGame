@@ -1,6 +1,6 @@
 # Hearthstone-JavaGame
 
-Dette projekt er en efterligning af det kendte spil Hearthstone, udviklet i Java som en øvelse i clean code, design patterns og arkitektonisk struktur.
+Dette projekt er en efterligning af det kendte spil Hearthstone, udviklet i Java som en øvelse i clean code, design patterns og arkitektonisk struktur. Projektet er udviklet som en del af et kursus på Aarhus Universitet med afsæt i en undervisningsramme skabt af Henrik Bærbak Christensen. Alt kode jeg selv har skrevet, bygger ovenpå denne ramme, og er markeret i projektet.
 
 ## Teknologier og principper
 - Udviklet i Java
